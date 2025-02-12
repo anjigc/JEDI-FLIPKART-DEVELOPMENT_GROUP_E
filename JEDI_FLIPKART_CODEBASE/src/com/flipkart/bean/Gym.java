@@ -9,7 +9,7 @@ public class Gym {
     private String gymName;
     private String gymAddress;
     private int ownerId;
-    private List<Slot> slots;
+    private int capacity;
 
     // Getters and Setters
     public String getGymId() {
@@ -40,10 +40,10 @@ public class Gym {
         this.ownerId = ownerId;
     }
 
-    public List<Slot> getSlots() {
-        return slots;
+    public int getCapacity() {
+        return capacity;
     }
-    public void setSlots(List<Slot> slots) {
-        this.slots = slots;
+    public void setCapacity(int ownerId) {
+        this.capacity = capacity;
     }
 }

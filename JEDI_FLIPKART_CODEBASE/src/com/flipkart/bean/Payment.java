@@ -5,7 +5,7 @@ import com.flipkart.bean.Slot;
 public class Payment {
     private String transactionId;
     private int bookingId;
-    private boolean isSuccessful;
+    private String status;
 
     // Getters and Setters
     public String getTransactionId() {
@@ -22,10 +22,10 @@ public class Payment {
         this.bookingId = bookingId;
     }
 
-    public boolean isSuccessful() {
-        return isSuccessful;
+    public String getStatus() {
+        return status;
     }
-    public void setSuccessful(boolean isSuccessful) {
-        this.isSuccessful = isSuccessful;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -6,7 +6,6 @@ public class GymOwner extends User{
     private String address;
     private String panNo;
     private String Aadhaar;
-    private List<Gym> gyms;
 
     // Getters and Setters
     public String getAddress() {
@@ -28,12 +27,5 @@ public class GymOwner extends User{
     }
     public void setAadhaar(String aadhaar) {
         this.Aadhaar = aadhaar;
-    }
-
-    public List<Gym> getGyms() {
-        return gyms;
-    }
-    public void setGyms(List<Gym> gyms) {
-        this.gyms = gyms;
     }
 }
