@@ -2,7 +2,7 @@ package com.flipkart.business;
 
 import com.flipkart.bean.Admin;
 
-public class AdminBusiness {
+public class AdminService {
 
     public boolean approveGym(int gymId) {
         System.out.println("Gym with ID: " + gymId + " has been approved.");

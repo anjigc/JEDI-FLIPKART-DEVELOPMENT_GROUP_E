@@ -1,16 +1,16 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.User;
-import com.flipkart.business.UserBusiness;
+import com.flipkart.business.UserService;
 import java.util.Scanner;
-import com.flipkart.business.CustomerBusiness;
+import com.flipkart.business.CustomerService;
 
 public class Client {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        UserBusiness userBusiness = new UserBusiness();
-        CustomerBusiness customerBusiness = new CustomerBusiness();
+        UserService userBusiness = new UserService();
+        CustomerService customerBusiness = new CustomerService();
         User currentUser = null;
         int choice;
 

@@ -5,7 +5,7 @@ import com.flipkart.bean.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class UserBusiness {
+public class UserService {
 
     public User registerUser(String name, String mobileNo, String email, String type) {
         User user = new User();

@@ -5,7 +5,7 @@ import java.util.List;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.GymOwner;
 
-public class GymOwnerBusiness {
+public class GymOwnerService {
     public boolean addGym(Gym gym, GymOwner gymOwner) {
         // Logic to add a new gym
         return true;

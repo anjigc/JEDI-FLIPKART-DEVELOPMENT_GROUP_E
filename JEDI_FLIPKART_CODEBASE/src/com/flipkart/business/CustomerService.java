@@ -5,7 +5,7 @@ import com.flipkart.bean.Booking;
 import java.util.List;
 import java.util.ArrayList;
 
-public class CustomerBusiness {
+public class CustomerService {
 
     private List<Customer> customers = new ArrayList<>();
 
