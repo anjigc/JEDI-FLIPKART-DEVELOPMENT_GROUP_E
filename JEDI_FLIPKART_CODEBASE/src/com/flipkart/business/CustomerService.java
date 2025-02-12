@@ -17,6 +17,9 @@ public class CustomerService extends UserService {
         customer.setAge(age);
         customer.setAddress(address);
         customer.setRole("FlipFit Customer");
+
+        System.out.println("User with email " + email + " registered as FLipfit Customer Successfully!");
+
         return customer;
     }
 

@@ -17,6 +17,9 @@ public class GymOwnerService {
 		gymOwner.setAddress(address);
 		gymOwner.setAadhaar(Aadhaar);
 		gymOwner.setRole("FlipFit Gym Owner");
+
+        System.out.println("User with email " + email + " registered as FLipfit Gym Owner Successfully!");
+
         return gymOwner;
     }
 	

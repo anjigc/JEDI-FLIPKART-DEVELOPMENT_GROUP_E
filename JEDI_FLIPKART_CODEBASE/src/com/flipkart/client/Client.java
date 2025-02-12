@@ -1,22 +1,26 @@
 package com.flipkart.client;
 
-import com.flipkart.bean.User;
-import com.flipkart.business.UserService;
 import java.util.Scanner;
+
+import com.flipkart.business.UserService;
+import com.flipkart.business.AdminService;
+import com.flipkart.business.GymOwnerService;
 import com.flipkart.business.CustomerService;
 
 public class Client {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        UserService userBusiness = new UserService();
-        CustomerService customerBusiness = new CustomerService();
-        User currentUser = null;
         int choice;
 
+        UserService userService = new UserService();
+        AdminService adminService = new AdminService();
+        GymOwnerService gymOwnerService = new GymOwnerService();
+        CustomerService customerService = new CustomerService();
+
         do {
-            System.out.println("Welcome to FlipFit application");
-            System.out.println("Enter the choice: ");
+            System.out.println("Welcome to FlipFit Application");
+            System.out.println("Enter your choice: ");
             System.out.println("1. Login");
             System.out.println("2. Registration of the gym customer");
             System.out.println("3. Registration of the gym owner");
@@ -29,16 +33,18 @@ public class Client {
                 case 1:
                     System.out.print("Enter email: ");
                     String email = scanner.nextLine();
+
                     System.out.print("Enter password: ");
                     String password = scanner.nextLine();
-                    currentUser = userBusiness.loginUser(email, password);
-                    if (currentUser != null) {
-                        if (currentUser.getRole().equalsIgnoreCase("gym owner")) {
-                            gymOwnerMenu(scanner);
-                        } else if (currentUser.getRole().equalsIgnoreCase("gym customer")) {
-                            gymCustomerMenu(scanner);
-                        } else if (currentUser.getRole().equalsIgnoreCase("gym admin")) {
-                            gymAdminMenu(scanner);
+                    
+                    String currentUserRole = userService.loginUser(email, password);
+                    if (currentUserRole != null) {
+                        if (currentUserRole == "Flipfit Customer") {
+
+                        } else if (currentUserRole == "Flipfit Gym Owner") {
+
+                        } else if (currentUserRole == "Flipfit Admin") {
+
                         }
                     } else {
                         System.out.println("Invalid credentials. Please try again.");
@@ -47,36 +53,55 @@ public class Client {
                 case 2:
                     System.out.print("Enter name: ");
                     String name = scanner.nextLine();
-                    System.out.print("Enter mobile number: ");
-                    String mobileNo = scanner.nextLine();
+
                     System.out.print("Enter email: ");
                     email = scanner.nextLine();
+
+                    System.out.print("Enter password: ");
+                    password = scanner.nextLine();
+
+                    System.out.print("Enter contact: ");
+                    String contact = scanner.nextLine();
+                    
                     System.out.print("Enter age: ");
                     int age = scanner.nextInt();
                     scanner.nextLine();  // Consume newline
+
                     System.out.print("Enter address: ");
                     String address = scanner.nextLine();
-                    customerBusiness.registerCustomer(name, mobileNo, email, age, address);
-                    System.out.println("Gym customer registered successfully!");
+                    
+                    customerService.registerCustomer(name, email, password, contact, age, address);
                     break;
                 case 3:
                     System.out.print("Enter name: ");
-                    name = scanner.nextLine();
-                    System.out.print("Enter mobile number: ");
-                    mobileNo = scanner.nextLine();
+                    String name = scanner.nextLine();
+
                     System.out.print("Enter email: ");
                     email = scanner.nextLine();
-                    userBusiness.registerUser(name, mobileNo, email, "gym owner");
-                    System.out.println("Gym owner registered successfully!");
+
+                    System.out.print("Enter password: ");
+                    password = scanner.nextLine();
+
+                    System.out.print("Enter contact: ");
+                    String contact = scanner.nextLine();
+                    
+                    System.out.print("Enter pan number: ");
+                    String panNo = scanner.nextLine();
+
+                    System.out.print("Enter aadhaar number: ");
+                    String aadhaarNo = scanner.nextLine();
+
+                    System.out.print("Enter address: ");
+                    String address = scanner.nextLine();
+                    
+                    customerService.registerCustomer(name, email, password, contact, panNo, address, aadhaarNo);
                     break;
                 case 4:
-                    if (currentUser != null) {
+                        System.out.print("Enter your email: ");
+                        String email = scanner.nextLine();
                         System.out.print("Enter new password: ");
-                        password = scanner.nextLine();
+                        String password = scanner.nextLine();
                         System.out.println("Password changed successfully!");
-                    } else {
-                        System.out.println("You need to be logged in to change password.");
-                    }
                     break;
                 case 5:
                     System.out.println("Exiting FlipFit application...");
