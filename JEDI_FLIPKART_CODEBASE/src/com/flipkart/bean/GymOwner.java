@@ -1,13 +1,11 @@
 package main.java.com.flipkart.bean;
 
-
-public class User {
-
+public class GymOwner {
     private int id;
     private String name;
-    private String mobileNo;
     private String email;
-    private String type;
+    private String aadhaarProof;
+    private String panNo;
 
     public int getId() {
         return id;
@@ -25,14 +23,6 @@ public class User {
         this.name = name;
     }
 
-    public String getMobileNo() {
-        return mobileNo;
-    }
-
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -41,12 +31,19 @@ public class User {
         this.email = email;
     }
 
-    public String getType() {
-        return type;
+    public String getAadhaarProof() {
+        return aadhaarProof;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setAadhaarProof(String aadhaarProof) {
+        this.aadhaarProof = aadhaarProof;
     }
 
+    public String getPanNo() {
+        return panNo;
+    }
+
+    public void setPanNo(String panNo) {
+        this.panNo = panNo;
+    }
 }
