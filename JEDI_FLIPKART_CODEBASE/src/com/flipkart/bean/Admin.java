@@ -1,9 +1,9 @@
-package main.java.com.flipkart.bean;
+package com.flipkart.bean;
 
 import java.util.List;
 
 public class Admin extends User{
 
     }
-}
+
 

@@ -1,6 +1,8 @@
 package com.flipkart.bean;
 
-class Customer extends User {
+import java.util.List;
+
+ public class Customer extends User {
     private int age;
     private String address;
     private List<Booking> bookings;

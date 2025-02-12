@@ -2,7 +2,7 @@ package com.flipkart.bean;
 
 import java.util.Date;
 
-public class Bookings {
+public class Booking {
     private int bookingId;
     private int gymId;
     private int slotId;
@@ -52,3 +52,4 @@ public class Bookings {
     public void setBookingDate(java.util.Date bookingDate) {
         this.bookingDate = bookingDate;
     }
+}

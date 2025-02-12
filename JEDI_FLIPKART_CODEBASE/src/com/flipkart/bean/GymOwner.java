@@ -1,5 +1,7 @@
 package com.flipkart.bean;
 
+import java.util.List;
+
 public class GymOwner extends User{
     private String address;
     private String panNo;

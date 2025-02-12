@@ -1,9 +1,9 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.User;
-import com.flipkart.service.UserBusiness;
+import com.flipkart.business.UserBusiness;
 import java.util.Scanner;
-
+import com.flipkart.business.CustomerBusiness;
 public class Client {
 
     public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class Client {
             switch (choice) {
                 case 1:
                     // Login
-                    currentUser = userBusiness.login(scanner);
+                    currentUser = userBusiness.loginUser(null, null)
                     if (currentUser != null) {
                         // Check role and display respective menus
                         if (currentUser.getType().equalsIgnoreCase("gym owner")) {

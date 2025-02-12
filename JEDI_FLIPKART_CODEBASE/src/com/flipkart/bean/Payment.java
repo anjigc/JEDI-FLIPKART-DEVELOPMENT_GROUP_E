@@ -2,7 +2,7 @@ package com.flipkart.bean;
 
 import com.flipkart.bean.Slot;
 
-class Payment {
+public class Payment {
     private String transactionId;
     private int bookingId;
     private boolean isSuccessful;

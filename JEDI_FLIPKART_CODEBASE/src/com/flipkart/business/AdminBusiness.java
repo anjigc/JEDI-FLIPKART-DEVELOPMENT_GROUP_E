@@ -1,6 +1,6 @@
-package main.java.com.flipkart.service;
+package com.flipkart.business;
 
-import main.java.com.flipkart.bean.Admin;
+import com.flipkart.bean.Admin;
 
 public class AdminBusiness {
 
