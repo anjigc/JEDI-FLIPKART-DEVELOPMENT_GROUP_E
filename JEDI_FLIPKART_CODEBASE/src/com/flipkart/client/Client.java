@@ -40,11 +40,11 @@ public class Client {
                     String currentUserRole = userService.loginUser(email, password);
                     if (currentUserRole != null) {
                         if (currentUserRole == "Flipfit Customer") {
-
+                        	CustomerMenu.Menu();
                         } else if (currentUserRole == "Flipfit Gym Owner") {
-
+                            GymOwnerMenu.Menu();
                         } else if (currentUserRole == "Flipfit Admin") {
-
+                        	AdminMenu.Menu();
                         }
                     } else {
                         System.out.println("Invalid credentials. Please try again.");
@@ -74,7 +74,7 @@ public class Client {
                     break;
                 case 3:
                     System.out.print("Enter name: ");
-                    String name = scanner.nextLine();
+                    name = scanner.nextLine();
 
                     System.out.print("Enter email: ");
                     email = scanner.nextLine();
@@ -83,7 +83,7 @@ public class Client {
                     password = scanner.nextLine();
 
                     System.out.print("Enter contact: ");
-                    String contact = scanner.nextLine();
+                    contact = scanner.nextLine();
                     
                     System.out.print("Enter pan number: ");
                     String panNo = scanner.nextLine();
@@ -92,15 +92,15 @@ public class Client {
                     String aadhaarNo = scanner.nextLine();
 
                     System.out.print("Enter address: ");
-                    String address = scanner.nextLine();
+                    address = scanner.nextLine();
                     
-                    customerService.registerCustomer(name, email, password, contact, panNo, address, aadhaarNo);
+                    gymOwnerService.registerGymOwner(name, email, password, contact, panNo, address, aadhaarNo);
                     break;
                 case 4:
                         System.out.print("Enter your email: ");
-                        String email = scanner.nextLine();
+                        email = scanner.nextLine();
                         System.out.print("Enter new password: ");
-                        String password = scanner.nextLine();
+                        password = scanner.nextLine();
                         System.out.println("Password changed successfully!");
                     break;
                 case 5:
@@ -122,7 +122,7 @@ public class Client {
             System.out.println("1. Add Gym");
             System.out.println("2. Update Gym");
             System.out.println("3. Remove Gym");
-            System.out.println("4. View Gym Details");
+            System.out.println("4. View Gym List");
             System.out.println("5. Exit to main menu");
             choice = scanner.nextInt();
             scanner.nextLine();

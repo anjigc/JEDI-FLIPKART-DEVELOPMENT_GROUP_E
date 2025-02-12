@@ -1,8 +1,7 @@
 package com.flipkart.business;
 
-import java.util.List;
-
 import com.flipkart.bean.Gym;
+import java.util.Scanner;
 import com.flipkart.bean.GymOwner;
 
 public class GymOwnerService {
@@ -23,18 +22,40 @@ public class GymOwnerService {
         return gymOwner;
     }
 	
-    public boolean addGym(Gym gym, GymOwner gymOwner) {
-        // Logic to add a new gym
-        return true;
+     private Scanner scanner = new Scanner(System.in);
+    
+    public void addGym() {
+        System.out.print("Enter Gym Name: ");
+        String gymName = scanner.nextLine();
+        System.out.print("Enter Gym Location: ");
+        String location = scanner.nextLine();
+        System.out.println("Gym '" + gymName + "' added successfully at " + location + "!\n");
     }
-
-    public boolean updateGym(Gym gym) {
-        // Logic to update gym details
-        return true;
+    
+    public void updateGym() {
+        System.out.print("Enter Gym ID to update: ");
+        int gymId = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter new Gym Name: ");
+        String newGymName = scanner.nextLine();
+        System.out.println("Gym ID " + gymId + " updated successfully to '" + newGymName + "'!\n");
     }
-
-    public List<Gym> getGymsByOwnerId(int ownerId) {
-        // Logic to get list of gyms by owner ID
-        return null;
+    
+    public void removeGym() {
+        System.out.print("Enter Gym ID to remove: ");
+        int gymId = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.println("Gym ID " + gymId + " removed successfully!\n");
+    }
+    
+    public void viewGymList() {
+        System.out.println("\nGym List:");
+        System.out.println("-------------------------------------");
+        System.out.println("| Gym ID | Gym Name  | Location    |");
+        System.out.println("-------------------------------------");
+        System.out.println("|   1    | FitZone   | Downtown    |");
+        System.out.println("|   2    | Iron Gym  | Uptown      |");
+        System.out.println("|   3    | PowerFit  | Suburb      |");
+        System.out.println("-------------------------------------\n");
     }
 }
