@@ -7,20 +7,14 @@ import java.util.ArrayList;
 
 public class UserService {
 
-    public User registerUser(String name, String mobileNo, String email, String type) {
+    public User registerUser(String name, String contact, String email, String password, String role) {
         User user = new User();
         user.setName(name);
-        user.setContact(mobileNo);
+        user.setContact(contact);
         user.setEmail(email);
-        user.setRole(type);
+        user.setPassword(password);
+        user.setRole(role);
         return user;
-    }
-
-    public User registerUser(User user) {
-
-        System.out.println("User " + user.getName() + " registered successfully!");
-        return null;
-
     }
 
     public User loginUser(String email, String password) {
@@ -33,6 +27,3 @@ public class UserService {
         System.out.println("User with email " + email + " logged out successfully!");
     }
 }
-
-
-
