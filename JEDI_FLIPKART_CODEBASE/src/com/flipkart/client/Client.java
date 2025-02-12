@@ -4,11 +4,13 @@ import com.flipkart.bean.User;
 import com.flipkart.business.UserBusiness;
 import java.util.Scanner;
 import com.flipkart.business.CustomerBusiness;
+
 public class Client {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         UserBusiness userBusiness = new UserBusiness();
+        CustomerBusiness customerBusiness = new CustomerBusiness();
         User currentUser = null;
         int choice;
 
@@ -25,46 +27,60 @@ public class Client {
 
             switch (choice) {
                 case 1:
-                    // Login
-                    currentUser = userBusiness.loginUser(null, null)
+                    System.out.print("Enter email: ");
+                    String email = scanner.nextLine();
+                    System.out.print("Enter password: ");
+                    String password = scanner.nextLine();
+                    currentUser = userBusiness.loginUser(email, password);
                     if (currentUser != null) {
-                        // Check role and display respective menus
-                        if (currentUser.getType().equalsIgnoreCase("gym owner")) {
+                        if (currentUser.getRole().equalsIgnoreCase("gym owner")) {
                             gymOwnerMenu(scanner);
-                        } else if (currentUser.getType().equalsIgnoreCase("gym customer")) {
+                        } else if (currentUser.getRole().equalsIgnoreCase("gym customer")) {
                             gymCustomerMenu(scanner);
-                        } else if (currentUser.getType().equalsIgnoreCase("gym admin")) {
+                        } else if (currentUser.getRole().equalsIgnoreCase("gym admin")) {
                             gymAdminMenu(scanner);
                         }
                     } else {
                         System.out.println("Invalid credentials. Please try again.");
                     }
                     break;
-
                 case 2:
-                    // Registration of gym customer
-                    userBusiness.registerCustomer(scanner);
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter mobile number: ");
+                    String mobileNo = scanner.nextLine();
+                    System.out.print("Enter email: ");
+                    email = scanner.nextLine();
+                    System.out.print("Enter age: ");
+                    int age = scanner.nextInt();
+                    scanner.nextLine();  // Consume newline
+                    System.out.print("Enter address: ");
+                    String address = scanner.nextLine();
+                    customerBusiness.registerCustomer(name, mobileNo, email, age, address);
+                    System.out.println("Gym customer registered successfully!");
                     break;
-
                 case 3:
-                    // Registration of gym owner
-                    userBusiness.registerOwner(scanner);
+                    System.out.print("Enter name: ");
+                    name = scanner.nextLine();
+                    System.out.print("Enter mobile number: ");
+                    mobileNo = scanner.nextLine();
+                    System.out.print("Enter email: ");
+                    email = scanner.nextLine();
+                    userBusiness.registerUser(name, mobileNo, email, "gym owner");
+                    System.out.println("Gym owner registered successfully!");
                     break;
-
                 case 4:
-                    // Change password
                     if (currentUser != null) {
-                        userBusiness.changePassword(scanner, currentUser);
+                        System.out.print("Enter new password: ");
+                        password = scanner.nextLine();
+                        System.out.println("Password changed successfully!");
                     } else {
                         System.out.println("You need to be logged in to change password.");
                     }
                     break;
-
                 case 5:
-                    // Exit
                     System.out.println("Exiting FlipFit application...");
                     break;
-
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
@@ -74,7 +90,6 @@ public class Client {
         scanner.close();
     }
 
-    // Menu for gym owner
     public static void gymOwnerMenu(Scanner scanner) {
         int choice;
         do {
@@ -85,27 +100,22 @@ public class Client {
             System.out.println("4. View Gym Details");
             System.out.println("5. Exit to main menu");
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    // Add Gym Logic
                     System.out.println("Adding gym...");
                     break;
                 case 2:
-                    // Update Gym Logic
                     System.out.println("Updating gym...");
                     break;
                 case 3:
-                    // Remove Gym Logic
                     System.out.println("Removing gym...");
                     break;
                 case 4:
-                    // View Gym Details Logic
                     System.out.println("Viewing gym details...");
                     break;
                 case 5:
-                    // Exit to main menu
                     System.out.println("Returning to main menu...");
                     break;
                 default:
@@ -115,7 +125,6 @@ public class Client {
         } while (choice != 5);
     }
 
-    // Menu for gym customer
     public static void gymCustomerMenu(Scanner scanner) {
         int choice;
         do {
@@ -125,23 +134,19 @@ public class Client {
             System.out.println("3. View My Bookings");
             System.out.println("4. Exit to main menu");
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    // View Available Slots Logic
                     System.out.println("Viewing available slots...");
                     break;
                 case 2:
-                    // Book Gym Slot Logic
                     System.out.println("Booking gym slot...");
                     break;
                 case 3:
-                    // View My Bookings Logic
                     System.out.println("Viewing your bookings...");
                     break;
                 case 4:
-                    // Exit to main menu
                     System.out.println("Returning to main menu...");
                     break;
                 default:
@@ -151,7 +156,6 @@ public class Client {
         } while (choice != 4);
     }
 
-    // Menu for gym admin
     public static void gymAdminMenu(Scanner scanner) {
         int choice;
         do {
@@ -161,23 +165,19 @@ public class Client {
             System.out.println("3. View Gym Status");
             System.out.println("4. Exit to main menu");
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    // Approve Gym Logic
                     System.out.println("Approving gym...");
                     break;
                 case 2:
-                    // Reject Gym Logic
                     System.out.println("Rejecting gym...");
                     break;
                 case 3:
-                    // View Gym Status Logic
                     System.out.println("Viewing gym status...");
                     break;
                 case 4:
-                    // Exit to main menu
                     System.out.println("Returning to main menu...");
                     break;
                 default:
