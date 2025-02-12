@@ -2,7 +2,17 @@ package com.flipkart.business;
 
 import com.flipkart.bean.Admin;
 
-public class AdminService {
+public class AdminService extends UserService {
+	
+	public Admin registerAdmin(String name, String email, String password, String contact) {
+		Admin admin = new Admin();
+		admin.setName(name);
+		admin.setEmail(email);
+		admin.setPassword(password);
+		admin.setContact(contact);
+		admin.setRole("FlipFit Admin");
+        return admin;
+    }
 
     public boolean approveGym(int gymId) {
         System.out.println("Gym with ID: " + gymId + " has been approved.");

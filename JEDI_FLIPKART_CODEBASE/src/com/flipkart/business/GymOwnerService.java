@@ -6,6 +6,20 @@ import com.flipkart.bean.Gym;
 import com.flipkart.bean.GymOwner;
 
 public class GymOwnerService {
+	
+	public GymOwner registerGymOwner(String name, String email, String password, String contact, String panNo, String address, String Aadhaar) {
+		GymOwner gymOwner = new GymOwner();
+		gymOwner.setName(name);
+		gymOwner.setEmail(email);
+		gymOwner.setPassword(password);
+		gymOwner.setContact(contact);
+		gymOwner.setPanNo(panNo);
+		gymOwner.setAddress(address);
+		gymOwner.setAadhaar(Aadhaar);
+		gymOwner.setRole("FlipFit Gym Owner");
+        return gymOwner;
+    }
+	
     public boolean addGym(Gym gym, GymOwner gymOwner) {
         // Logic to add a new gym
         return true;
