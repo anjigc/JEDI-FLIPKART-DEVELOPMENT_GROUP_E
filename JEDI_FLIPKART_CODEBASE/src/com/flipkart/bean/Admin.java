@@ -1,24 +1,9 @@
 package main.java.com.flipkart.bean;
 
-public class Admin {
-    private int id;
-    private String name;
+import java.util.List;
 
-    // Getters and setters for all attributes
-    public int getId() {
-        return id;
-    }
+public class Admin extends User{
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
 

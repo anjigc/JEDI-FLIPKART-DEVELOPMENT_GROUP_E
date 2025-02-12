@@ -1,49 +1,37 @@
-package main.java.com.flipkart.bean;
+package com.flipkart.bean;
 
-public class GymOwner {
-    private int id;
-    private String name;
-    private String email;
-    private String aadhaarProof;
+public class GymOwner extends User{
+    private String address;
     private String panNo;
+    private String Aadhaar;
+    private List<Gym> gyms;
 
-    public int getId() {
-        return id;
+    // Getters and Setters
+    public String getAddress() {
+        return address;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAadhaarProof() {
-        return aadhaarProof;
-    }
-
-    public void setAadhaarProof(String aadhaarProof) {
-        this.aadhaarProof = aadhaarProof;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPanNo() {
         return panNo;
     }
-
     public void setPanNo(String panNo) {
         this.panNo = panNo;
+    }
+
+    public String getAadhaar() {
+        return Aadhaar;
+    }
+    public void setAadhaar(String aadhaar) {
+        this.Aadhaar = aadhaar;
+    }
+
+    public List<Gym> getGyms() {
+        return gyms;
+    }
+    public void setGyms(List<Gym> gyms) {
+        this.gyms = gyms;
     }
 }

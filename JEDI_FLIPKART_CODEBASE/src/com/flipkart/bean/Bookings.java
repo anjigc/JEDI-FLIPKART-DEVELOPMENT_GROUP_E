@@ -1,61 +1,54 @@
-package main.java.com.flipkart.bean;
+package com.flipkart.bean;
 
 import java.util.Date;
 
 public class Bookings {
-    private int id;
     private int bookingId;
-    private int customerId; // Foreign key referencing Customer
-    private double amount;
-    private Date paymentDate;
-    private String paymentMethod;
+    private int gymId;
+    private int slotId;
+    private int customerId;
+    private boolean isConfirmed;
+    private java.util.Date bookingDate;
 
-    // Getters and setters for all attributes
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    // Getters and Setters
     public int getBookingId() {
         return bookingId;
     }
-
     public void setBookingId(int bookingId) {
         this.bookingId = bookingId;
+    }
+
+    public int getGymId() {
+        return gymId;
+    }
+    public void setGymId(int gymId) {
+        this.gymId = gymId;
+    }
+
+    public int getSlotId() {
+        return slotId;
+    }
+    public void setSlotId(int slotId) {
+        this.slotId = slotId;
     }
 
     public int getCustomerId() {
         return customerId;
     }
-
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
-    public double getAmount() {
-        return amount;
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+    public void setConfirmed(boolean isConfirmed) {
+        this.isConfirmed = isConfirmed;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public java.util.Date getBookingDate() {
+        return bookingDate;
     }
-
-    public Date getPaymentDate() {
-        return paymentDate;
+    public void setBookingDate(java.util.Date bookingDate) {
+        this.bookingDate = bookingDate;
     }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-}
