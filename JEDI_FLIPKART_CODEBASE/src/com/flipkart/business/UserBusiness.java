@@ -16,11 +16,22 @@ public class UserBusiness {
         return user;
     }
 
-    public User loginUser(String email, String password) {
-        return null;
+    public User registerUser(User user) {
+
+        System.out.println("User " + user.getName() + " registered successfully!");
+        return true;
+
     }
 
-    public void logoutUser(User user) {
+    public User loginUser(String email, String password) {
+        System.out.println("User with email " + email + " logged in successfully!");
+        return true;
+
+    }
+
+    public void logoutUser(String email) {
+        System.out.println("User with email " + email + " logged out successfully!");
+        return true;
     }
 }
 
