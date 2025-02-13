@@ -11,10 +11,10 @@ public class FlipFitApplication {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
-        FlipFitUserService userService = new FlipFitUserService();
+        FlipFitUserInterface userService = new FlipFitUserService();
         FlipFitAdminInterface adminService = new FlipFitAdminService();
-        FlipFitGymOwnerService gymOwnerService = new FlipFitGymOwnerService();
-        FlipFitCustomerService customerService = new FlipFitCustomerService();
+        FlipFitGymOwnerInterface gymOwnerService = new FlipFitGymOwnerService();
+        FlipFitCustomerInterface customerService = new FlipFitCustomerService();
 
         do {
             System.out.println("Welcome to FlipFit Application");
