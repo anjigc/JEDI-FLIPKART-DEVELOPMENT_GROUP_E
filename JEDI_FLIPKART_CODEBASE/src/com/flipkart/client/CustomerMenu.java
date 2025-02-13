@@ -18,10 +18,11 @@ public class CustomerMenu {
     	
         do {
             System.out.println("Welcome Gym Customer");
-            System.out.println("1. View Available Slots");
-            System.out.println("2. Book Gym Slot");
-            System.out.println("3. View My Bookings");
-            System.out.println("4. Logout (Exit to main menu)");
+            System.out.println("1. View Gyms");
+            System.out.println("2. Select Gym to view slots");
+            System.out.println("3. Book a Gym Slot");
+            System.out.println("4. View My Bookings");
+            System.out.println("5. Logout (Exit to main menu)");
             System.out.print("Enter your choice: ");
             
             choice = scanner.nextInt();
@@ -29,15 +30,18 @@ public class CustomerMenu {
 
             switch (choice) {
                 case 1:
-                	customerService.viewAvailableSlots();
+                	customerService.viewGymList();
                     break;
                 case 2:
-                	customerService.bookGymSlot();
+                	customerService.selectGym();
                     break;
                 case 3:
-                	customerService.viewMyBookings();
+                	customerService.bookGymSlot();
                     break;
                 case 4:
+                	customerService.viewMyBookings();
+                    break;
+                case 5:
                     System.out.println("Logged Out, Returning to main menu...");
                     break;
                 default:

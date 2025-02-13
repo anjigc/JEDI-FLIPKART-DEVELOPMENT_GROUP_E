@@ -6,21 +6,24 @@ import com.flipkart.business.AdminService;
 public class AdminMenu {
 	private static Scanner scanner = new Scanner(System.in);
     public static void Menu() {
-        
+
         AdminService adminService = new AdminService();
         int choice;
-        
+
         do {
             System.out.println("Welcome Gym Admin");
             System.out.println("1. Approve Gym");
             System.out.println("2. Reject Gym");
             System.out.println("3. View Gym Status");
-            System.out.println("4. Exit to main menu");
+            System.out.println("4. Approve Gym Owner");
+            System.out.println("5. Deny Gym Owner");
+            System.out.println("6. View Gym Owner Status");
+            System.out.println("7. Exit to main menu");
             System.out.print("Enter your choice: ");
-            
+
             choice = scanner.nextInt();
             scanner.nextLine();
-            
+
             switch (choice) {
                 case 1:
                     adminService.approveGym();
@@ -32,13 +35,22 @@ public class AdminMenu {
                     adminService.viewGymStatus();
                     break;
                 case 4:
+                    adminService.approveGymOwner();
+                    break;
+                case 5:
+                    adminService.rejectGymOwner();
+                    break;
+                case 6:
+                    adminService.viewGymOwnerStatus();
+                    break;
+                case 7:
                     System.out.println("Returning to main menu...");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
-        } while (choice != 4);
-        
+        } while (choice != 7);
+
     }
 }
