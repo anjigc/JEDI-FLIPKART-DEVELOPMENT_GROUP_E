@@ -1,8 +1,6 @@
 package com.flipkart.bean;
 
-import com.flipkart.bean.Slot;
-
-public class Payment {
+public class FlipFitPayment {
     private String transactionId;
     private int bookingId;
     private String status;

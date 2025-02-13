@@ -11,10 +11,10 @@ public class FlipFitApplication {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
-        UserService userService = new UserService();
-        FlipFitAdminInterface adminService = new AdminService();
-        GymOwnerService gymOwnerService = new GymOwnerService();
-        CustomerService customerService = new CustomerService();
+        FlipFitUserService userService = new FlipFitUserService();
+        FlipFitAdminInterface adminService = new FlipFitAdminService();
+        FlipFitGymOwnerService gymOwnerService = new FlipFitGymOwnerService();
+        FlipFitCustomerService customerService = new FlipFitCustomerService();
 
         do {
             System.out.println("Welcome to FlipFit Application");
@@ -38,11 +38,11 @@ public class FlipFitApplication {
                     String currentUserRole = userService.loginUser(email, password);
                     if (currentUserRole != null) {
                         if (currentUserRole == "Flipfit Customer") {
-                        	CustomerMenu.Menu();
+                        	FlipFitCustomerMenu.Menu();
                         } else if (currentUserRole == "Flipfit Gym Owner") {
-                            GymOwnerMenu.Menu();
+                            FlipFitGymOwnerMenu.Menu();
                         } else if (currentUserRole == "Flipfit Admin") {
-                        	AdminMenu.Menu();
+                        	FlipFitAdminMenu.Menu();
                         }
                     } else {
                         System.out.println("Invalid credentials. Please try again.");

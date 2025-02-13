@@ -1,7 +1,7 @@
 package com.flipkart.bean;
 
 
-public class Notification {
+public class FlipFitNotification {
     private String bookingId;
     private String message;
 

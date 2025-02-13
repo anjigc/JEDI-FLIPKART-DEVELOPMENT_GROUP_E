@@ -1,10 +1,6 @@
 package com.flipkart.bean;
 
-import com.flipkart.bean.Slot;
-
-import java.util.List;
-
-public class Gym {
+public class FlipFitGymCentre {
     private String gymId;
     private String gymName;
     private String gymAddress;

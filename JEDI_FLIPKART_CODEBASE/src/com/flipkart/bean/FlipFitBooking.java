@@ -2,7 +2,7 @@ package com.flipkart.bean;
 
 import java.util.Date;
 
-public class Booking {
+public class FlipFitBooking {
     private int bookingId;
     private int slotId;
     private int customerId;

@@ -1,9 +1,9 @@
 package com.flipkart.business;
 
-import com.flipkart.bean.Admin;
+import com.flipkart.bean.FlipFitAdmin;
 
 public interface FlipFitAdminInterface {
-    public Admin registerAdmin(String name, String email, String password, String contact);
+    public FlipFitAdmin registerAdmin(String name, String email, String password, String contact);
     public void approveGym();
     public void rejectGym();
     public void viewGymStatus();

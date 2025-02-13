@@ -4,16 +4,16 @@
 package com.flipkart.client;
 
 import java.util.Scanner;
-import com.flipkart.business.CustomerService;
+import com.flipkart.business.FlipFitCustomerService;
 /**
  * 
  */
-public class CustomerMenu {
+public class FlipFitCustomerMenu {
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void Menu() {
 		
-		CustomerService customerService = new CustomerService();
+		FlipFitCustomerService customerService = new FlipFitCustomerService();
 	    int choice;
     	
         do {

@@ -1,13 +1,13 @@
 package com.flipkart.client;
 
 import java.util.Scanner;
-import com.flipkart.business.GymOwnerService;
+import com.flipkart.business.FlipFitGymOwnerService;
 
-public class GymOwnerMenu {
+public class FlipFitGymOwnerMenu {
 	private static Scanner scanner = new Scanner(System.in);
     public static void Menu() {
         
-        GymOwnerService gymOwnerService = new GymOwnerService();
+        FlipFitGymOwnerService gymOwnerService = new FlipFitGymOwnerService();
         int choice;
         
         do {

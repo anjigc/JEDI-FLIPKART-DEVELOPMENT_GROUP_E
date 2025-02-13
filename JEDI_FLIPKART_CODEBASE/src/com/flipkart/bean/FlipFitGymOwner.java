@@ -1,8 +1,6 @@
 package com.flipkart.bean;
 
-import java.util.List;
-
-public class GymOwner extends User{
+public class FlipFitGymOwner extends FlipFitUser {
     private String address;
     private String panNo;
     private String Aadhaar;

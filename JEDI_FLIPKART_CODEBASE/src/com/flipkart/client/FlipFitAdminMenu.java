@@ -1,13 +1,13 @@
 package com.flipkart.client;
 
 import java.util.Scanner;
-import com.flipkart.business.AdminService;
+import com.flipkart.business.FlipFitAdminService;
 
-public class AdminMenu {
+public class FlipFitAdminMenu {
 	private static Scanner scanner = new Scanner(System.in);
     public static void Menu() {
 
-        AdminService adminService = new AdminService();
+        FlipFitAdminService adminService = new FlipFitAdminService();
         int choice;
 
         do {

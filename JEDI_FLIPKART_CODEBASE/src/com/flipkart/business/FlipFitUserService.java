@@ -1,8 +1,6 @@
 package com.flipkart.business;
 
-import com.flipkart.bean.User;
-
-public class UserService {
+public class FlipFitUserService {
 
     public String loginUser(String email, String password) {
         System.out.println("User with email " + email + " logged in successfully!");

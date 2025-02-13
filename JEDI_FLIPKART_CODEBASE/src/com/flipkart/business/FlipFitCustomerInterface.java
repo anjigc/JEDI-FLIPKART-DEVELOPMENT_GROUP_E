@@ -1,9 +1,9 @@
 package com.flipkart.business;
 
-import com.flipkart.bean.Customer;
+import com.flipkart.bean.FlipFitCustomer;
 
 public interface FlipFitCustomerInterface {
-    public Customer registerCustomer(String name, String email, String password, String contact, int age, String address);
+    public FlipFitCustomer registerCustomer(String name, String email, String password, String contact, int age, String address);
     public void viewGymList();
     public void selectGym();
     public void viewAvailableSlots(String gymName);

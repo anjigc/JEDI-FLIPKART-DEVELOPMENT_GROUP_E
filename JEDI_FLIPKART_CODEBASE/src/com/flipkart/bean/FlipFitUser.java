@@ -1,8 +1,6 @@
 package com.flipkart.bean;
 
-import java.util.List;
-
-public class User {
+public class FlipFitUser {
     private int id;
     private String email;
     private String password;

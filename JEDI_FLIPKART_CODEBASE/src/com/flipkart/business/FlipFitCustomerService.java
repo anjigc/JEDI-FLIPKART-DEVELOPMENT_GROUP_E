@@ -2,15 +2,15 @@ package com.flipkart.business;
 
 import java.util.Scanner;
 
-import com.flipkart.bean.Customer;
+import com.flipkart.bean.FlipFitCustomer;
 import com.flipkart.client.Client;
 
 
-public class CustomerService extends UserService {
+public class FlipFitCustomerService extends FlipFitUserService {
 
 
-    public Customer registerCustomer(String name, String email, String password, String contact, int age, String address) {
-        Customer customer = new Customer();
+    public FlipFitCustomer registerCustomer(String name, String email, String password, String contact, int age, String address) {
+        FlipFitCustomer customer = new FlipFitCustomer();
         customer.setName(name);
         customer.setEmail(email);
         customer.setPassword(password);

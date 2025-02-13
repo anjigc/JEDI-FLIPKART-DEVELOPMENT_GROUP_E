@@ -1,12 +1,12 @@
 package com.flipkart.business;
 
-import com.flipkart.bean.Admin;
+import com.flipkart.bean.FlipFitAdmin;
 import java.util.Scanner;
 
-public class AdminService extends UserService implements FlipFitAdminInterface {
+public class FlipFitAdminService extends FlipFitUserService implements FlipFitAdminInterface {
 	
-	public Admin registerAdmin(String name, String email, String password, String contact) {
-		Admin admin = new Admin();
+	public FlipFitAdmin registerAdmin(String name, String email, String password, String contact) {
+		FlipFitAdmin admin = new FlipFitAdmin();
 		admin.setName(name);
 		admin.setEmail(email);
 		admin.setPassword(password);

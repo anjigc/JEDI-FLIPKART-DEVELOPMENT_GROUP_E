@@ -1,13 +1,12 @@
 package com.flipkart.business;
 
-import com.flipkart.bean.Gym;
 import java.util.Scanner;
-import com.flipkart.bean.GymOwner;
+import com.flipkart.bean.FlipFitGymOwner;
 
-public class GymOwnerService {
+public class FlipFitGymOwnerService {
 	
-	public GymOwner registerGymOwner(String name, String email, String password, String contact, String panNo, String address, String Aadhaar) {
-		GymOwner gymOwner = new GymOwner();
+	public FlipFitGymOwner registerGymOwner(String name, String email, String password, String contact, String panNo, String address, String Aadhaar) {
+		FlipFitGymOwner gymOwner = new FlipFitGymOwner();
 		gymOwner.setName(name);
 		gymOwner.setEmail(email);
 		gymOwner.setPassword(password);
