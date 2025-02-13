@@ -6,40 +6,43 @@ public class FlipFitGymCentre {
     private String gymAddress;
     private int ownerId;
     private int capacity;
+    private String status;
+    
+	public String getGymId() {
+		return gymId;
+	}
+	public void setGymId(String gymId) {
+		this.gymId = gymId;
+	}
+	public String getGymName() {
+		return gymName;
+	}
+	public void setGymName(String gymName) {
+		this.gymName = gymName;
+	}
+	public String getGymAddress() {
+		return gymAddress;
+	}
+	public void setGymAddress(String gymAddress) {
+		this.gymAddress = gymAddress;
+	}
+	public int getOwnerId() {
+		return ownerId;
+	}
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+	public int getCapacity() {
+		return capacity;
+	}
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    // Getters and Setters
-    public String getGymId() {
-        return gymId;
-    }
-    public void setGymId(String gymId) {
-        this.gymId = gymId;
-    }
-
-    public String getGymName() {
-        return gymName;
-    }
-    public void setGymName(String gymName) {
-        this.gymName = gymName;
-    }
-
-    public String getGymAddress() {
-        return gymAddress;
-    }
-    public void setGymAddress(String gymAddress) {
-        this.gymAddress = gymAddress;
-    }
-
-    public int getOwnerId() {
-        return ownerId;
-    }
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-    public void setCapacity(int ownerId) {
-        this.capacity = capacity;
-    }
 }

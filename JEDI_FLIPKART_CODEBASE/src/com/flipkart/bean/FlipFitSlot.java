@@ -2,16 +2,16 @@ package com.flipkart.bean;
 
 
 public class FlipFitSlot {
-    private String slotId;
+    private int slotId;
     private String startTime;
     private String endTime;
     private int availableSeats;
     private int gymId;
     
-	public String getSlotId() {
+	public int getSlotId() {
 		return slotId;
 	}
-	public void setSlotId(String slotId) {
+	public void setSlotId(int slotId) {
 		this.slotId = slotId;
 	}
 	public String getStartTime() {

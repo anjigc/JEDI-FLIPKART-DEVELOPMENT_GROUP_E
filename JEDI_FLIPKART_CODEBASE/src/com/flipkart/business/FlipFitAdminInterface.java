@@ -3,13 +3,11 @@ package com.flipkart.business;
 import com.flipkart.bean.FlipFitAdmin;
 
 public interface FlipFitAdminInterface {
-    public FlipFitAdmin registerAdmin(String name, String email, String password, String contact);
+    public FlipFitAdmin registerAdmin(int id);
     public void approveGym();
     public void rejectGym();
     public void viewGymStatus();
     public void approveGymOwner();
     public void rejectGymOwner();
     public void viewGymOwnerStatus();
-    public void loginAdmin(String email, String password);
-    public void logoutAdmin(String email);
 }
