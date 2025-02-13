@@ -1,6 +1,6 @@
 package com.flipkart.business;
 
-public class FlipFitUserService {
+public class FlipFitUserService implements FlipFitUserInterface {
 
     public String loginUser(String email, String password) {
         System.out.println("User with email " + email + " logged in successfully!");

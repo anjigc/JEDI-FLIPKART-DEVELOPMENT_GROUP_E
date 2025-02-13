@@ -3,11 +3,27 @@ package com.flipkart.business;
 import java.util.Scanner;
 
 import com.flipkart.bean.FlipFitCustomer;
-import com.flipkart.client.Client;
 
 
-public class FlipFitCustomerService extends FlipFitUserService {
+public class FlipFitCustomerService implements FlipFitCustomerInterface {
 
+    public String loginUser(String email, String password) {
+        System.out.println("User with email " + email + " logged in successfully!");
+
+        switch(email) {
+            case "customer@gmail.com":
+                return "Flipfit Customer";
+            case "gymowner@gmail.com":
+                return "Flipfit Gym Owner";
+            case "admin@gmail.com":
+                return "Flipfit Admin";
+        }
+        return null;
+    }
+
+    public void logoutUser(String email) {
+        System.out.println("User with email " + email + " logged out successfully!");
+    }
 
     public FlipFitCustomer registerCustomer(String name, String email, String password, String contact, int age, String address) {
         FlipFitCustomer customer = new FlipFitCustomer();

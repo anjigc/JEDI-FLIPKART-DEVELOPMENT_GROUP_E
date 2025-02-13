@@ -3,8 +3,26 @@ package com.flipkart.business;
 import com.flipkart.bean.FlipFitAdmin;
 import java.util.Scanner;
 
-public class FlipFitAdminService extends FlipFitUserService implements FlipFitAdminInterface {
-	
+public class FlipFitAdminService implements FlipFitAdminInterface {
+
+    public String loginUser(String email, String password) {
+        System.out.println("User with email " + email + " logged in successfully!");
+
+        switch(email) {
+            case "customer@gmail.com":
+                return "Flipfit Customer";
+            case "gymowner@gmail.com":
+                return "Flipfit Gym Owner";
+            case "admin@gmail.com":
+                return "Flipfit Admin";
+        }
+        return null;
+    }
+
+    public void logoutUser(String email) {
+        System.out.println("User with email " + email + " logged out successfully!");
+    }
+
 	public FlipFitAdmin registerAdmin(String name, String email, String password, String contact) {
 		FlipFitAdmin admin = new FlipFitAdmin();
 		admin.setName(name);

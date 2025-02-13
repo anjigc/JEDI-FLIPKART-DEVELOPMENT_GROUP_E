@@ -3,7 +3,7 @@ package com.flipkart.business;
 import java.util.Scanner;
 import com.flipkart.bean.FlipFitGymOwner;
 
-public class FlipFitGymOwnerService {
+public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
 	
 	public FlipFitGymOwner registerGymOwner(String name, String email, String password, String contact, String panNo, String address, String Aadhaar) {
 		FlipFitGymOwner gymOwner = new FlipFitGymOwner();
