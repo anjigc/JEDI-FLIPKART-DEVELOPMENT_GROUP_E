@@ -29,16 +29,23 @@ public class GymOwnerService {
         String gymName = scanner.nextLine();
         System.out.print("Enter Gym Location: ");
         String location = scanner.nextLine();
-        System.out.println("Gym '" + gymName + "' added successfully at " + location + "!\n");
-    }
-    
-    public void updateGym() {
-        System.out.print("Enter Gym ID to update: ");
-        int gymId = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-        System.out.print("Enter new Gym Name: ");
-        String newGymName = scanner.nextLine();
-        System.out.println("Gym ID " + gymId + " updated successfully to '" + newGymName + "'!\n");
+        System.out.print("Enter Gym Slots Count: ");
+        int slots = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter Gym Capacity of each Slot: ");
+        int capacity = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Gym '" + gymName + "' added successfully at " + location + " for " + slots + " slots with capacity of " + capacity + " for each slot." +"\n");
+        for(int i = 0; i < slots; i++){
+            System.out.print("Enter Gym Slot " + i+1 + " Details: " + "\n");
+            System.out.print("Enter Start Time for Slot " + i+1 + ":");
+            int startTime = scanner.nextInt();
+            scanner.nextLine();
+            System.out.print("Enter End Time for Slot " + i+1 + ":");
+            int endTime = scanner.nextInt();
+            scanner.nextLine();
+            System.out.print("Slot details added from start time " + startTime + " to end time " + endTime + "!\n");
+        }
     }
     
     public void removeGym() {
