@@ -24,24 +24,49 @@ public class CustomerService extends UserService {
     
     private Scanner scanner = new Scanner(System.in);
 
-   public void viewAvailableSlots() {
-        System.out.println("\nAvailable Gym Slots:");
+    public void viewGymList() {
+        System.out.println("\nAvailable Gyms:");
         System.out.println("-------------------------------------");
-        System.out.println("| Slot No | Gym Name  | Slot Time   |");
+        System.out.println("| Gym Name  | Location    |");
         System.out.println("-------------------------------------");
-        System.out.println("|   1     | FitZone   | 6pm - 7pm   |");
-        System.out.println("|   2     | Iron Gym  | 7pm - 8pm   |");
-        System.out.println("|   3     | PowerFit  | 8pm - 9pm   |");
+        System.out.println("| FitZone   | Downtown    |");
+        System.out.println("| Iron Gym  | Uptown      |");
+        System.out.println("| PowerFit  | Suburb      |");
+        System.out.println("-------------------------------------\n");
+    }
+    
+    public void selectGym() {
+        System.out.println("\n Enter Gym Name:");
+        String gymName = scanner.nextLine();
+        viewAvailableSlots(gymName);
+    }
+    
+    public void viewAvailableSlots(String gymName) {
+        System.out.println("\nAvailable Gym Slots in " + gymName + " :");
+        System.out.println("-------------------------------------");
+        System.out.println("| Slot No | Slot Time  | Available Seats |");
+        System.out.println("-------------------------------------");
+        System.out.println("|   1     | 6pm - 7pm  | 5               |");
+        System.out.println("|   2     | 7pm - 8pm  | 3               |");
+        System.out.println("|   3     | 8pm - 9pm  | 2               |");
         System.out.println("-------------------------------------\n");
     }
     
     public void bookGymSlot() {
-    	
         System.out.print("Enter Slot No to book: ");
         int slotNo = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Slot " + slotNo + " booked successfully!\n");
         
+        if (payAmount()) {
+            System.out.println("Slot " + slotNo + " booked successfully!\n");
+        } else {
+            System.out.println("Payment failed. Booking not completed.\n");
+        }
+    }
+    
+    public boolean payAmount() {
+        System.out.println("Processing payment...");
+        return true; // Hardcoded to always succeed
     }
     
     public void viewMyBookings() {
@@ -50,8 +75,7 @@ public class CustomerService extends UserService {
         System.out.println("| Slot No | Gym Name  | Slot Time   |");
         System.out.println("-------------------------------------");
         System.out.println("|   1     | FitZone   | 6pm - 7pm   |");
+        System.out.println("|   2     | Iron Gym  | 7pm - 8pm   |");
         System.out.println("-------------------------------------\n");
     }
-
-
 }
