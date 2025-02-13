@@ -30,7 +30,7 @@ public class AdminService extends UserService {
         scanner.nextLine(); // Consume newline
         System.out.println("Gym ID " + gymId + " rejected successfully!\n");
     }
-    
+
     public void viewGymStatus() {
         System.out.println("\nGym Status:");
         System.out.println("-------------------------------------");
@@ -41,4 +41,30 @@ public class AdminService extends UserService {
         System.out.println("|   3    | PowerFit  | Rejected    |");
         System.out.println("-------------------------------------\n");
     }
+
+    public void approveGymOwner() {
+        System.out.print("Enter Gym Owner ID to approve: ");
+        int gymOwnerId = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Gym Owner ID " + gymOwnerId + " approved successfully!\n");
+    }
+
+    public void rejectGymOwner() {
+        System.out.print("Enter Gym Owner ID to reject: ");
+        int gymOwnerId = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Gym Owner ID " + gymOwnerId + " rejected successfully!\n");
+    }
+
+    public void viewGymOwnerStatus() {
+        System.out.println("\nGym Owner Status:");
+        System.out.println("-------------------------------------");
+        System.out.println("| Gym Owner ID | GymOwner  | Status      |");
+        System.out.println("-------------------------------------");
+        System.out.println("|      1       | Anjita    | Approved    |");
+        System.out.println("|      2       | Sakshi    | Pending     |");
+        System.out.println("|      3       | Sujan     | Rejected    |");
+        System.out.println("-------------------------------------\n");
+    }
+
 }
