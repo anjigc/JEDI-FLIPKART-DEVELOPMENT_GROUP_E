@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.flipkart.business.*;
 
 
-public class Client {
+public class FlipFitApplication {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

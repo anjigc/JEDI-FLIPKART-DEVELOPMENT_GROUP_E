@@ -3,7 +3,6 @@ package com.flipkart.business;
 import java.util.Scanner;
 
 import com.flipkart.bean.Customer;
-import com.flipkart.client.Client;
 
 
 public class CustomerService extends UserService {
