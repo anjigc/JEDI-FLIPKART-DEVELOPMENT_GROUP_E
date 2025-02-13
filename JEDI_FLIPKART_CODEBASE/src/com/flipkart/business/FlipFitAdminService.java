@@ -1,9 +1,24 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.FlipFitAdmin;
+import com.flipkart.bean.FlipFitGymCentre;
+import com.flipkart.bean.FlipFitGymOwner;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class FlipFitAdminService implements FlipFitAdminInterface {
+
+    private ArrayList<FlipFitAdmin> adminList;
+    private ArrayList<FlipFitGymOwner> gymOwnerList;
+    private HashMap<Integer, FlipFitGymCentre> gymCentres;
+
+    public FlipFitAdminService(ArrayList<FlipFitAdmin> adminList, HashMap<Integer, FlipFitGymCentre> gymCentres, ArrayList<FlipFitGymOwner> gymOwnerList) {
+        this.adminList = adminList;
+        this.gymOwnerList = gymOwnerList;
+        this.gymCentres = gymCentres;
+    }
 
     public void loginAdmin(String email, String password) {
         System.out.println("User with email " + email + " logged in as Admin successfully!");

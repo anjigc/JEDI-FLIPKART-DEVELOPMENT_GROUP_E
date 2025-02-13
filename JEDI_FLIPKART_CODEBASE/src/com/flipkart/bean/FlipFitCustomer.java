@@ -1,7 +1,8 @@
 package com.flipkart.bean;
 
 
- public class FlipFitCustomer extends FlipFitUser {
+ public class FlipFitCustomer {
+	private int id;
     private int age;
     private String address;
     

@@ -18,12 +18,12 @@ public class FlipFitApplication {
 
         do {
             System.out.println("Welcome to FlipFit Application");
-            System.out.println("Enter your choice: ");
             System.out.println("1. Login");
             System.out.println("2. Registration of the gym customer");
             System.out.println("3. Registration of the gym owner");
             System.out.println("4. Change password");
             System.out.println("5. Exit");
+            System.out.println("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();  // Consume newline character
 

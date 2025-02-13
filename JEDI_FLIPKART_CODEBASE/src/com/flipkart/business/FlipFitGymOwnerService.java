@@ -1,9 +1,26 @@
 package com.flipkart.business;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
+
+import com.flipkart.bean.FlipFitGymCentre;
 import com.flipkart.bean.FlipFitGymOwner;
+import com.flipkart.bean.FlipFitSlot;
 
 public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
+
+    private ArrayList<FlipFitGymOwner> gymOwnerList;
+    private HashMap<Integer, FlipFitGymCentre> gymCentres;
+    private HashMap<Integer, FlipFitSlot> gymSlots;
+
+
+
+    public FlipFitGymOwnerService(ArrayList<FlipFitGymOwner> gymOwnerList, HashMap<Integer, FlipFitGymCentre> gymCentres, HashMap<Integer, FlipFitSlot> gymSlots) {
+        this.gymOwnerList = gymOwnerList;
+        this.gymCentres = gymCentres;
+        this.gymSlots = gymSlots;
+    }
 	
 	public FlipFitGymOwner registerGymOwner(String name, String email, String password, String contact, String panNo, String address, String Aadhaar) {
 		FlipFitGymOwner gymOwner = new FlipFitGymOwner();

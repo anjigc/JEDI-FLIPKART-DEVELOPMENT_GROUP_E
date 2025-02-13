@@ -1,11 +1,31 @@
 package com.flipkart.business;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
+import com.flipkart.bean.FlipFitBooking;
 import com.flipkart.bean.FlipFitCustomer;
+import com.flipkart.bean.FlipFitGymCentre;
+import com.flipkart.bean.FlipFitPayment;
+import com.flipkart.bean.FlipFitSlot;
 
 
 public class FlipFitCustomerService implements FlipFitCustomerInterface {
+
+    private ArrayList<FlipFitCustomer> customerList;
+    private HashMap<Integer, FlipFitGymCentre> gymCentres;
+    private HashMap<Integer, FlipFitBooking> slotBookings;
+    private HashMap<Integer, FlipFitSlot> gymSlots;
+    private HashMap<Integer, FlipFitPayment> payments;
+
+    public FlipFitCustomerService(ArrayList<FlipFitCustomer> customerList, HashMap<Integer, FlipFitGymCentre> gymCentres, HashMap<Integer, FlipFitBooking> slotBookings, HashMap<Integer, FlipFitSlot> gymSlots, HashMap<Integer, FlipFitPayment> payments) {
+        this.customerList = customerList;
+        this.gymCentres = gymCentres;
+        this.slotBookings = slotBookings;
+        this.gymSlots = gymSlots;
+        this.payments = payments;
+    }
 
     public void loginCustomer(String email, String password) {
         System.out.println("User with email " + email + " logged in as Customer successfully!");

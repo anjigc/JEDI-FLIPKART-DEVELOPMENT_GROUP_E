@@ -1,6 +1,16 @@
 package com.flipkart.business;
 
+import java.util.HashMap;
+
+import com.flipkart.bean.FlipFitUser;
+
 public class FlipFitUserService implements FlipFitUserInterface {
+
+    private HashMap<Integer, FlipFitUser> UserList;
+
+    public FlipFitUserService(HashMap<Integer, FlipFitUser> UserList) {
+        this.UserList = UserList;
+    }
 
     public String loginUser(String email, String password) {
         System.out.println("User with email " + email + " logged in successfully!");
