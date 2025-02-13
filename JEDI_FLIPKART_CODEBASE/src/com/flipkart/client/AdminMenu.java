@@ -4,8 +4,9 @@ import java.util.Scanner;
 import com.flipkart.business.AdminService;
 
 public class AdminMenu {
+	private static Scanner scanner = new Scanner(System.in);
     public static void Menu() {
-        Scanner scanner = new Scanner(System.in);
+        
         AdminService adminService = new AdminService();
         int choice;
         
@@ -39,6 +40,5 @@ public class AdminMenu {
             }
         } while (choice != 4);
         
-        scanner.close();
     }
 }

@@ -4,8 +4,9 @@ import java.util.Scanner;
 import com.flipkart.business.GymOwnerService;
 
 public class GymOwnerMenu {
+	private static Scanner scanner = new Scanner(System.in);
     public static void Menu() {
-        Scanner scanner = new Scanner(System.in);
+        
         GymOwnerService gymOwnerService = new GymOwnerService();
         int choice;
         
@@ -43,6 +44,5 @@ public class GymOwnerMenu {
             }
         } while (choice != 5);
         
-        scanner.close();
     }
 }
