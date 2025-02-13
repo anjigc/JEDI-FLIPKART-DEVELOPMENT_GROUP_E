@@ -21,6 +21,8 @@ public class CustomerService extends UserService {
 
         return customer;
     }
+    
+    private Scanner scanner = new Scanner(System.in);
 
    public void viewAvailableSlots() {
         System.out.println("\nAvailable Gym Slots:");
@@ -34,13 +36,11 @@ public class CustomerService extends UserService {
     }
     
     public void bookGymSlot() {
-    	Scanner scanner = new Scanner(System.in);
     	
         System.out.print("Enter Slot No to book: ");
         int slotNo = scanner.nextInt();
         scanner.nextLine();
         System.out.println("Slot " + slotNo + " booked successfully!\n");
-        scanner.close();
         
     }
     

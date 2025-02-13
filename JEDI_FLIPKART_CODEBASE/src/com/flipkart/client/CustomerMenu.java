@@ -9,8 +9,10 @@ import com.flipkart.business.CustomerService;
  * 
  */
 public class CustomerMenu {
+	private static Scanner scanner = new Scanner(System.in);
+	
 	public static void Menu() {
-		Scanner scanner = new Scanner(System.in);
+		
 		CustomerService customerService = new CustomerService();
 	    int choice;
     	
@@ -19,7 +21,7 @@ public class CustomerMenu {
             System.out.println("1. View Available Slots");
             System.out.println("2. Book Gym Slot");
             System.out.println("3. View My Bookings");
-            System.out.println("4. Exit to main menu");
+            System.out.println("4. Logout (Exit to main menu)");
             System.out.print("Enter your choice: ");
             
             choice = scanner.nextInt();
@@ -36,13 +38,12 @@ public class CustomerMenu {
                 	customerService.viewMyBookings();
                     break;
                 case 4:
-                    System.out.println("Returning to main menu...");
+                    System.out.println("Logged Out, Returning to main menu...");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
         } while (choice != 4);
-        scanner.close();
 	}
 }
