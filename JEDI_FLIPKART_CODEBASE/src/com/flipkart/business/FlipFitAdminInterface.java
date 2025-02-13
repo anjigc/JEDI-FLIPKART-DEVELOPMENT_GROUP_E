@@ -10,6 +10,6 @@ public interface FlipFitAdminInterface {
     public void approveGymOwner();
     public void rejectGymOwner();
     public void viewGymOwnerStatus();
-    public String loginUser(String email, String password);
-    public void logoutUser(String email);
+    public void loginAdmin(String email, String password);
+    public void logoutAdmin(String email);
 }

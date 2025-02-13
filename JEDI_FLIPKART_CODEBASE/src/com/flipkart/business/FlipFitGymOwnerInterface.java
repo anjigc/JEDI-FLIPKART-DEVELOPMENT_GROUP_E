@@ -7,4 +7,6 @@ public interface FlipFitGymOwnerInterface {
     public void addGym();
     public void removeGym();
     public void viewGymList();
+    public void loginGymOwner(String email, String password);
+    public void logoutGymOwner(String email);
 }

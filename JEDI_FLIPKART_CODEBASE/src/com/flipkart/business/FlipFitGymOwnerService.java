@@ -21,6 +21,15 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         return gymOwner;
     }
 	
+	public void loginGymOwner(String email, String password) {
+        System.out.println("User with email " + email + " logged in as Gym Owner successfully!");
+
+    }
+
+    public void logoutGymOwner(String email) {
+        System.out.println("User with email " + email + " logged out successfully!");
+    }
+	
      private Scanner scanner = new Scanner(System.in);
     
     public void addGym() {

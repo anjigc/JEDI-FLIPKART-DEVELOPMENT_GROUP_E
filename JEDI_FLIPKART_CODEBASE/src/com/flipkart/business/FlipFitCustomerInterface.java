@@ -3,8 +3,8 @@ package com.flipkart.business;
 import com.flipkart.bean.FlipFitCustomer;
 
 public interface FlipFitCustomerInterface {
-    public String loginUser(String email, String password);
-    public void logoutUser(String email);
+    public void loginCustomer(String email, String password);
+    public void logoutCustomer(String email);
     public FlipFitCustomer registerCustomer(String name, String email, String password, String contact, int age, String address);
     public void viewGymList();
     public void selectGym();
