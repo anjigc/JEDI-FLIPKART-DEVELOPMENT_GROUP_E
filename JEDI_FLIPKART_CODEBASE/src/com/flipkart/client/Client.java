@@ -2,10 +2,7 @@ package com.flipkart.client;
 
 import java.util.Scanner;
 
-import com.flipkart.business.UserService;
-import com.flipkart.business.AdminService;
-import com.flipkart.business.GymOwnerService;
-import com.flipkart.business.CustomerService;
+import com.flipkart.business.*;
 
 
 public class Client {
@@ -15,7 +12,7 @@ public class Client {
         int choice;
 
         UserService userService = new UserService();
-        AdminService adminService = new AdminService();
+        FlipFitAdminInterface adminService = new AdminService();
         GymOwnerService gymOwnerService = new GymOwnerService();
         CustomerService customerService = new CustomerService();
 
