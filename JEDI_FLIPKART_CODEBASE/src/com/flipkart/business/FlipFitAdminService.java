@@ -3,31 +3,28 @@ package com.flipkart.business;
 import com.flipkart.bean.FlipFitAdmin;
 import com.flipkart.bean.FlipFitGymCentre;
 import com.flipkart.bean.FlipFitGymOwner;
-import com.flipkart.bean.FlipFitUser;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.flipkart.dao.FlipFitAdminDAO;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class FlipFitAdminService implements FlipFitAdminInterface {
 
-    private ArrayList<FlipFitAdmin> adminList;
-    private HashMap<Integer, FlipFitGymOwner> gymOwners;
-    private HashMap<Integer, FlipFitGymCentre> gymCentres;
-    private HashMap<Integer, FlipFitUser> Users;
+    private FlipFitAdminDAO adminDAO;
     private Scanner scanner = new Scanner(System.in);
 
-    public FlipFitAdminService(ArrayList<FlipFitAdmin> adminList, HashMap<Integer, FlipFitGymCentre> gymCentres, HashMap<Integer, FlipFitGymOwner> gymOwners, HashMap<Integer, FlipFitUser> Users) {
-        this.adminList = adminList;
-        this.gymOwners = gymOwners;
-        this.gymCentres = gymCentres;
-        this.Users = Users;
+    public FlipFitAdminService(FlipFitAdminDAO adminDAO) {
+        this.adminDAO = adminDAO;
     }
 
-	public FlipFitAdmin registerAdmin(int id) {
+    public FlipFitAdmin registerAdmin(int id) {
         FlipFitAdmin admin = new FlipFitAdmin();
         admin.setId(id);
-        adminList.add(admin);
+        try {
+            adminDAO.registerAdmin(admin);
+        } catch (SQLException e) {
+            System.out.println("Error registering admin: " + e.getMessage());
+        }
         return admin;
     }
 
@@ -35,11 +32,11 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         System.out.print("Enter Gym ID to approve: ");
         int gymId = scanner.nextInt();
         scanner.nextLine();
-        if (gymCentres.containsKey(gymId)) {
-            gymCentres.get(gymId).setStatus("Approved");
+        try {
+            adminDAO.approveGym(gymId);
             System.out.println("Gym ID " + gymId + " approved successfully!\n");
-        } else {
-            System.out.println("Gym ID not found!\n");
+        } catch (SQLException e) {
+            System.out.println("Error approving gym: " + e.getMessage());
         }
     }
 
@@ -47,34 +44,39 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         System.out.print("Enter Gym ID to reject: ");
         int gymId = scanner.nextInt();
         scanner.nextLine();
-        if (gymCentres.containsKey(gymId)) {
-            gymCentres.get(gymId).setStatus("Rejected");
+        try {
+            adminDAO.rejectGym(gymId);
             System.out.println("Gym ID " + gymId + " rejected successfully!\n");
-        } else {
-            System.out.println("Gym ID not found!\n");
+        } catch (SQLException e) {
+            System.out.println("Error rejecting gym: " + e.getMessage());
         }
     }
 
     public void viewGymStatus() {
-        System.out.println("\nGym Status:");
-        System.out.println("-------------------------------------");
-        System.out.println("| Gym ID | Gym Name  | Status      |");
-        System.out.println("-------------------------------------");
-        for (FlipFitGymCentre gym : gymCentres.values()) {
-            System.out.printf("|   %d    | %s   | %s    |%n", gym.getGymId(), gym.getGymName(), gym.getStatus());
+        try {
+            List<FlipFitGymCentre> gyms = adminDAO.viewGymStatus();
+            System.out.println("\nGym Status:");
+            System.out.println("-------------------------------------");
+            System.out.println("| Gym ID | Gym Name  | Status      |");
+            System.out.println("-------------------------------------");
+            for (FlipFitGymCentre gym : gyms) {
+                System.out.printf("|   %d    | %s   | %s    |%n", gym.getGymId(), gym.getGymName(), gym.getStatus());
+            }
+            System.out.println("-------------------------------------\n");
+        } catch (SQLException e) {
+            System.out.println("Error retrieving gym status: " + e.getMessage());
         }
-        System.out.println("-------------------------------------\n");
     }
 
     public void approveGymOwner() {
         System.out.print("Enter Gym Owner ID to approve: ");
         int gymOwnerId = scanner.nextInt();
         scanner.nextLine();
-        if (gymOwners.containsKey(gymOwnerId)) {
-            gymOwners.get(gymOwnerId).setStatus("Approved");
+        try {
+            adminDAO.approveGymOwner(gymOwnerId);
             System.out.println("Gym Owner ID " + gymOwnerId + " approved successfully!\n");
-        } else {
-            System.out.println("Gym Owner ID not found!\n");
+        } catch (SQLException e) {
+            System.out.println("Error approving gym owner: " + e.getMessage());
         }
     }
 
@@ -82,24 +84,27 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         System.out.print("Enter Gym Owner ID to reject: ");
         int gymOwnerId = scanner.nextInt();
         scanner.nextLine();
-        if (gymOwners.containsKey(gymOwnerId)) {
-            gymOwners.get(gymOwnerId).setStatus("Rejected");
+        try {
+            adminDAO.rejectGymOwner(gymOwnerId);
             System.out.println("Gym Owner ID " + gymOwnerId + " rejected successfully!\n");
-        } else {
-            System.out.println("Gym Owner ID not found!\n");
+        } catch (SQLException e) {
+            System.out.println("Error rejecting gym owner: " + e.getMessage());
         }
     }
 
     public void viewGymOwnerStatus() {
-        System.out.println("\nGym Owner Status:");
-        System.out.println("-------------------------------------");
-        System.out.println("| Gym Owner ID | Gym Owner  | Status      |");
-        System.out.println("-------------------------------------");
-        for (FlipFitGymOwner owner : gymOwners.values()) {
-            String ownerName = Users.get(owner.getId()).getName();
-            System.out.printf("|      %d       | %s    | %s    |%n", owner.getId(), ownerName, owner.getStatus());
+        try {
+            List<FlipFitGymOwner> owners = adminDAO.viewGymOwnerStatus();
+            System.out.println("\nGym Owner Status:");
+            System.out.println("-------------------------------------");
+            System.out.println("| Gym Owner ID | Status      |");
+            System.out.println("-------------------------------------");
+            for (FlipFitGymOwner owner : owners) {
+                System.out.printf("|      %d       | %s    |%n", owner.getId(), owner.getStatus());
+            }
+            System.out.println("-------------------------------------\n");
+        } catch (SQLException e) {
+            System.out.println("Error retrieving gym owner status: " + e.getMessage());
         }
-        System.out.println("-------------------------------------\n");
     }
 }
-
