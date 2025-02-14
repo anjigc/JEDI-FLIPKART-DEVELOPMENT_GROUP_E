@@ -13,8 +13,8 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
     private FlipFitAdminDAO adminDAO;
     private Scanner scanner = new Scanner(System.in);
 
-    public FlipFitAdminService(FlipFitAdminDAO adminDAO) {
-        this.adminDAO = adminDAO;
+    public FlipFitAdminService() {
+        this.adminDAO = new FlipFitAdminDAO();
     }
 
     public FlipFitAdmin registerAdmin(int id) {
