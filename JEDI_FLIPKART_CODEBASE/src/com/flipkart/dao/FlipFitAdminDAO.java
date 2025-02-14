@@ -6,12 +6,13 @@ import com.flipkart.bean.FlipFitGymOwner;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.flipkart.utils.FlipFitDBConnection;
 
 public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
     private Connection connection;
 
-    public FlipFitAdminDAO(Connection connection) {
-        this.connection = connection;
+    public FlipFitAdminDAO() {
+        this.connection = FlipFitDBConnection.getConnection();
     }
 
     @Override

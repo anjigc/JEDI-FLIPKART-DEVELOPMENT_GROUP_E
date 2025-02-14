@@ -5,6 +5,7 @@ import com.flipkart.bean.FlipFitCustomer;
 import com.flipkart.bean.FlipFitGymCentre;
 import com.flipkart.bean.FlipFitPayment;
 import com.flipkart.bean.FlipFitSlot;
+import com.flipkart.utils.FlipFitDBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ import java.util.UUID;
 public class FlipFitCustomerDAO {
     private Connection connection;
 
-    public FlipFitCustomerDAO(Connection connection) {
-        this.connection = connection;
+    public FlipFitCustomerDAO() {
+        this.connection = FlipFitDBConnection.getConnection();
     }
 
     public void registerCustomer(FlipFitCustomer customer) throws SQLException {
