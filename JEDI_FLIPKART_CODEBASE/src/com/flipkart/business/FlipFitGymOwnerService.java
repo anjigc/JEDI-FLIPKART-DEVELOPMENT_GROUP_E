@@ -95,16 +95,17 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         }
     }
 
-    public void viewGymList() {
+    public void viewGymList(int ownerId) {
         System.out.println("\nGym List:");
         System.out.println("-------------------------------------");
-        System.out.println("| Gym ID | Gym Name  | Location    |");
+        System.out.println("| Gym ID | Gym Name  | Location    | Status      |");
         System.out.println("-------------------------------------");
 
         // Iterate through the gymCentres to display the gym details
-        for (Integer gymId : gymCentres.keySet()) {
-            FlipFitGymCentre gym = gymCentres.get(gymId);
-            System.out.println("|   " + gymId + "    | " + gym.getGymName() + "   | " + gym.getGymAddress() + "   |");
+        for (FlipFitGymCentre gym : gymCentres.values()) {
+            if (gym.getOwnerId() == ownerId) {
+                System.out.println("|   " + gym.getGymId() + "    | " + gym.getGymName() + "   | " + gym.getGymAddress() + "   | " + gym.getStatus() + "    |");
+            }
         }
 
         System.out.println("-------------------------------------\n");

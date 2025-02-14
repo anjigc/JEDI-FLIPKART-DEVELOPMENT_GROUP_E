@@ -28,20 +28,21 @@ public class FlipFitUserService implements FlipFitUserInterface {
         return user;
     }
 
-    public int loginUser(String email, String password) {
+    public FlipFitUser loginUser(String email, String password) {
+        // Iterate through Users map to find the user with the given email
         for (FlipFitUser user : Users.values()) {
             if (user.getEmail().equals(email)) {
                 if (user.getPassword().equals(password)) {
                     System.out.println("User with email " + email + " logged in successfully!");
-                    return user.getRoleId();
+                    return user;  // Return the user object upon successful login
                 } else {
                     System.out.println("Incorrect password for email " + email + "!");
-                    return -1;
+                    return null;  // Incorrect password, return null
                 }
             }
         }
         System.out.println("No user found with email " + email + "!");
-        return -1;
+        return null;  // User not found, return null
     }
 
     public void logoutUser(String email) {

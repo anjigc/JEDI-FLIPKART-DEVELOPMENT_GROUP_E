@@ -1,23 +1,43 @@
 package com.flipkart.client;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
+import com.flipkart.bean.FlipFitAdmin;
+import com.flipkart.bean.FlipFitBooking;
+import com.flipkart.bean.FlipFitCustomer;
+import com.flipkart.bean.FlipFitGymCentre;
+import com.flipkart.bean.FlipFitGymOwner;
+import com.flipkart.bean.FlipFitPayment;
+import com.flipkart.bean.FlipFitSlot;
+import com.flipkart.bean.FlipFitUser;
 import com.flipkart.business.*;
 
 
 public class FlipFitApplication {
 
+    private static HashMap<Integer, FlipFitUser> users = new HashMap<Integer, FlipFitUser>();
+    private static HashMap<Integer, FlipFitGymOwner> gymOwners = new HashMap<Integer, FlipFitGymOwner>();
+    private static HashMap<Integer, FlipFitCustomer> customers = new HashMap<Integer, FlipFitCustomer>();
+    private static ArrayList<FlipFitAdmin> adminList = new ArrayList<FlipFitAdmin>();
+    private static HashMap<Integer, FlipFitBooking> slotBookings = new HashMap<Integer, FlipFitBooking>();
+    private static HashMap<Integer, FlipFitGymCentre> gymCentres = new HashMap<Integer, FlipFitGymCentre>();
+    private static HashMap<Integer, FlipFitSlot> gymSlots = new HashMap<Integer, FlipFitSlot>();
+    private static HashMap<String, FlipFitPayment> payments = new HashMap<String, FlipFitPayment>();
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int choice;
+        int idGenerator = 1;
 
-        FlipFitUserInterface userService = new FlipFitUserService();
-        FlipFitAdminInterface adminService = new FlipFitAdminService();
-        FlipFitGymOwnerInterface gymOwnerService = new FlipFitGymOwnerService();
-        FlipFitCustomerInterface customerService = new FlipFitCustomerService();
+        FlipFitUserInterface userService = new FlipFitUserService(users);
+        FlipFitAdminInterface adminService = new FlipFitAdminService(adminList, gymCentres, gymOwners, users);
+        FlipFitGymOwnerInterface gymOwnerService = new FlipFitGymOwnerService(gymOwners, gymCentres, gymSlots);
+        FlipFitCustomerInterface customerService = new FlipFitCustomerService(customers, gymCentres, slotBookings, gymSlots, payments);
 
+        System.out.println("Welcome to FlipFit Application");
         do {
-            System.out.println("Welcome to FlipFit Application");
             System.out.println("1. Login");
             System.out.println("2. Registration of the gym customer");
             System.out.println("3. Registration of the gym owner");
@@ -29,21 +49,24 @@ public class FlipFitApplication {
 
             switch (choice) {
                 case 1:
-                    System.out.print("Enter email: ");
+                    System.out.println("Enter email: ");
                     String email = scanner.nextLine();
 
-                    System.out.print("Enter password: ");
+                    System.out.println("Enter password: ");
                     String password = scanner.nextLine();
-                    
-                    String currentUserRole = userService.loginUser(email, password);
-                    if (currentUserRole != null) {
-                        if (currentUserRole == "Flipfit Customer") {
-                        	FlipFitCustomerMenu.Menu();
-                        } else if (currentUserRole == "Flipfit Gym Owner") {
-                            FlipFitGymOwnerMenu.Menu();
-                        } else if (currentUserRole == "Flipfit Admin") {
-                        	FlipFitAdminMenu.Menu();
-                        }
+
+                    FlipFitUser flipFitUser = userService.loginUser(email, password);
+
+                    if (flipFitUser == null) {
+                        break;
+                    }
+
+                    if(flipFitUser.getRoleId() == 1) {
+                        FlipFitAdminMenu.Menu(flipFitUser, adminService);
+                    } else if(flipFitUser.getRoleId() == 2) {
+                        FlipFitGymOwnerMenu.Menu(flipFitUser, gymOwnerService);
+                    } else if(flipFitUser.getRoleId() == 3) {
+                        FlipFitCustomerMenu.Menu(flipFitUser, customerService);
                     } else {
                         System.out.println("Invalid credentials. Please try again.");
                     }
@@ -68,7 +91,9 @@ public class FlipFitApplication {
                     System.out.print("Enter address: ");
                     String address = scanner.nextLine();
                     
-                    customerService.registerCustomer(name, email, password, contact, age, address);
+                    userService.registerUser(idGenerator, email, password, name, contact, 3);
+                    customerService.registerCustomer(idGenerator, age, address);
+                    idGenerator++;
                     break;
                 case 3:
                     System.out.print("Enter name: ");
@@ -92,7 +117,8 @@ public class FlipFitApplication {
                     System.out.print("Enter address: ");
                     address = scanner.nextLine();
                     
-                    gymOwnerService.registerGymOwner(name, email, password, contact, panNo, address, aadhaarNo);
+                    userService.registerUser(idGenerator, email, password, name, contact, 2);
+                    gymOwnerService.registerGymOwner(idGenerator, panNo, address, aadhaarNo);
                     break;
                 case 4:
                         System.out.print("Enter your email: ");
