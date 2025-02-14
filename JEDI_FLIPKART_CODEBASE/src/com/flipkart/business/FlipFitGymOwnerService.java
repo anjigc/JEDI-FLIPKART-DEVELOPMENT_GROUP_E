@@ -50,7 +50,6 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         int capacity = scanner.nextInt();
         scanner.nextLine();
 
-        // Create a new gym and add it to the gymCentres map
         FlipFitGymCentre gymCentre = new FlipFitGymCentre();
         gymCentre.setGymName(gymName);
         gymCentre.setGymAddress(location);
@@ -58,13 +57,12 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         gymCentre.setCapacity(capacity);
         gymCentre.setStatus("Pending");
         
-        int gymId = (gymCentres.size() + 1); // Generate new Gym ID
+        int gymId = (gymCentres.size() + 1); 
         gymCentre.setGymId(gymId);
         gymCentres.put(gymId, gymCentre);
 
         System.out.println("Gym '" + gymName + "' added successfully at " + location + " for " + slots + " slots with capacity of " + capacity + " for each slot.\n");
 
-        // Adding slots to the gym
         for (int i = 0; i < slots; i++) {
             System.out.print("Enter Gym Slot " + (i + 1) + " Details: \n");
             System.out.print("Enter Start Time for Slot " + (i + 1) + ": ");
