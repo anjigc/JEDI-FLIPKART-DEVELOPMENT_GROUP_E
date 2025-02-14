@@ -7,6 +7,22 @@ public class FlipFitUser {
     private String name;
     private String contact;
     private int roleId;
+
+
+	public FlipFitUser(){
+
+	}
+
+	
+	public FlipFitUser(int id, String email, String password, String name, String contact, int roleId) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.contact = contact;
+        this.roleId = roleId;
+    }
+
     
 	public int getId() {
 		return id;

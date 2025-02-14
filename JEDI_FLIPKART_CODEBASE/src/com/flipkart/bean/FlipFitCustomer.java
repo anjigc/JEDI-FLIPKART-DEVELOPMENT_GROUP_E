@@ -5,7 +5,17 @@ package com.flipkart.bean;
 	private int id;
     private int age;
     private String address;
-    
+
+	public FlipFitCustomer(){
+
+	}
+
+	public FlipFitCustomer(int id, int age, String address){
+		this.id = id;
+		this.age = age;
+		this.address = address;
+	}
+
 	public int getId() {
 		return id;
 	}
