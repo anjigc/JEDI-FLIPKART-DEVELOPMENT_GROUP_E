@@ -1,17 +1,17 @@
 package com.flipkart.bean;
 
 public class FlipFitGymCentre {
-    private String gymId;
+    private int gymId;
     private String gymName;
     private String gymAddress;
     private int ownerId;
     private int capacity;
     private String status;
     
-	public String getGymId() {
+	public int getGymId() {
 		return gymId;
 	}
-	public void setGymId(String gymId) {
+	public void setGymId(int gymId) {
 		this.gymId = gymId;
 	}
 	public String getGymName() {

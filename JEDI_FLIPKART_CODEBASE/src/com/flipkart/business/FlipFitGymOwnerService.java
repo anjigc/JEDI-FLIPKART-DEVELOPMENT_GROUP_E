@@ -56,7 +56,8 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         gymCentre.setCapacity(capacity);
         gymCentre.setStatus("Pending");
         
-        int gymId = gymCentres.size() + 1; // Generate new Gym ID
+        int gymId = (gymCentres.size() + 1); // Generate new Gym ID
+        gymCentre.setGymId(gymId);
         gymCentres.put(gymId, gymCentre);
 
         System.out.println("Gym '" + gymName + "' added successfully at " + location + " for " + slots + " slots with capacity of " + capacity + " for each slot.\n");

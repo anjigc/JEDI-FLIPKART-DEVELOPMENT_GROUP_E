@@ -119,6 +119,7 @@ public class FlipFitApplication {
                     
                     userService.registerUser(idGenerator, email, password, name, contact, 2);
                     gymOwnerService.registerGymOwner(idGenerator, panNo, address, aadhaarNo);
+                    idGenerator++;
                     break;
                 case 4:
                         System.out.print("Enter your email: ");

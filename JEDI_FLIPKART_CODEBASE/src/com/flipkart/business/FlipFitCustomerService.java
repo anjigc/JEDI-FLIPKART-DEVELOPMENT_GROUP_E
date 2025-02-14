@@ -50,7 +50,7 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
         System.out.println("| Gym ID | Gym Name  | Location    |");
         System.out.println("-------------------------------------");
         for (FlipFitGymCentre gym : gymCentres.values()) {
-            System.out.printf("|   %d    | %s   | %s    |%n", gym.getGymId(), gym.getGymName(), gym.getGymAddress());
+            System.out.printf("|   %d   | %s   | %s    |%n", gym.getGymId(), gym.getGymName(), gym.getGymAddress());
         }
         System.out.println("-------------------------------------\n");
     }
