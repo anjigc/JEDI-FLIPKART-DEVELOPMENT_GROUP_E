@@ -39,10 +39,9 @@ public class FlipFitApplication {
         System.out.println("Welcome to FlipFit Application");
         do {
             System.out.println("1. Login");
-            System.out.println("2. Registration of the gym customer");
-            System.out.println("3. Registration of the gym owner");
-            System.out.println("4. Change password");
-            System.out.println("5. Exit");
+            System.out.println("2. Registration as GymCustomer/GymOwner/Admin");
+            System.out.println("3. Change password");
+            System.out.println("4. Exit");
             System.out.println("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();  // Consume newline character
@@ -83,59 +82,58 @@ public class FlipFitApplication {
 
                     System.out.print("Enter contact: ");
                     String contact = scanner.nextLine();
-                    
-                    System.out.print("Enter age: ");
-                    int age = scanner.nextInt();
-                    scanner.nextLine();  // Consume newline
 
-                    System.out.print("Enter address: ");
-                    String address = scanner.nextLine();
-                    
-                    userService.registerUser(idGenerator, email, password, name, contact, 3);
-                    customerService.registerCustomer(idGenerator, age, address);
-                    idGenerator++;
+                    System.out.println("Enter your role: 1) Admin 2) GymOwner 3) Customer");
+                    int roleId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (roleId == 1) {
+                        userService.registerUser(idGenerator, email, password, name, contact, 1);
+                        adminService.registerAdmin(idGenerator);
+                        idGenerator++;
+                    } else if (roleId == 2) {
+                        System.out.print("Enter pan number: ");
+                        String panNo = scanner.nextLine();
+
+                        System.out.print("Enter aadhaar number: ");
+                        String aadhaarNo = scanner.nextLine();
+
+                        System.out.print("Enter address: ");
+                        String address = scanner.nextLine();
+
+                        userService.registerUser(idGenerator, email, password, name, contact, 2);
+                        gymOwnerService.registerGymOwner(idGenerator, panNo, address, aadhaarNo);
+                        idGenerator++;
+                    } else if (roleId == 3) {
+                        System.out.print("Enter age: ");
+                        int age = scanner.nextInt();
+                        scanner.nextLine();  // Consume newline
+
+                        System.out.print("Enter address: ");
+                        String address = scanner.nextLine();
+
+                        userService.registerUser(idGenerator, email, password, name, contact, 3);
+                        customerService.registerCustomer(idGenerator, age, address);
+                        idGenerator++;
+                    } else {
+                        System.out.println("Invalid role. Please try again.");
+                    }
                     break;
                 case 3:
-                    System.out.print("Enter name: ");
-                    name = scanner.nextLine();
-
-                    System.out.print("Enter email: ");
-                    email = scanner.nextLine();
-
-                    System.out.print("Enter password: ");
-                    password = scanner.nextLine();
-
-                    System.out.print("Enter contact: ");
-                    contact = scanner.nextLine();
-                    
-                    System.out.print("Enter pan number: ");
-                    String panNo = scanner.nextLine();
-
-                    System.out.print("Enter aadhaar number: ");
-                    String aadhaarNo = scanner.nextLine();
-
-                    System.out.print("Enter address: ");
-                    address = scanner.nextLine();
-                    
-                    userService.registerUser(idGenerator, email, password, name, contact, 2);
-                    gymOwnerService.registerGymOwner(idGenerator, panNo, address, aadhaarNo);
-                    idGenerator++;
-                    break;
-                case 4:
                         System.out.print("Enter your email: ");
                         email = scanner.nextLine();
                         System.out.print("Enter new password: ");
                         password = scanner.nextLine();
                         System.out.println("Password changed successfully!");
                     break;
-                case 5:
+                case 4:
                     System.out.println("Exiting FlipFit application...");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
-        } while (choice != 5);
+        } while (choice != 4);
 
         scanner.close();
     }

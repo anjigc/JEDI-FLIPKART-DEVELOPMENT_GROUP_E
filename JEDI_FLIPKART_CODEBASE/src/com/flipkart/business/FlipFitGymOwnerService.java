@@ -29,6 +29,8 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         gymOwner.setAddress(address);
         gymOwner.setAadhaar(Aadhaar);
 
+        gymOwner.setStatus("Pending");
+
         gymOwners.put(id, gymOwner); 
         System.out.println("User with email " + " registered as Flipfit Gym Owner Successfully!");
         return gymOwner;
