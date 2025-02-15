@@ -15,7 +15,7 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
     }
 
     public void addUser(FlipFitUser user) {
-        String sql = "INSERT INTO users (id, email, password, name, contact, roleId) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO FlipFitUser (id, email, password, name, contact, roleId) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, user.getId());
             stmt.setString(2, user.getEmail());
@@ -30,7 +30,7 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
     }
 
     public FlipFitUser getUserById(int id) {
-        String sql = "SELECT * FROM users WHERE id = ?";
+        String sql = "SELECT * FROM FlipFitUser WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -52,7 +52,7 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
 
     public List<FlipFitUser> getAllUsers() {
         List<FlipFitUser> users = new ArrayList<>();
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM FlipFitUser";
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -72,7 +72,7 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
     }
 
     public void updateUser(FlipFitUser user) {
-        String sql = "UPDATE users SET email = ?, password = ?, name = ?, contact = ?, roleId = ? WHERE id = ?";
+        String sql = "UPDATE FlipFitUser SET email = ?, password = ?, name = ?, contact = ?, roleId = ? WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getEmail());
             stmt.setString(2, user.getPassword());
@@ -87,7 +87,7 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
     }
 
     public void deleteUser(int id) {
-        String sql = "DELETE FROM users WHERE id = ?";
+        String sql = "DELETE FROM FlipFitUser WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();

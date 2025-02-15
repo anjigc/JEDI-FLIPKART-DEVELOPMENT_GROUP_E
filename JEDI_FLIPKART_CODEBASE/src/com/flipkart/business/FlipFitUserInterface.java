@@ -6,4 +6,5 @@ public interface FlipFitUserInterface {
     public FlipFitUser registerUser(int id, String email, String password, String name, String contact, int roleId);
     public FlipFitUser loginUser(String email, String password);
     public void logoutUser(String email);
+    public boolean changePassword(String email, String password, String newPassword);
 }

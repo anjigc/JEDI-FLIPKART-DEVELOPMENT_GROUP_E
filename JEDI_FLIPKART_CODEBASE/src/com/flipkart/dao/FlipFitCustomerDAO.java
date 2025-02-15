@@ -63,15 +63,15 @@ public class FlipFitCustomerDAO {
         return slots;
     }
 
-    public String bookGymSlot(int customerId, int slotId) throws SQLException {
-        String transactionId = UUID.randomUUID().toString();
-        connection.setAutoCommit(false);
+    public int bookGymSlot(int customerId, int slotId) throws SQLException {
+        int transactionId = Math.abs(UUID.randomUUID().hashCode());
         try {
-            String sql = "INSERT INTO FlipFitBooking (slotId, customerId, isConfirmed, bookingDate) VALUES (?, ?, ?, NOW())";
-            try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                stmt.setInt(1, slotId);
-                stmt.setInt(2, customerId);
-                stmt.setBoolean(3, true);
+            String sql = "INSERT INTO FlipFitBooking (bookingId,slotId, customerId, isConfirmed, bookingDate) VALUES (?,?, ?, ?, NOW())";
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setInt(1, transactionId);
+                stmt.setInt(2, slotId);
+                stmt.setInt(3, customerId);
+                stmt.setBoolean(4, true);
                 stmt.executeUpdate();
             }
 
@@ -83,7 +83,7 @@ public class FlipFitCustomerDAO {
 
             sql = "INSERT INTO FlipFitPayment (transactionId, bookingId, status) VALUES (?, ?, ?)";
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                stmt.setString(1, transactionId);
+                stmt.setInt(1, transactionId);
                 stmt.setInt(2, slotId);
                 stmt.setString(3, "Completed");
                 stmt.executeUpdate();

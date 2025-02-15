@@ -79,7 +79,7 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
         scanner.nextLine();
         
         try {
-            String transactionId = customerDAO.bookGymSlot(customerId, slotId);
+            int transactionId = customerDAO.bookGymSlot(customerId, slotId);
             System.out.println("Slot " + slotId + " booked successfully! Transaction ID: " + transactionId + "\n");
         } catch (SQLException e) {
             System.out.println("Error booking slot: " + e.getMessage());

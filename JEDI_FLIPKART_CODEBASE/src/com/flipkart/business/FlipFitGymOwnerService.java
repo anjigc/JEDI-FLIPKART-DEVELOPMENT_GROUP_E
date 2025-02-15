@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import java.util.UUID;
+
 public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
 
     private FlipFitGymOwnerDAO gymOwnerDAO;
@@ -49,7 +51,9 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         scanner.nextLine();
 
         FlipFitGymCentre gymCentre = new FlipFitGymCentre();
-        gymCentre.setGymName(gymName);
+        int gymId = Math.abs(UUID.randomUUID().hashCode());
+        gymCentre.setGymId(gymId);
+        gymCentre.setGymName(gymName);  
         gymCentre.setGymAddress(location);
         gymCentre.setOwnerId(ownerId);
         gymCentre.setCapacity(capacity);
@@ -71,7 +75,8 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
                 slot.setStartTime(startTime);
                 slot.setEndTime(endTime);
                 slot.setAvailableSeats(capacity);
-
+                
+                System.out.println("Adding slot -> " + slot);
                 gymOwnerDAO.addGymSlot(slot);
                 System.out.println("Slot " + (i + 1) + " added successfully!");
             }

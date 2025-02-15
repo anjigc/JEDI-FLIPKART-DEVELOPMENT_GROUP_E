@@ -3,6 +3,7 @@ package com.flipkart.dao;
 import com.flipkart.bean.FlipFitGymCentre;
 import com.flipkart.bean.FlipFitGymOwner;
 import com.flipkart.bean.FlipFitSlot;
+import com.flipkart.utils.FlipFitDBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,8 +12,9 @@ import java.util.List;
 public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
     private Connection connection;
 
-    public FlipFitGymOwnerDAO(Connection connection) {
-        this.connection = connection;
+    
+    public FlipFitGymOwnerDAO() {
+        this.connection = FlipFitDBConnection.getConnection();
     }
 
     @Override
@@ -30,13 +32,14 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
 
     @Override
     public void addGym(FlipFitGymCentre gymCentre) throws SQLException {
-        String sql = "INSERT INTO FlipFitGymCentre (gymName, gymAddress, ownerId, capacity, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO FlipFitGymCentre (gymId,gymName, gymAddress, ownerId, capacity, status) VALUES (?, ?, ?, ?, ?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, gymCentre.getGymName());
-            stmt.setString(2, gymCentre.getGymAddress());
-            stmt.setInt(3, gymCentre.getOwnerId());
-            stmt.setInt(4, gymCentre.getCapacity());
-            stmt.setString(5, "Pending");
+            stmt.setInt(1, gymCentre.getGymId());
+            stmt.setString(2, gymCentre.getGymName());
+            stmt.setString(3, gymCentre.getGymAddress());
+            stmt.setInt(4, gymCentre.getOwnerId());
+            stmt.setInt(5, gymCentre.getCapacity());
+            stmt.setString(6, "Pending");
             stmt.executeUpdate();
         }
     }

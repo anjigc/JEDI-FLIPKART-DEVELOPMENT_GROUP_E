@@ -46,4 +46,22 @@ public class FlipFitUserService implements FlipFitUserInterface {
     public void logoutUser(String email) {
         System.out.println("User with email " + email + " logged out successfully!");
     }
+    
+    public boolean changePassword(String email, String oldPassword, String newPassword) {
+        for (FlipFitUser user : userDAO.getAllUsers()) {
+            if (user.getEmail().equals(email)) {
+                if (user.getPassword().equals(oldPassword)) {
+                    user.setPassword(newPassword);
+                    userDAO.updateUser(user);
+                    System.out.println("Password changed successfully for email " + email + "!");
+                    return true;
+                } else {
+                    System.out.println("Incorrect old password for email " + email + "!");
+                    return false;
+                }
+            }
+        }
+        System.out.println("No user found with email " + email + "!");
+        return false;
+    }
 }
