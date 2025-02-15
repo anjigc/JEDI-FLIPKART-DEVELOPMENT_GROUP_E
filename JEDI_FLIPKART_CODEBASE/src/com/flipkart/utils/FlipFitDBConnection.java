@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class FlipFitDBConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/FlipFitDB";
     private static final String USER = "root";
-    private static final String PASSWORD = "FK_232532_gulu";
+    private static final String PASSWORD = "password";
 
     public static Connection getConnection() {
         try {
