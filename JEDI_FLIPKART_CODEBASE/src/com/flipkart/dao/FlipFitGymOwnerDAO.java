@@ -3,6 +3,7 @@ package com.flipkart.dao;
 import com.flipkart.bean.FlipFitGymCentre;
 import com.flipkart.bean.FlipFitGymOwner;
 import com.flipkart.bean.FlipFitSlot;
+import com.flipkart.constant.FlipFitConstants;
 import com.flipkart.utils.FlipFitDBConnection;
 
 import java.sql.*;
@@ -12,15 +13,13 @@ import java.util.List;
 public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
     private Connection connection;
 
-    
     public FlipFitGymOwnerDAO() {
         this.connection = FlipFitDBConnection.getConnection();
     }
 
     @Override
     public void registerGymOwner(FlipFitGymOwner gymOwner) throws SQLException {
-        String sql = "INSERT INTO FlipFitGymOwner (id, panNo, address, aadhaar, status) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMOWNER_REGISTER)) {
             stmt.setInt(1, gymOwner.getId());
             stmt.setString(2, gymOwner.getPanNo());
             stmt.setString(3, gymOwner.getAddress());
@@ -32,8 +31,7 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
 
     @Override
     public void addGym(FlipFitGymCentre gymCentre) throws SQLException {
-        String sql = "INSERT INTO FlipFitGymCentre (gymId,gymName, gymAddress, ownerId, capacity, status) VALUES (?, ?, ?, ?, ?,?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_ADD)) {
             stmt.setInt(1, gymCentre.getGymId());
             stmt.setString(2, gymCentre.getGymName());
             stmt.setString(3, gymCentre.getGymAddress());
@@ -46,8 +44,7 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
 
     @Override
     public void removeGym(int gymId) throws SQLException {
-        String sql = "DELETE FROM FlipFitGymCentre WHERE gymId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_REMOVE)) {
             stmt.setInt(1, gymId);
             stmt.executeUpdate();
         }
@@ -56,8 +53,7 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
     @Override
     public List<FlipFitGymCentre> viewGymList(int ownerId) throws SQLException {
         List<FlipFitGymCentre> gymCentres = new ArrayList<>();
-        String sql = "SELECT * FROM FlipFitGymCentre WHERE ownerId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_LIST_BY_OWNER)) {
             stmt.setInt(1, ownerId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -77,8 +73,7 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
 
     @Override
     public void addGymSlot(FlipFitSlot slot) throws SQLException {
-        String sql = "INSERT INTO FlipFitSlot (gymId, startTime, endTime, availableSeats) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_ADD)) {
             stmt.setInt(1, slot.getGymId());
             stmt.setString(2, slot.getStartTime());
             stmt.setString(3, slot.getEndTime());
@@ -89,8 +84,7 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
 
     @Override
     public void removeGymSlot(int slotId) throws SQLException {
-        String sql = "DELETE FROM FlipFitSlot WHERE slotId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_DELETE)) {
             stmt.setInt(1, slotId);
             stmt.executeUpdate();
         }
@@ -99,8 +93,7 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
     @Override
     public List<FlipFitSlot> viewGymSlots(int gymId) throws SQLException {
         List<FlipFitSlot> slots = new ArrayList<>();
-        String sql = "SELECT * FROM FlipFitSlot WHERE gymId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_LIST_ALL_AVAILABLE)) {
             stmt.setInt(1, gymId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

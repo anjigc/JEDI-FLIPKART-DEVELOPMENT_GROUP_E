@@ -1,6 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.FlipFitUser;
+import com.flipkart.constant.FlipFitConstants;
 import com.flipkart.utils.FlipFitDBConnection;
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,14 +10,13 @@ import java.util.List;
 public class FlipFitUserDAO implements FlipFitUserDAOInterface {
     private Connection conn;
 
-    // Constructor to initialize connection
     public FlipFitUserDAO() {
         this.conn = FlipFitDBConnection.getConnection();
     }
 
     public void addUser(FlipFitUser user) {
-        String sql = "INSERT INTO FlipFitUser (id, email, password, name, contact, roleId) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = conn.prepareStatement(FlipFitConstants.FLIPFIT_SQL_USER_ADD)) {
             stmt.setInt(1, user.getId());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
@@ -30,8 +30,8 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
     }
 
     public FlipFitUser getUserById(int id) {
-        String sql = "SELECT * FROM FlipFitUser WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = conn.prepareStatement(FlipFitConstants.FLIPFIT_SQL_USER_GET_BY_ID)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -52,9 +52,8 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
 
     public List<FlipFitUser> getAllUsers() {
         List<FlipFitUser> users = new ArrayList<>();
-        String sql = "SELECT * FROM FlipFitUser";
         try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             ResultSet rs = stmt.executeQuery(FlipFitConstants.FLIPFIT_SQL_USER_GET_ALL)) {
             while (rs.next()) {
                 users.add(new FlipFitUser(
                     rs.getInt("id"),
@@ -72,8 +71,8 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
     }
 
     public void updateUser(FlipFitUser user) {
-        String sql = "UPDATE FlipFitUser SET email = ?, password = ?, name = ?, contact = ?, roleId = ? WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = conn.prepareStatement(FlipFitConstants.FLIPFIT_SQL_USER_UPDATE)) {
             stmt.setString(1, user.getEmail());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getName());
@@ -87,8 +86,7 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
     }
 
     public void deleteUser(int id) {
-        String sql = "DELETE FROM FlipFitUser WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(FlipFitConstants.FLIPFIT_SQL_USER_DELETE)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -96,7 +94,6 @@ public class FlipFitUserDAO implements FlipFitUserDAOInterface {
         }
     }
 
-    // Close connection when done (optional if connection pooling is used)
     public void closeConnection() {
         try {
             if (conn != null && !conn.isClosed()) {

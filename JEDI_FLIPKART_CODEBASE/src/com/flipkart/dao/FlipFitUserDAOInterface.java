@@ -5,9 +5,9 @@ import com.flipkart.bean.FlipFitUser;
 import java.util.List;
 
 public interface FlipFitUserDAOInterface {
-    void addUser(FlipFitUser user);
-    FlipFitUser getUserById(int id);
-    List<FlipFitUser> getAllUsers();
-    void updateUser(FlipFitUser user);
-    void deleteUser(int id);
+    public void addUser(FlipFitUser user);
+    public FlipFitUser getUserById(int id);
+    public List<FlipFitUser> getAllUsers();
+    public void updateUser(FlipFitUser user);
+    public void deleteUser(int id);
 }

@@ -10,13 +10,9 @@ import java.util.List;
 
 public interface FlipFitCustomerDAOInterface {
     
-    void registerCustomer(FlipFitCustomer customer) throws SQLException;
-    
-    List<FlipFitGymCentre> viewGymList() throws SQLException;
-    
-    List<FlipFitSlot> viewAvailableSlots(int gymId) throws SQLException;
-    
-    String bookGymSlot(int customerId, int slotId) throws SQLException;
-    
-    List<FlipFitBooking> viewMyBookings(int customerId) throws SQLException;
+    public void registerCustomer(FlipFitCustomer customer) throws SQLException;
+    public List<FlipFitGymCentre> viewGymList() throws SQLException;
+    public List<FlipFitSlot> viewAvailableSlots(int gymId) throws SQLException;
+    public String bookGymSlot(int customerId, int slotId) throws SQLException;
+    public List<FlipFitBooking> viewMyBookings(int customerId) throws SQLException;
 }

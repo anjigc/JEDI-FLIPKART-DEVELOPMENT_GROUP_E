@@ -1,10 +1,7 @@
 package com.flipkart.dao;
 
-import com.flipkart.bean.FlipFitBooking;
-import com.flipkart.bean.FlipFitCustomer;
-import com.flipkart.bean.FlipFitGymCentre;
-import com.flipkart.bean.FlipFitPayment;
-import com.flipkart.bean.FlipFitSlot;
+import com.flipkart.bean.*;
+import com.flipkart.constant.FlipFitConstants;
 import com.flipkart.utils.FlipFitDBConnection;
 
 import java.sql.*;
@@ -20,8 +17,7 @@ public class FlipFitCustomerDAO {
     }
 
     public void registerCustomer(FlipFitCustomer customer) throws SQLException {
-        String sql = "INSERT INTO FlipFitCustomer (id, age, address) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_CUSTOMER_REGISTER)) {
             stmt.setInt(1, customer.getId());
             stmt.setInt(2, customer.getAge());
             stmt.setString(3, customer.getAddress());
@@ -31,8 +27,8 @@ public class FlipFitCustomerDAO {
 
     public List<FlipFitGymCentre> viewGymList() throws SQLException {
         List<FlipFitGymCentre> gymCentres = new ArrayList<>();
-        String sql = "SELECT * FROM FlipFitGymCentre WHERE status = 'Approved'";
-        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_LIST_ALL_APPROVED);
+             ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 FlipFitGymCentre gym = new FlipFitGymCentre();
                 gym.setGymId(rs.getInt("gymId"));
@@ -46,8 +42,7 @@ public class FlipFitCustomerDAO {
 
     public List<FlipFitSlot> viewAvailableSlots(int gymId) throws SQLException {
         List<FlipFitSlot> slots = new ArrayList<>();
-        String sql = "SELECT * FROM FlipFitSlot WHERE gymId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_LIST_ALL_AVAILABLE)) {
             stmt.setInt(1, gymId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -66,8 +61,9 @@ public class FlipFitCustomerDAO {
     public int bookGymSlot(int customerId, int slotId) throws SQLException {
         int transactionId = Math.abs(UUID.randomUUID().hashCode());
         try {
-            String sql = "INSERT INTO FlipFitBooking (bookingId,slotId, customerId, isConfirmed, bookingDate) VALUES (?,?, ?, ?, NOW())";
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            connection.setAutoCommit(false);
+
+            try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_BOOKING_CREATE)) {
                 stmt.setInt(1, transactionId);
                 stmt.setInt(2, slotId);
                 stmt.setInt(3, customerId);
@@ -75,14 +71,12 @@ public class FlipFitCustomerDAO {
                 stmt.executeUpdate();
             }
 
-            sql = "UPDATE FlipFitSlot SET availableSeats = availableSeats - 1 WHERE slotId = ?";
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_DECREMENT_AVAILABILITY)) {
                 stmt.setInt(1, slotId);
                 stmt.executeUpdate();
             }
 
-            sql = "INSERT INTO FlipFitPayment (transactionId, bookingId, status) VALUES (?, ?, ?)";
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_PAYMENT_CREATE)) {
                 stmt.setInt(1, transactionId);
                 stmt.setInt(2, slotId);
                 stmt.setString(3, "Completed");
@@ -101,8 +95,7 @@ public class FlipFitCustomerDAO {
 
     public List<FlipFitBooking> viewMyBookings(int customerId) throws SQLException {
         List<FlipFitBooking> bookings = new ArrayList<>();
-        String sql = "SELECT * FROM FlipFitBooking WHERE customerId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_CUSTOMER_VIEW_BOOKINGS)) {
             stmt.setInt(1, customerId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

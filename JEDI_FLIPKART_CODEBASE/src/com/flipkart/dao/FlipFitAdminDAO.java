@@ -3,6 +3,8 @@ package com.flipkart.dao;
 import com.flipkart.bean.FlipFitAdmin;
 import com.flipkart.bean.FlipFitGymCentre;
 import com.flipkart.bean.FlipFitGymOwner;
+import com.flipkart.constant.FlipFitConstants;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,8 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
 
     @Override
     public void registerAdmin(FlipFitAdmin admin) throws SQLException {
-        String sql = "INSERT INTO FlipFitAdmin (id) VALUES (?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_ADMIN_REGISTER)) {
             stmt.setInt(1, admin.getId());
             stmt.executeUpdate();
         }
@@ -26,8 +28,8 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
 
     @Override
     public void approveGym(int gymId) throws SQLException {
-        String sql = "UPDATE FlipFitGymCentre SET status = 'Approved' WHERE gymId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_APPROVE)) {
             stmt.setInt(1, gymId);
             stmt.executeUpdate();
         }
@@ -35,8 +37,8 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
 
     @Override
     public void rejectGym(int gymId) throws SQLException {
-        String sql = "UPDATE FlipFitGymCentre SET status = 'Rejected' WHERE gymId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_REJECT)) {
             stmt.setInt(1, gymId);
             stmt.executeUpdate();
         }
@@ -45,8 +47,7 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
     @Override
     public List<FlipFitGymCentre> viewGymStatus() throws SQLException {
         List<FlipFitGymCentre> gymList = new ArrayList<>();
-        String sql = "SELECT * FROM FlipFitGymCentre";
-        try (PreparedStatement stmt = connection.prepareStatement(sql);
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_LIST_ALL);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 FlipFitGymCentre gym = new FlipFitGymCentre();
@@ -61,8 +62,7 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
 
     @Override
     public void approveGymOwner(int ownerId) throws SQLException {
-        String sql = "UPDATE FlipFitGymOwner SET status = 'Approved' WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMOWNER_APPROVE)) {
             stmt.setInt(1, ownerId);
             stmt.executeUpdate();
         }
@@ -70,8 +70,7 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
 
     @Override
     public void rejectGymOwner(int ownerId) throws SQLException {
-        String sql = "UPDATE FlipFitGymOwner SET status = 'Rejected' WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMOWNER_REJECT)) {
             stmt.setInt(1, ownerId);
             stmt.executeUpdate();
         }
@@ -80,8 +79,7 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
     @Override
     public List<FlipFitGymOwner> viewGymOwnerStatus() throws SQLException {
         List<FlipFitGymOwner> ownerList = new ArrayList<>();
-        String sql = "SELECT * FROM FlipFitGymOwner";
-        try (PreparedStatement stmt = connection.prepareStatement(sql);
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMOWNER_LIST_ALL);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 FlipFitGymOwner owner = new FlipFitGymOwner();

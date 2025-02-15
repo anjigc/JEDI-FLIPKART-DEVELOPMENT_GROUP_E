@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface FlipFitAdminDAOInterface {
 
-    void registerAdmin(FlipFitAdmin admin) throws SQLException;
-    void approveGym(int gymId) throws SQLException;
-    void rejectGym(int gymId) throws SQLException;
-    List<FlipFitGymCentre> viewGymStatus() throws SQLException;
-    void approveGymOwner(int ownerId) throws SQLException;
-    void rejectGymOwner(int ownerId) throws SQLException;
-    List<FlipFitGymOwner> viewGymOwnerStatus() throws SQLException;
+    public void registerAdmin(FlipFitAdmin admin) throws SQLException;
+    public void approveGym(int gymId) throws SQLException;
+    public void rejectGym(int gymId) throws SQLException;
+    public List<FlipFitGymCentre> viewGymStatus() throws SQLException;
+    public void approveGymOwner(int ownerId) throws SQLException;
+    public void rejectGymOwner(int ownerId) throws SQLException;
+    public List<FlipFitGymOwner> viewGymOwnerStatus() throws SQLException;
 }
