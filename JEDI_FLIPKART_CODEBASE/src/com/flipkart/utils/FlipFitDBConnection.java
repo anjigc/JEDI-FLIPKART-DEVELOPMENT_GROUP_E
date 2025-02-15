@@ -9,6 +9,7 @@ public class FlipFitDBConnection {
     private static final String USER = "root";
     private static final String PASSWORD = "ENTER_YOUR_PASSWORD_HERE";
 
+
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
