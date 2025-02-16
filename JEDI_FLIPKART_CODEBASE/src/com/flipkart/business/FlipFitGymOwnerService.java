@@ -32,9 +32,10 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         try {
             gymOwnerDAO.registerGymOwner(gymOwner);
             System.out.println("Gym Owner registered successfully with ID: " + id);
-        } catch (SQLException e) {
-            System.err.println("Error registering Gym Owner: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
+
         return gymOwner;
     }
 
@@ -93,8 +94,8 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         try {
             gymOwnerDAO.removeGym(gymId);
             System.out.println("Gym with ID " + gymId + " removed successfully!");
-        } catch (SQLException e) {
-            System.err.println("Error removing gym: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
     }
 

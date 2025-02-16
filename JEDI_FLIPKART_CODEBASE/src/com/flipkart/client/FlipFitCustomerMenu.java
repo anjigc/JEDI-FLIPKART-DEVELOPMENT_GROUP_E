@@ -1,8 +1,10 @@
 package com.flipkart.client;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 import com.flipkart.business.FlipFitCustomerInterface;
 import com.flipkart.bean.FlipFitUser;
+import com.flipkart.exception.*;
 
 public class FlipFitCustomerMenu {
     private static Scanner scanner = new Scanner(System.in);
@@ -25,16 +27,42 @@ public class FlipFitCustomerMenu {
 
             switch (choice) {
                 case 1:
-                    customerService.viewGymList();
+                    try {
+                        customerService.viewGymList();
+                    } catch (NoGymsFoundException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    } catch (Exception e) {
+                        System.out.println("Unexpected error: " + e.getMessage());
+                    }
                     break;
                 case 2:
-                    customerService.selectGym();
+                    try {
+                        customerService.selectGym();
+                    } catch (NoSlotsAvailableException e) {
+                        System.out.println("Error: " + e.getMessage());  // No available slots for the selected gym
+                    } catch (GymNotFoundException e) {
+                        System.out.println("Error: " + e.getMessage());  // Gym with the provided ID does not exist
+                    } catch (Exception e) {
+                        System.out.println("Unexpected error: " + e.getMessage());  // Catch any other unforeseen errors
+                    }
                     break;
                 case 3:
-                    customerService.bookGymSlot(customerUser.getId());
+                    try {
+                        customerService.bookGymSlot(customerUser.getId());
+                    } catch (BookingFailedException e) {
+                        System.out.println("Booking error: " + e.getMessage());
+                    } catch (Exception e) {
+                        System.out.println("Unexpected error: " + e.getMessage());
+                    }
                     break;
                 case 4:
-                    customerService.viewMyBookings(customerUser.getId());
+                    try {
+                        customerService.viewMyBookings(customerUser.getId());
+                    } catch (NoBookingsFoundException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    } catch (Exception e) {
+                        System.out.println("Unexpected error: " + e.getMessage());
+                    }
                     break;
                 case 5:
                     System.out.println("Logging out...");
