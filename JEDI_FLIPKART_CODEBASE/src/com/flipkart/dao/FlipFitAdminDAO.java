@@ -28,10 +28,14 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
 
     @Override
     public void approveGym(int gymId) throws SQLException {
-
+        int rowsAffected = 0;
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_APPROVE)) {
             stmt.setInt(1, gymId);
-            stmt.executeUpdate();
+            rowsAffected = stmt.executeUpdate();
+        }
+
+        if (rowsAffected == 0) {
+            throw new SQLException("No gym was approved with the given Gym ID: " + gymId);
         }
     }
 

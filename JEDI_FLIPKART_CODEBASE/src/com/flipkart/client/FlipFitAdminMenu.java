@@ -3,6 +3,10 @@ package com.flipkart.client;
 import java.util.Scanner;
 import com.flipkart.business.FlipFitAdminInterface;
 import com.flipkart.bean.FlipFitUser;
+import com.flipkart.exception.DatabaseException;
+import com.flipkart.exception.GymNotFoundException;
+import com.flipkart.exception.GymOwnerNotFoundException;
+import com.flipkart.exception.GymStatusNotFoundException;
 
 public class FlipFitAdminMenu {
     private static Scanner scanner = new Scanner(System.in);
@@ -27,19 +31,49 @@ public class FlipFitAdminMenu {
 
             switch (choice) {
                 case 1:
-                    adminService.approveGym();
+                    try {
+                        adminService.approveGym();
+                    } catch (GymNotFoundException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    } catch (DatabaseException e) {
+                        System.out.println("Database error: " + e.getMessage());
+                    }
                     break;
                 case 2:
-                    adminService.rejectGym();
+                    try {
+                        adminService.rejectGym();
+                    } catch (GymNotFoundException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    } catch (DatabaseException e) {
+                        System.out.println("Database error: " + e.getMessage());
+                    }
                     break;
                 case 3:
-                    adminService.viewGymStatus();
+                    try {
+                        adminService.viewGymStatus();
+                    } catch (GymStatusNotFoundException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    } catch (DatabaseException e) {
+                        System.out.println("Database error: " + e.getMessage());
+                    }
                     break;
                 case 4:
-                    adminService.approveGymOwner();
+                    try {
+                        adminService.approveGymOwner();
+                    } catch (GymOwnerNotFoundException e) {
+                        System.out.println("Error: " + e.getMessage());  // Custom message if gym owner not found
+                    } catch (DatabaseException e) {
+                        System.out.println("Database error: " + e.getMessage());  // Custom message for DB error
+                    }
                     break;
                 case 5:
-                    adminService.rejectGymOwner();
+                    try {
+                        adminService.rejectGymOwner();
+                    } catch (GymOwnerNotFoundException e) {
+                        System.out.println("Error: " + e.getMessage());  // Custom message if gym owner not found
+                    } catch (DatabaseException e) {
+                        System.out.println("Database error: " + e.getMessage());  // Custom message for DB error
+                    }
                     break;
                 case 6:
                     adminService.viewGymOwnerStatus();
