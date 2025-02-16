@@ -60,15 +60,24 @@ public class FlipFitCustomerDAO {
 
     public int bookGymSlot(int customerId, int slotId) throws SQLException {
         int transactionId = Math.abs(UUID.randomUUID().hashCode());
+        int bookingId = -1;
+
         try {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_BOOKING_CREATE)) {
-                stmt.setInt(1, transactionId);
-                stmt.setInt(2, slotId);
-                stmt.setInt(3, customerId);
-                stmt.setBoolean(4, true);
+            try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_BOOKING_CREATE, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setInt(1, slotId);
+                stmt.setInt(2, customerId);
+                stmt.setBoolean(3, true);
                 stmt.executeUpdate();
+                
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        bookingId = rs.getInt(1); // Retrieve generated bookingId
+                    } else {
+                        throw new SQLException("Booking ID retrieval failed.");
+                    }
+                }
             }
 
             try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_DECREMENT_AVAILABILITY)) {
@@ -78,7 +87,7 @@ public class FlipFitCustomerDAO {
 
             try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_PAYMENT_CREATE)) {
                 stmt.setInt(1, transactionId);
-                stmt.setInt(2, slotId);
+                stmt.setInt(2, bookingId); // Use retrieved bookingId
                 stmt.setString(3, "Completed");
                 stmt.executeUpdate();
             }
@@ -92,6 +101,7 @@ public class FlipFitCustomerDAO {
         }
         return transactionId;
     }
+
 
     public List<FlipFitBooking> viewMyBookings(int customerId) throws SQLException {
         List<FlipFitBooking> bookings = new ArrayList<>();

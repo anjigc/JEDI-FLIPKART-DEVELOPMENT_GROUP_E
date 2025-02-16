@@ -22,7 +22,7 @@ public class FlipFitConstants {
     public final static String FLIPFIT_SQL_SLOT_LIST_BY_GYMCENTER = "SELECT * FROM FlipFitSlot WHERE gymId = ?";
     public final static String FLIPFIT_SQL_SLOT_DECREMENT_AVAILABILITY = "UPDATE FlipFitSlot SET availableSeats = availableSeats - 1 WHERE slotId = ?";
     
-    public final static String FLIPFIT_SQL_BOOKING_CREATE = "INSERT INTO FlipFitBooking (bookingId, slotId, customerId, isConfirmed, bookingDate) VALUES (?, ?, ?, ?, NOW())";
+    public final static String FLIPFIT_SQL_BOOKING_CREATE = "INSERT INTO FlipFitBooking (slotId, customerId, isConfirmed, bookingDate) VALUES ( ?, ?, ?, NOW())";
     public final static String FLIPFIT_SQL_CUSTOMER_VIEW_BOOKINGS = "SELECT * FROM FlipFitBooking WHERE customerId = ?";
     
     public final static String FLIPFIT_SQL_PAYMENT_CREATE = "INSERT INTO FlipFitPayment (transactionId, bookingId, status) VALUES (?, ?, ?)";
