@@ -52,26 +52,26 @@ public class FlipFitUserService implements FlipFitUserInterface {
      * @return The logged-in FlipFitUser object if successful, null otherwise
      */
     public FlipFitUser loginUser(String email, String password) {
-        for (FlipFitUser user : userDAO.getAllUsers()) {
-            if (user.getEmail().equals(email)) {
-                if (user.getPassword().equals(password)) {
-
-                    LocalDateTime now = LocalDateTime.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                    String formattedDateTime = now.format(formatter);
-                    System.out.println("\nLogin:");
-
-
-                    System.out.println("User " + user.getName() + " with email " + email + " logged in successfully at " + formattedDateTime + "!");
-                    return user;
-                } else {
-                    System.out.println("Incorrect password for email " + email + "!");
+        return userDAO.getAllUsers().stream()
+                .filter(user -> user.getEmail().equals(email)) // Filter by email
+                .findFirst() // Get the first match (if any)
+                .map(user -> {
+                    if (user.getPassword().equals(password)) {
+                        LocalDateTime now = LocalDateTime.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                        String formattedDateTime = now.format(formatter);
+                        System.out.println("\nLogin:");
+                        System.out.println("User " + user.getName() + " with email " + email + " logged in successfully at " + formattedDateTime + "!");
+                        return user;
+                    } else {
+                        System.out.println("Incorrect password for email " + email + "!");
+                        return null;
+                    }
+                })
+                .orElseGet(() -> {
+                    System.out.println("No user found with email " + email + "!");
                     return null;
-                }
-            }
-        }
-        System.out.println("No user found with email " + email + "!");
-        return null;
+                });
     }
 
     /**
@@ -92,20 +92,23 @@ public class FlipFitUserService implements FlipFitUserInterface {
      * @return true if the password change was successful, false otherwise
      */
     public boolean changePassword(String email, String oldPassword, String newPassword) {
-        for (FlipFitUser user : userDAO.getAllUsers()) {
-            if (user.getEmail().equals(email)) {
-                if (user.getPassword().equals(oldPassword)) {
-                    user.setPassword(newPassword);
-                    userDAO.updateUser(user);
-                    System.out.println("Password changed successfully for email " + email + "!");
-                    return true;
-                } else {
-                    System.out.println("Incorrect old password for email " + email + "!");
+        return userDAO.getAllUsers().stream()
+                .filter(user -> user.getEmail().equals(email)) // Filter by email
+                .findFirst() // Get the first match (if any)
+                .map(user -> {
+                    if (user.getPassword().equals(oldPassword)) {
+                        user.setPassword(newPassword);
+                        userDAO.updateUser(user);
+                        System.out.println("Password changed successfully for email " + email + "!");
+                        return true;
+                    } else {
+                        System.out.println("Incorrect old password for email " + email + "!");
+                        return false;
+                    }
+                })
+                .orElseGet(() -> {
+                    System.out.println("No user found with email " + email + "!");
                     return false;
-                }
-            }
-        }
-        System.out.println("No user found with email " + email + "!");
-        return false;
+                });
     }
 }
