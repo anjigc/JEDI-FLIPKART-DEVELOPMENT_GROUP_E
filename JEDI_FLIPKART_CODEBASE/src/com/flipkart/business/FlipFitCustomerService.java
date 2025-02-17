@@ -69,9 +69,7 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
             System.out.println("-------------------------------------");
             System.out.println("| Gym ID | Gym Name  | Location    |");
             System.out.println("-------------------------------------");
-            for (FlipFitGymCentre gym : gymCentres) {
-                System.out.printf("|   %d   | %s   | %s    |%n", gym.getGymId(), gym.getGymName(), gym.getGymAddress());
-            }
+            gymCentres.forEach(gym -> System.out.printf("|   %d   | %s   | %s    |%n", gym.getGymId(), gym.getGymName(), gym.getGymAddress()));
             System.out.println("-------------------------------------\n");
         } catch (NoGymsFoundException e) {
             System.out.println("Error: " + e.getMessage());
@@ -131,9 +129,9 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
             System.out.println("-------------------------------------");
             System.out.println("| Slot ID | Start Time  | End Time  | Available Seats |");
             System.out.println("-------------------------------------");
-            for (FlipFitSlot slot : slots) {
-                System.out.printf("|   %d     | %s  | %s  | %d               |%n", slot.getSlotId(), slot.getStartTime(), slot.getEndTime(), slot.getAvailableSeats());
-            }
+            slots.forEach(slot ->
+                    System.out.printf("|   %d     | %s  | %s  | %d               |%n", slot.getSlotId(), slot.getStartTime(), slot.getEndTime(), slot.getAvailableSeats())
+            );
             System.out.println("-------------------------------------\n");
         } catch (NoSlotsAvailableException e) {
             System.out.println("Error: " + e.getMessage());  // In case no slots are available
@@ -187,9 +185,9 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
             System.out.println("-------------------------------------");
             System.out.println("| Slot ID | Booking Date | Confirmed |");
             System.out.println("-------------------------------------");
-            for (FlipFitBooking booking : bookings) {
-                System.out.printf("|   %d     | %s  | %s  |%n", booking.getSlotId(), booking.getBookingDate(), booking.isConfirmed());
-            }
+            bookings.forEach(booking ->
+                    System.out.printf("|   %d     | %s  | %s  |%n", booking.getSlotId(), booking.getBookingDate(), booking.isConfirmed())
+            );
             System.out.println("-------------------------------------\n");
         } catch (NoBookingsFoundException e) {
             System.out.println("Error: " + e.getMessage());
