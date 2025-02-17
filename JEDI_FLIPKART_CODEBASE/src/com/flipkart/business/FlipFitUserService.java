@@ -15,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 public class FlipFitUserService implements FlipFitUserInterface {
 
     private FlipFitUserDAO userDAO;
-
     /**
      * Constructor to initialize the FlipFitUserService with the associated DAO.
      * Initializes the userDAO object for handling database interactions.
@@ -23,7 +22,6 @@ public class FlipFitUserService implements FlipFitUserInterface {
     public FlipFitUserService() {
         this.userDAO = new FlipFitUserDAO();
     }
-
     /**
      * Registers a new user in the system.
      * 
@@ -44,13 +42,14 @@ public class FlipFitUserService implements FlipFitUserInterface {
         user.setContact(contact);
         user.setRoleId(roleId);
 
-        // Store in the database
-        userDAO.addUser(user);
-        System.out.println("User with email " + email + " registered successfully!");
-
+        try {
+            userDAO.addUser(user);
+            System.out.println("User with email " + email + " registered successfully!");
+        } catch (Exception e) {
+            System.out.println("Error while registering user: " + e.getMessage());
+        }
         return user;
     }
-
     /**
      * Logs in an existing user using email and password.
      * 
@@ -59,37 +58,44 @@ public class FlipFitUserService implements FlipFitUserInterface {
      * @return The logged-in {@link FlipFitUser} object if successful, null otherwise
      */
     public FlipFitUser loginUser(String email, String password) {
-        return userDAO.getAllUsers().stream()
-                .filter(user -> user.getEmail().equals(email)) // Filter by email
-                .findFirst() // Get the first match (if any)
-                .map(user -> {
-                    if (user.getPassword().equals(password)) {
-                        LocalDateTime now = LocalDateTime.now();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        String formattedDateTime = now.format(formatter);
-                        System.out.println("\nLogin:");
-                        System.out.println("User " + user.getName() + " with email " + email + " logged in successfully at " + formattedDateTime + "!");
-                        return user;
-                    } else {
-                        System.out.println("Incorrect password for email " + email + "!");
+        try {
+            return userDAO.getAllUsers().stream()
+                    .filter(user -> user.getEmail().equals(email))
+                    .findFirst()
+                    .map(user -> {
+                        if (user.getPassword().equals(password)) {
+                            LocalDateTime now = LocalDateTime.now();
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                            String formattedDateTime = now.format(formatter);
+                            System.out.println("\nLogin:");
+                            System.out.println("User " + user.getName() + " with email " + email + " logged in successfully at " + formattedDateTime + "!");
+                            return user;
+                        } else {
+                            System.out.println("Incorrect password for email " + email + "!");
+                            return null;
+                        }
+                    })
+                    .orElseGet(() -> {
+                        System.out.println("No user found with email " + email + "!");
                         return null;
-                    }
-                })
-                .orElseGet(() -> {
-                    System.out.println("No user found with email " + email + "!");
-                    return null;
-                });
+                    });
+        } catch (Exception e) {
+            System.out.println("Error during login: " + e.getMessage());
+            return null;
+        }
     }
-
     /**
      * Logs out a user from the system.
      * 
      * @param email The email address of the user attempting to log out
      */
     public void logoutUser(String email) {
-        System.out.println("User with email " + email + " logged out successfully!");
+        try {
+            System.out.println("User with email " + email + " logged out successfully!");
+        } catch (Exception e) {
+            System.out.println("Error while logging out: " + e.getMessage());
+        }
     }
-
     /**
      * Changes the password for a user.
      * 
@@ -99,23 +105,33 @@ public class FlipFitUserService implements FlipFitUserInterface {
      * @return true if the password change was successful, false otherwise
      */
     public boolean changePassword(String email, String oldPassword, String newPassword) {
-        return userDAO.getAllUsers().stream()
-                .filter(user -> user.getEmail().equals(email)) // Filter by email
-                .findFirst() // Get the first match (if any)
-                .map(user -> {
-                    if (user.getPassword().equals(oldPassword)) {
-                        user.setPassword(newPassword);
-                        userDAO.updateUser(user);
-                        System.out.println("Password changed successfully for email " + email + "!");
-                        return true;
-                    } else {
-                        System.out.println("Incorrect old password for email " + email + "!");
+        try {
+            return userDAO.getAllUsers().stream()
+                    .filter(user -> user.getEmail().equals(email))
+                    .findFirst()
+                    .map(user -> {
+                        if (user.getPassword().equals(oldPassword)) {
+                            user.setPassword(newPassword);
+                            try {
+                                userDAO.updateUser(user);
+                                System.out.println("Password changed successfully for email " + email + "!");
+                                return true;
+                            } catch (Exception e) {
+                                System.out.println("Error while updating password: " + e.getMessage());
+                                return false;
+                            }
+                        } else {
+                            System.out.println("Incorrect old password for email " + email + "!");
+                            return false;
+                        }
+                    })
+                    .orElseGet(() -> {
+                        System.out.println("No user found with email " + email + "!");
                         return false;
-                    }
-                })
-                .orElseGet(() -> {
-                    System.out.println("No user found with email " + email + "!");
-                    return false;
-                });
+                    });
+        } catch (Exception e) {
+            System.out.println("Error during password change: " + e.getMessage());
+            return false;
+        }
     }
 }
