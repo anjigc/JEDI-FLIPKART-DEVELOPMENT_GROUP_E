@@ -111,7 +111,6 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
     /**
      * Removes a gym from the system.
      * 
-     * @param gymId The unique identifier of the gym to be removed
      */
     public void removeGym() {
         System.out.print("Enter Gym ID to remove: ");
