@@ -9,13 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The {@code FlipFitCustomerDAO} class provides the implementation for the data access layer responsible for performing
+ * database operations related to customer functionalities. These include registering customers, viewing available gym centers,
+ * viewing available gym slots, booking gym slots, and viewing customer bookings.
+ * <p>
+ * This class interacts with the database using SQL queries defined in the {@link FlipFitConstants} class.
+ * </p>
+ */
 public class FlipFitCustomerDAO {
     private Connection connection;
 
+    /**
+     * Constructor that initializes the database connection.
+     * Uses {@link FlipFitDBConnection#getConnection()} to obtain a connection to the database.
+     */
     public FlipFitCustomerDAO() {
         this.connection = FlipFitDBConnection.getConnection();
     }
 
+    /**
+     * Registers a new customer in the system.
+     *
+     * @param customer The {@link FlipFitCustomer} object containing the customer's details to be registered.
+     * @throws SQLException If a database error occurs during registration.
+     */
     public void registerCustomer(FlipFitCustomer customer) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_CUSTOMER_REGISTER)) {
             stmt.setInt(1, customer.getId());
@@ -25,6 +43,12 @@ public class FlipFitCustomerDAO {
         }
     }
 
+    /**
+     * Retrieves a list of all approved gym centers.
+     *
+     * @return A list of {@link FlipFitGymCentre} objects representing the approved gym centers.
+     * @throws SQLException If a database error occurs during retrieval.
+     */
     public List<FlipFitGymCentre> viewGymList() throws SQLException {
         List<FlipFitGymCentre> gymCentres = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_LIST_ALL_APPROVED);
@@ -40,6 +64,13 @@ public class FlipFitCustomerDAO {
         return gymCentres;
     }
 
+    /**
+     * Retrieves a list of available slots for a specific gym.
+     *
+     * @param gymId The ID of the gym for which the available slots are to be retrieved.
+     * @return A list of {@link FlipFitSlot} objects representing the available slots for the specified gym.
+     * @throws SQLException If a database error occurs during retrieval.
+     */
     public List<FlipFitSlot> viewAvailableSlots(int gymId) throws SQLException {
         List<FlipFitSlot> slots = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_LIST_ALL_AVAILABLE)) {
@@ -58,6 +89,21 @@ public class FlipFitCustomerDAO {
         return slots;
     }
 
+    /**
+     * Books a gym slot for a customer and creates a corresponding payment transaction.
+     * The method performs the following steps atomically:
+     * <ol>
+     *   <li>Creates a booking entry in the database.</li>
+     *   <li>Decrements the available seats for the slot.</li>
+     *   <li>Creates a payment entry in the database with status 'Completed'.</li>
+     * </ol>
+     * If any of these steps fail, the transaction is rolled back.
+     *
+     * @param customerId The ID of the customer booking the slot.
+     * @param slotId The ID of the slot being booked.
+     * @return The transaction ID associated with the booking.
+     * @throws SQLException If a database error occurs during the booking process.
+     */
     public int bookGymSlot(int customerId, int slotId) throws SQLException {
         int transactionId = Math.abs(UUID.randomUUID().hashCode());
         int bookingId = -1;
@@ -70,7 +116,7 @@ public class FlipFitCustomerDAO {
                 stmt.setInt(2, customerId);
                 stmt.setBoolean(3, true);
                 stmt.executeUpdate();
-                
+
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
                         bookingId = rs.getInt(1); // Retrieve generated bookingId
@@ -102,7 +148,13 @@ public class FlipFitCustomerDAO {
         return transactionId;
     }
 
-
+    /**
+     * Retrieves a list of bookings made by a specific customer.
+     *
+     * @param customerId The ID of the customer whose bookings are to be retrieved.
+     * @return A list of {@link FlipFitBooking} objects representing the customer's bookings.
+     * @throws SQLException If a database error occurs during retrieval.
+     */
     public List<FlipFitBooking> viewMyBookings(int customerId) throws SQLException {
         List<FlipFitBooking> bookings = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_CUSTOMER_VIEW_BOOKINGS)) {
