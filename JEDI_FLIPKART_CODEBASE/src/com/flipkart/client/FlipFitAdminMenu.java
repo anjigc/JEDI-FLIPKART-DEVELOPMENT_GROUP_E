@@ -33,13 +33,13 @@ public class FlipFitAdminMenu {
 
         // List of available menu options for the admin
         List<String> menuOptions = List.of(
-                "1. Approve Gym",
-                "2. Reject Gym",
-                "3. View Gym List",
-                "4. Approve Gym Owner",
-                "5. Reject Gym Owner",
-                "6. View Gym Owner Status",
-                "7. Logout"
+            "1. View Gym Owner List",
+            "2. Approve Gym Owner",
+            "3. Reject Gym Owner",
+            "4. View Gym List",
+            "5. Approve Gym",
+            "6. Reject Gym",
+            "7. Logout"
         );
 
         int choice; // Variable to store user choice
@@ -48,21 +48,24 @@ public class FlipFitAdminMenu {
             // Displaying the menu options
             System.out.println("\n--- Admin Menu ---");
             menuOptions.forEach(System.out::println); // Displaying each option using forEach
+            System.out.println("");
 
             // Prompting the user for a menu choice
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt(); // Reading user input
             scanner.nextLine(); // Clearing the newline character from input buffer
+            System.out.println("");
+
 
             try {
                 // Handling the user's choice
                 switch (choice) {
-                    case 1 -> adminService.approveGym();  // Approve gym action
-                    case 2 -> adminService.rejectGym();   // Reject gym action
-                    case 3 -> adminService.viewGymStatus(); // View gym list/status
-                    case 4 -> adminService.approveGymOwner(); // Approve gym owner action
-                    case 5 -> adminService.rejectGymOwner(); // Reject gym owner action
-                    case 6 -> adminService.viewGymOwnerStatus(); // View gym owner status
+                    case 1 -> adminService.viewGymOwnerStatus(); // View gym owner status
+                    case 2 -> adminService.approveGymOwner(); // Approve gym owner action
+                    case 3 -> adminService.rejectGymOwner(); // Reject gym owner action
+                    case 4 -> adminService.viewGymStatus(); // View gym list/status
+                    case 5 -> adminService.approveGym();  // Approve gym action
+                    case 6 -> adminService.rejectGym();   // Reject gym action
                     case 7 -> System.out.println("Logging out..."); // Logging out action
                     default -> System.out.println("Invalid choice. Please try again."); // Invalid option message
                 }

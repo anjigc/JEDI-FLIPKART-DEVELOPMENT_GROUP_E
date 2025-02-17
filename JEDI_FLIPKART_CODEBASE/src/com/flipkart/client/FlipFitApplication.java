@@ -39,12 +39,6 @@ public class FlipFitApplication {
         }
 
         try {
-            // Creating DAO objects for different user roles
-            FlipFitUserDAO userDAO = new FlipFitUserDAO();
-            FlipFitAdminDAO adminDAO = new FlipFitAdminDAO();
-            FlipFitGymOwnerDAO gymOwnerDAO = new FlipFitGymOwnerDAO();
-            FlipFitCustomerDAO customerDAO = new FlipFitCustomerDAO();
-
             // Creating service objects for handling business logic
             FlipFitUserInterface userService = new FlipFitUserService();
             FlipFitAdminInterface adminService = new FlipFitAdminService();
@@ -62,6 +56,7 @@ public class FlipFitApplication {
                 System.out.print("Enter your choice: ");
                 choice = scanner.nextInt(); // Reading user's choice
                 scanner.nextLine(); // Clearing the input buffer
+                System.out.println("");
 
                 switch (choice) {
                     case 1:
@@ -149,6 +144,7 @@ public class FlipFitApplication {
                         System.out.println("Invalid choice. Please try again.");
                         break;
                 }
+                System.out.println("");
             } while (choice != 4); // Repeating until the user chooses to exit
 
         } catch (Exception e) {

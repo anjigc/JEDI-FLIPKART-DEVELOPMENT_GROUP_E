@@ -29,10 +29,10 @@ public class FlipFitGymOwnerMenu {
 
         // List of available menu options for the gym owner
         List<String> menuOptions = List.of(
-                "1. Add Gym",
-                "2. Remove Gym",
-                "3. View Gym List",
-                "4. Logout"
+            "1. View Gym List",
+            "2. Add Gym",
+            "3. Remove Gym",
+            "4. Logout"
         );
 
         int choice; // Variable to store user's choice
@@ -41,18 +41,22 @@ public class FlipFitGymOwnerMenu {
             // Displaying the menu options
             System.out.println("\n--- Gym Owner Menu ---");
             menuOptions.forEach(System.out::println); // Displaying each option using forEach
+            System.out.println("");
+
 
             // Prompting the user for a menu choice
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt(); // Reading user input
             scanner.nextLine(); // Clearing the newline character from input buffer
+            System.out.println("");
+
 
             try {
                 // Handling the user's choice
                 switch (choice) {
-                    case 1 -> gymOwnerService.addGym(gymOwnerUser.getId()); // Adding a gym
-                    case 2 -> gymOwnerService.removeGym(); // Removing a gym
-                    case 3 -> gymOwnerService.viewGymList(gymOwnerUser.getId()); // Viewing the gym list
+                    case 1 -> gymOwnerService.viewGymList(gymOwnerUser.getId()); // Viewing the gym list
+                    case 2 -> gymOwnerService.addGym(gymOwnerUser.getId()); // Adding a gym
+                    case 3 -> gymOwnerService.removeGym(); // Removing a gym
                     case 4 -> System.out.println("Logging out..."); // Logging out action
                     default -> System.out.println("Invalid choice. Please try again."); // Invalid option message
                 }
