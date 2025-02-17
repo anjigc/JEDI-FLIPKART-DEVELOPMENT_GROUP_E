@@ -10,5 +10,5 @@ public interface FlipFitAdminInterface {
     public void viewGymStatus() throws GymStatusNotFoundException, DatabaseException;
     public void approveGymOwner() throws GymOwnerNotFoundException, DatabaseException;
     public void rejectGymOwner() throws GymOwnerNotFoundException, DatabaseException;
-    public void viewGymOwnerStatus();
+    public void viewGymOwnerStatus() throws GymOwnerNotFoundException, DatabaseException;
 }

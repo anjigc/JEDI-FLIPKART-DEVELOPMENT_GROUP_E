@@ -13,7 +13,7 @@ public class FlipFitConstants {
     
     public final static String FLIPFIT_SQL_GYMOWNER_APPROVE = "UPDATE FlipFitGymOwner SET status = 'Approved' WHERE id = ?";
     public final static String FLIPFIT_SQL_GYMOWNER_REJECT = "UPDATE FlipFitGymOwner SET status = 'Rejected' WHERE id = ?";
-    public final static String FLIPFIT_SQL_GYMOWNER_LIST_ALL = "SELECT * FROM FlipFitGymOwner";
+    public final static String FLIPFIT_SQL_GYMOWNER_LIST_ALL = "SELECT * FROM FlipFitGymOwner JOIN FlipFitUser ON FlipFitGymOwner.id = FlipFitUser.id";
     public final static String FLIPFIT_SQL_GYMOWNER_REGISTER = "INSERT INTO FlipFitGymOwner (id, panNo, address, aadhaar, status) VALUES (?, ?, ?, ?, ?)";
     
     public final static String FLIPFIT_SQL_SLOT_LIST_ALL_AVAILABLE = "SELECT * FROM FlipFitSlot WHERE gymId = ?";

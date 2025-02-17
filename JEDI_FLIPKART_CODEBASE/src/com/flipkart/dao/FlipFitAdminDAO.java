@@ -7,7 +7,10 @@ import com.flipkart.constant.FlipFitConstants;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.flipkart.utils.FlipFitDBConnection;
 
 public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
@@ -81,17 +84,20 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
     }
 
     @Override
-    public List<FlipFitGymOwner> viewGymOwnerStatus() throws SQLException {
-        List<FlipFitGymOwner> ownerList = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMOWNER_LIST_ALL);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                FlipFitGymOwner owner = new FlipFitGymOwner();
-                owner.setId(rs.getInt("id"));
-                owner.setStatus(rs.getString("status"));
-                ownerList.add(owner);
-            }
+    public Map<FlipFitGymOwner, String> viewGymOwnerStatus() throws SQLException {
+    Map<FlipFitGymOwner, String> ownerMap = new HashMap<>();
+    try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMOWNER_LIST_ALL);
+         ResultSet rs = stmt.executeQuery()) {
+        while (rs.next()) {
+            FlipFitGymOwner owner = new FlipFitGymOwner();
+            owner.setId(rs.getInt("id"));                  // From FlipFitGymOwner
+            owner.setStatus(rs.getString("status"));       // From FlipFitGymOwner
+            String ownerName = rs.getString("name");       // From FlipFitUser
+            
+            ownerMap.put(owner, ownerName);
         }
-        return ownerList;
     }
+    return ownerMap;
+}
+
 }

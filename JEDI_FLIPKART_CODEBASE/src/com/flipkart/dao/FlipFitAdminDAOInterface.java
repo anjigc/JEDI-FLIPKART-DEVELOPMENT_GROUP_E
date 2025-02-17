@@ -6,6 +6,7 @@ import com.flipkart.bean.FlipFitGymOwner;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface FlipFitAdminDAOInterface {
 
@@ -15,5 +16,5 @@ public interface FlipFitAdminDAOInterface {
     public List<FlipFitGymCentre> viewGymStatus() throws SQLException;
     public void approveGymOwner(int ownerId) throws SQLException;
     public void rejectGymOwner(int ownerId) throws SQLException;
-    public List<FlipFitGymOwner> viewGymOwnerStatus() throws SQLException;
+    public Map<FlipFitGymOwner, String> viewGymOwnerStatus() throws SQLException;
 }

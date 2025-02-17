@@ -22,7 +22,7 @@ public class FlipFitAdminMenu {
             System.out.println("3. View Gym List");
             System.out.println("4. Approve Gym Owner");
             System.out.println("5. Reject Gym Owner");
-            System.out.println("6. View Gym Owner Status");
+            System.out.println("6. View Gym Owner List");
             System.out.println("7. Logout");
             System.out.print("Enter your choice: ");
 
@@ -76,7 +76,13 @@ public class FlipFitAdminMenu {
                     }
                     break;
                 case 6:
-                    adminService.viewGymOwnerStatus();
+                    try {
+                        adminService.viewGymOwnerStatus();
+                    } catch (GymOwnerNotFoundException e) {
+                        System.out.println("Error: " + e.getMessage());  // Custom message if gym owner not found
+                    } catch (DatabaseException e) {
+                        System.out.println("Database error: " + e.getMessage());  // Custom message for DB error
+                    }
                     break;
                 case 7:
                     System.out.println("Logging out...");

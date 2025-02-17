@@ -9,9 +9,9 @@ import com.flipkart.exception.GymNotFoundException;
 import com.flipkart.exception.GymOwnerNotFoundException;
 import com.flipkart.exception.GymStatusNotFoundException;
 
-import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class FlipFitAdminService implements FlipFitAdminInterface {
@@ -122,19 +122,20 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         int gymOwnerId = scanner.nextInt();
         scanner.nextLine();
         try {
-            List<FlipFitGymOwner> owners = adminDAO.viewGymOwnerStatus();
+            Map<FlipFitGymOwner, String> ownerMap = adminDAO.viewGymOwnerStatus();
             boolean gymOwnerFound = false;
-
-            for (FlipFitGymOwner owner : owners) {
+    
+            for (FlipFitGymOwner owner : ownerMap.keySet()) {
                 if (owner.getId() == gymOwnerId) {
                     gymOwnerFound = true;
                     break;
                 }
             }
-
+    
             if (!gymOwnerFound) {
                 throw new GymOwnerNotFoundException("Gym Owner ID " + gymOwnerId + " not found.");
             }
+    
             adminDAO.approveGymOwner(gymOwnerId);
             System.out.println("Gym Owner ID " + gymOwnerId + " approved successfully!\n");
         } catch (SQLException e) {
@@ -143,24 +144,27 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             throw e;
         }
     }
+    
 
     public void rejectGymOwner() throws GymOwnerNotFoundException, DatabaseException {
         System.out.print("Enter Gym Owner ID to reject: ");
         int gymOwnerId = scanner.nextInt();
         scanner.nextLine();
         try {
-            List<FlipFitGymOwner> owners = adminDAO.viewGymOwnerStatus();
+            Map<FlipFitGymOwner, String> ownerMap = adminDAO.viewGymOwnerStatus();
             boolean ownerFound = false;
-            for (FlipFitGymOwner owner : owners) {
+    
+            for (FlipFitGymOwner owner : ownerMap.keySet()) {
                 if (owner.getId() == gymOwnerId) {
                     ownerFound = true;
                     break;
                 }
             }
-
+    
             if (!ownerFound) {
                 throw new GymOwnerNotFoundException("Gym Owner with ID " + gymOwnerId + " not found.");
             }
+    
             adminDAO.rejectGymOwner(gymOwnerId);
             System.out.println("Gym Owner ID " + gymOwnerId + " rejected successfully!\n");
         } catch (SQLException e) {
@@ -169,8 +173,33 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             throw e;
         }
     }
-    public void viewGymOwnerStatus() {
-        return;
+    
+
+    public void viewGymOwnerStatus() throws GymOwnerNotFoundException, DatabaseException {
+        try {
+            Map<FlipFitGymOwner, String> ownerMap = adminDAO.viewGymOwnerStatus();
+
+            if (ownerMap.isEmpty()) {
+                throw new GymOwnerNotFoundException("No gym owners found or statuses are not available.");
+            }
+
+            System.out.println("\nGym Owner Status:");
+            System.out.println("---------------------------------------------");
+            System.out.println("| Owner ID | Owner Name      | Status       |");
+            System.out.println("---------------------------------------------");
+            
+            for (Map.Entry<FlipFitGymOwner, String> entry : ownerMap.entrySet()) {
+                FlipFitGymOwner owner = entry.getKey();
+                String ownerName = entry.getValue();
+                System.out.printf("|   %d    | %-15s | %-12s |%n", owner.getId(), ownerName, owner.getStatus());
+            }
+            
+            System.out.println("---------------------------------------------\n");
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving gym owner status from the database: " + e.getMessage());
+        } catch (GymOwnerNotFoundException e) {
+            throw e;
+        }
     }
 
 }
