@@ -10,10 +10,24 @@ public class FlipFitUserService implements FlipFitUserInterface {
 
     private FlipFitUserDAO userDAO;
 
+    /**
+     * Constructor to initialize the FlipFitUserService with the associated DAO.
+     */
     public FlipFitUserService() {
         this.userDAO = new FlipFitUserDAO();
     }
 
+    /**
+     * Registers a new user in the system.
+     * 
+     * @param id The unique identifier of the user
+     * @param email The email address of the user
+     * @param password The password for the user
+     * @param name The full name of the user
+     * @param contact The contact number of the user
+     * @param roleId The role ID of the user (e.g., customer, gym owner, etc.)
+     * @return The registered FlipFitUser object
+     */
     public FlipFitUser registerUser(int id, String email, String password, String name, String contact, int roleId) {
         FlipFitUser user = new FlipFitUser();
         user.setId(id);
@@ -30,6 +44,13 @@ public class FlipFitUserService implements FlipFitUserInterface {
         return user;
     }
 
+    /**
+     * Logs in an existing user using email and password.
+     * 
+     * @param email The email address of the user attempting to log in
+     * @param password The password of the user
+     * @return The logged-in FlipFitUser object if successful, null otherwise
+     */
     public FlipFitUser loginUser(String email, String password) {
         for (FlipFitUser user : userDAO.getAllUsers()) {
             if (user.getEmail().equals(email)) {
@@ -53,10 +74,23 @@ public class FlipFitUserService implements FlipFitUserInterface {
         return null;
     }
 
+    /**
+     * Logs out a user from the system.
+     * 
+     * @param email The email address of the user attempting to log out
+     */
     public void logoutUser(String email) {
         System.out.println("User with email " + email + " logged out successfully!");
     }
-    
+
+    /**
+     * Changes the password for a user.
+     * 
+     * @param email The email address of the user requesting the password change
+     * @param oldPassword The current password of the user
+     * @param newPassword The new password for the user
+     * @return true if the password change was successful, false otherwise
+     */
     public boolean changePassword(String email, String oldPassword, String newPassword) {
         for (FlipFitUser user : userDAO.getAllUsers()) {
             if (user.getEmail().equals(email)) {

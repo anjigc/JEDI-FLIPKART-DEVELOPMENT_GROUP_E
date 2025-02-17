@@ -7,7 +7,6 @@ import com.flipkart.bean.FlipFitSlot;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
-
 import java.util.UUID;
 
 public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
@@ -15,11 +14,23 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
     private FlipFitGymOwnerDAO gymOwnerDAO;
     private Scanner scanner;
 
+    /**
+     * Constructor to initialize the FlipFitGymOwnerService with DAO and Scanner
+     */
     public FlipFitGymOwnerService() {
         this.gymOwnerDAO = new FlipFitGymOwnerDAO();
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Registers a new Gym Owner in the system.
+     * 
+     * @param id The unique identifier of the gym owner
+     * @param panNo The PAN number of the gym owner
+     * @param address The address of the gym owner
+     * @param aadhaar The Aadhaar number of the gym owner
+     * @return The GymOwner object created
+     */
     @Override
     public FlipFitGymOwner registerGymOwner(int id, String panNo, String address, String aadhaar) {
         FlipFitGymOwner gymOwner = new FlipFitGymOwner();
@@ -39,6 +50,11 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         return gymOwner;
     }
 
+    /**
+     * Adds a new gym to the system, including gym slots for the gym.
+     * 
+     * @param ownerId The ID of the gym owner adding the gym
+     */
     public void addGym(int ownerId) {
         System.out.print("Enter Gym Name: ");
         String gymName = scanner.nextLine();
@@ -86,6 +102,11 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         }
     }
 
+    /**
+     * Removes a gym from the system.
+     * 
+     * @param gymId The unique identifier of the gym to be removed
+     */
     public void removeGym() {
         System.out.print("Enter Gym ID to remove: ");
         int gymId = scanner.nextInt();
@@ -99,6 +120,11 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         }
     }
 
+    /**
+     * Views the list of gyms owned by a specific gym owner.
+     * 
+     * @param ownerId The ID of the gym owner whose gyms need to be displayed
+     */
     public void viewGymList(int ownerId) {
         try {
             List<FlipFitGymCentre> gymList = gymOwnerDAO.viewGymList(ownerId);

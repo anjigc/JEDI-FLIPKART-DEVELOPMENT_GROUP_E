@@ -14,15 +14,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Service class implementing the FlipFitAdminInterface.
+ * Provides methods for administrative actions like approving and rejecting gyms,
+ * approving and rejecting gym owners, and viewing the statuses of gyms and gym owners.
+ */
 public class FlipFitAdminService implements FlipFitAdminInterface {
 
     private FlipFitAdminDAO adminDAO;
     private Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Constructor that initializes the adminDAO object.
+     */
     public FlipFitAdminService() {
         this.adminDAO = new FlipFitAdminDAO();
     }
 
+    /**
+     * Registers a new admin.
+     * @param id The unique ID of the admin.
+     * @return The newly registered FlipFitAdmin object.
+     */
     public FlipFitAdmin registerAdmin(int id) {
         FlipFitAdmin admin = new FlipFitAdmin();
         admin.setId(id);
@@ -34,6 +47,11 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         return admin;
     }
 
+    /**
+     * Approves a gym by its gym ID.
+     * @throws GymNotFoundException If the gym is not found.
+     * @throws DatabaseException If there is an error accessing the database.
+     */
     public void approveGym() throws GymNotFoundException, DatabaseException {
         System.out.print("Enter Gym ID to approve: ");
         int gymId = scanner.nextInt();
@@ -55,7 +73,6 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
                 throw new GymNotFoundException("Gym with ID " + gymId + " not found.");
             }
             adminDAO.approveGym(gymId);
-
             System.out.println("Gym ID " + gymId + " approved successfully!\n");
         } catch (SQLException e) {
             throw new DatabaseException("Database error while retrieving gym status: " + e.getMessage());
@@ -64,6 +81,11 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         }
     }
 
+    /**
+     * Rejects a gym by its gym ID.
+     * @throws GymNotFoundException If the gym is not found.
+     * @throws DatabaseException If there is an error accessing the database.
+     */
     public void rejectGym() throws GymNotFoundException, DatabaseException {
         System.out.print("Enter Gym ID to reject: ");
         int gymId = scanner.nextInt();
@@ -94,6 +116,11 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         }
     }
 
+    /**
+     * Views the status of all gyms.
+     * @throws GymStatusNotFoundException If no gyms are found or their statuses are unavailable.
+     * @throws DatabaseException If there is an error accessing the database.
+     */
     public void viewGymStatus() throws GymStatusNotFoundException, DatabaseException {
         try {
             List<FlipFitGymCentre> gyms = adminDAO.viewGymStatus();
@@ -117,6 +144,11 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         }
     }
 
+    /**
+     * Approves a gym owner by their owner ID.
+     * @throws GymOwnerNotFoundException If the gym owner is not found.
+     * @throws DatabaseException If there is an error accessing the database.
+     */
     public void approveGymOwner() throws GymOwnerNotFoundException, DatabaseException {
         System.out.print("Enter Gym Owner ID to approve: ");
         int gymOwnerId = scanner.nextInt();
@@ -144,8 +176,12 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             throw e;
         }
     }
-    
 
+    /**
+     * Rejects a gym owner by their owner ID.
+     * @throws GymOwnerNotFoundException If the gym owner is not found.
+     * @throws DatabaseException If there is an error accessing the database.
+     */
     public void rejectGymOwner() throws GymOwnerNotFoundException, DatabaseException {
         System.out.print("Enter Gym Owner ID to reject: ");
         int gymOwnerId = scanner.nextInt();
@@ -173,8 +209,12 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             throw e;
         }
     }
-    
 
+    /**
+     * Views the status of all gym owners.
+     * @throws GymOwnerNotFoundException If no gym owners are found or their statuses are unavailable.
+     * @throws DatabaseException If there is an error accessing the database.
+     */
     public void viewGymOwnerStatus() throws GymOwnerNotFoundException, DatabaseException {
         try {
             Map<FlipFitGymOwner, String> ownerMap = adminDAO.viewGymOwnerStatus();
@@ -201,5 +241,4 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             throw e;
         }
     }
-
 }
