@@ -90,28 +90,47 @@ public class FlipFitCustomerDAO {
     }
 
     /**
-     * Books a gym slot for a customer and creates a corresponding payment transaction.
-     * The method performs the following steps atomically:
-     * <ol>
-     *   <li>Creates a booking entry in the database.</li>
-     *   <li>Decrements the available seats for the slot.</li>
-     *   <li>Creates a payment entry in the database with status 'Completed'.</li>
-     * </ol>
-     * If any of these steps fail, the transaction is rolled back.
-     *
-     * @param customerId The ID of the customer booking the slot.
-     * @param slotId The ID of the slot being booked.
-     * @return The transaction ID associated with the booking.
-     * @throws SQLException If a database error occurs during the booking process.
+     * Retrieves gymId and slotPrice for a given slotId.
+     * 
+     * @param slotId The ID of the slot
+     * @return Object array containing [gymId, slotPrice] or null if not found
+     * @throws SQLException If a database error occurs
      */
-    public int bookGymSlot(int customerId, int slotId) throws SQLException {
+    public Object[] getGymSlotInfo(int slotId) throws SQLException {
+        String query = "SELECT s.gymId, g.slotPrice FROM FlipFitSlot s " +
+                    "JOIN FlipFitGymCentre g ON s.gymId = g.gymId " +
+                    "WHERE s.slotId = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, slotId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Object[]{rs.getInt("gymId"), rs.getDouble("slotPrice")};
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Books a gym slot for the customer and processes payment.
+     * 
+     * @param customerId The ID of the customer
+     * @param slotId The ID of the slot to book
+     * @param slotPrice The price of the slot
+     * @return Transaction ID if successful, -1 if failed
+     * @throws SQLException If any database error occurs
+     */
+    public int bookGymSlot(int customerId, int slotId, double slotPrice) throws SQLException {
         int transactionId = Math.abs(UUID.randomUUID().hashCode());
         int bookingId = -1;
 
         try {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_BOOKING_CREATE, Statement.RETURN_GENERATED_KEYS)) {
+            // Insert booking record
+            String bookingQuery = "INSERT INTO FlipFitBooking (slotId, customerId, isConfirmed) VALUES (?, ?, ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(bookingQuery, Statement.RETURN_GENERATED_KEYS)) {
                 stmt.setInt(1, slotId);
                 stmt.setInt(2, customerId);
                 stmt.setBoolean(3, true);
@@ -119,22 +138,27 @@ public class FlipFitCustomerDAO {
 
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        bookingId = rs.getInt(1); // Retrieve generated bookingId
+                        bookingId = rs.getInt(1);
                     } else {
                         throw new SQLException("Booking ID retrieval failed.");
                     }
                 }
             }
 
-            try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_DECREMENT_AVAILABILITY)) {
+            // Decrease available seats in the slot
+            String updateSlotQuery = "UPDATE FlipFitSlot SET availableSeats = availableSeats - 1 WHERE slotId = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(updateSlotQuery)) {
                 stmt.setInt(1, slotId);
                 stmt.executeUpdate();
             }
 
-            try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_PAYMENT_CREATE)) {
+            // Insert payment record
+            String paymentQuery = "INSERT INTO FlipFitPayment (transactionId, bookingId, status, amount) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(paymentQuery)) {
                 stmt.setInt(1, transactionId);
-                stmt.setInt(2, bookingId); // Use retrieved bookingId
+                stmt.setInt(2, bookingId);
                 stmt.setString(3, "Completed");
+                stmt.setDouble(4, slotPrice);
                 stmt.executeUpdate();
             }
 
@@ -147,6 +171,7 @@ public class FlipFitCustomerDAO {
         }
         return transactionId;
     }
+
 
     /**
      * Retrieves a list of bookings made by a specific customer.

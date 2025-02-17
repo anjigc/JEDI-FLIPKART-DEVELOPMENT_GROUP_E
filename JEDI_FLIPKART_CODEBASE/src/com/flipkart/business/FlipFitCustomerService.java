@@ -147,7 +147,7 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
     }
 
     /**
-     * Books a gym slot for the customer, handles booking failure.
+     * Books a gym slot for the customer after confirming the price.
      * 
      * @param customerId The ID of the customer making the booking
      * @throws BookingFailedException If the booking fails
@@ -156,14 +156,35 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
         System.out.print("Enter Slot ID to book: ");
         int slotId = scanner.nextInt();
         scanner.nextLine();
-        
+
         try {
-            // Attempt to book the slot and check if booking fails
-            int transactionId = customerDAO.bookGymSlot(customerId, slotId);
+            // Fetch gymId and slot price based on slotId
+            Object[] slotInfo = customerDAO.getGymSlotInfo(slotId);
+            
+            if (slotInfo == null) {
+                System.out.println("Invalid Slot ID. Please try again.");
+                return;
+            }
+
+            int gymId = (int) slotInfo[0];
+            double slotPrice = (double) slotInfo[1];
+
+            System.out.println("Slot Price: $" + slotPrice);
+            System.out.print("Do you want to proceed with the booking? (yes/no): ");
+            String confirmation = scanner.nextLine().trim().toLowerCase();
+
+            if (!confirmation.equals("yes")) {
+                System.out.println("Booking canceled.");
+                return;
+            }
+
+            // Proceed with booking
+            int transactionId = customerDAO.bookGymSlot(customerId, slotId, slotPrice);
             if (transactionId == -1) {
                 throw new BookingFailedException("Failed to book slot due to a system error.");
             }
-            System.out.println("Slot " + slotId + " booked successfully! Transaction ID: " + transactionId + "\n");
+
+            System.out.println("Slot " + slotId + " booked successfully! Transaction ID: " + transactionId);
         } catch (BookingFailedException e) {
             System.out.println("Booking error: " + e.getMessage());
             throw e;
@@ -171,6 +192,7 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
             System.out.println("Unexpected error: " + e.getMessage());
         }
     }
+
 
     /**
      * View all the bookings made by the customer.
