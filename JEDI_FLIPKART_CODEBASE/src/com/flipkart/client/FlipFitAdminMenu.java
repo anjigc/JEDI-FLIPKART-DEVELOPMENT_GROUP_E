@@ -9,11 +9,29 @@ import com.flipkart.exception.GymNotFoundException;
 import com.flipkart.exception.GymOwnerNotFoundException;
 import com.flipkart.exception.GymStatusNotFoundException;
 
+/**
+ * This class represents the admin menu for FlipFit application, providing options
+ * to approve, reject, and view the status of gyms and gym owners.
+ * The user is able to select actions from a list of menu options.
+ */
 public class FlipFitAdminMenu {
+
+    // Scanner instance to read user input
     private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Displays the admin menu and allows the admin to choose different options
+     * for managing gyms and gym owners. It processes user input and calls
+     * respective service methods to perform actions.
+     *
+     * @param adminUser The FlipFitAdminUser object representing the logged-in admin user.
+     * @param adminService The service interface that contains methods for gym and gym owner management.
+     */
     public static void Menu(FlipFitUser adminUser, FlipFitAdminInterface adminService) {
+        // Welcome message displaying the admin's name
         System.out.println("Welcome, Admin " + adminUser.getName() + "!");
+
+        // List of available menu options for the admin
         List<String> menuOptions = List.of(
                 "1. Approve Gym",
                 "2. Reject Gym",
@@ -24,29 +42,34 @@ public class FlipFitAdminMenu {
                 "7. Logout"
         );
 
-        int choice;
-        do {
-            System.out.println("\n--- Admin Menu ---");
-            menuOptions.forEach(System.out::println);
-            System.out.print("Enter your choice: ");
+        int choice; // Variable to store user choice
 
-            choice = scanner.nextInt();
-            scanner.nextLine();
+        do {
+            // Displaying the menu options
+            System.out.println("\n--- Admin Menu ---");
+            menuOptions.forEach(System.out::println); // Displaying each option using forEach
+
+            // Prompting the user for a menu choice
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt(); // Reading user input
+            scanner.nextLine(); // Clearing the newline character from input buffer
 
             try {
+                // Handling the user's choice
                 switch (choice) {
-                    case 1 -> adminService.approveGym();
-                    case 2 -> adminService.rejectGym();
-                    case 3 -> adminService.viewGymStatus();
-                    case 4 -> adminService.approveGymOwner();
-                    case 5 -> adminService.rejectGymOwner();
-                    case 6 -> adminService.viewGymOwnerStatus();
-                    case 7 -> System.out.println("Logging out...");
-                    default -> System.out.println("Invalid choice. Please try again.");
+                    case 1 -> adminService.approveGym();  // Approve gym action
+                    case 2 -> adminService.rejectGym();   // Reject gym action
+                    case 3 -> adminService.viewGymStatus(); // View gym list/status
+                    case 4 -> adminService.approveGymOwner(); // Approve gym owner action
+                    case 5 -> adminService.rejectGymOwner(); // Reject gym owner action
+                    case 6 -> adminService.viewGymOwnerStatus(); // View gym owner status
+                    case 7 -> System.out.println("Logging out..."); // Logging out action
+                    default -> System.out.println("Invalid choice. Please try again."); // Invalid option message
                 }
             } catch (GymNotFoundException | GymOwnerNotFoundException | GymStatusNotFoundException | DatabaseException e) {
+                // Handling any exceptions that might occur during service calls
                 System.out.println("Error: " + e.getMessage());
             }
-        } while (choice != 7);
+        } while (choice != 7); // Looping until the user chooses to logout
     }
 }
