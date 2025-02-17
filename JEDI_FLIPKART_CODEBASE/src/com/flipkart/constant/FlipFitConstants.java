@@ -92,4 +92,12 @@ public class FlipFitConstants {
     /** SQL query to get the status of a gym owner. */
     public final static String FLIPFIT_SQL_GYMOWNER_STATUS = "SELECT status FROM FlipFitGymOwner WHERE id = ?";
 
+    public static final String FLIPFIT_SQL_GET_GYM_SLOT_INFO =
+            "SELECT s.gymId, g.slotPrice FROM FlipFitSlot s " +
+                    "JOIN FlipFitGymCentre g ON s.gymId = g.gymId " +
+                    "WHERE s.slotId = ?";
+
+    public static final String FLIPFIT_SQL_INSERT_BOOKING_RECORD = "INSERT INTO FlipFitBooking (slotId, customerId, isConfirmed) VALUES (?, ?, ?)";
+    public static final String SQL_UPDATE_SLOT_AVAILABILITY = "UPDATE FlipFitSlot SET availableSeats = availableSeats - 1 WHERE slotId = ?";
+    public static final String SQL_INSERT_PAYMENT_RECORD = "INSERT INTO FlipFitPayment (transactionId, bookingId, status, amount) VALUES (?, ?, ?, ?)";
 }

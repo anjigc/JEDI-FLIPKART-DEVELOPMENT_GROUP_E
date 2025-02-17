@@ -85,6 +85,7 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         System.out.print("Enter Gym Capacity of each Slot: ");
         int capacity = scanner.nextInt();
         scanner.nextLine();
+        System.out.print("Enter Gym Slot Price: ");
         int slotPrice = scanner.nextInt();
         scanner.nextLine();
 
