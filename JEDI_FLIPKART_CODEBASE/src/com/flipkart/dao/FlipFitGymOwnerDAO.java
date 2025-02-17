@@ -10,13 +10,31 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code FlipFitGymOwnerDAO} class provides the implementation of the data access layer responsible for performing
+ * database operations related to gym owners. It includes functionality for registering gym owners, adding/removing gym centers,
+ * managing gym slots, and viewing gym details.
+ * <p>
+ * This class interacts with the database using SQL queries defined in the {@link FlipFitConstants} class.
+ * </p>
+ */
 public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
     private Connection connection;
 
+    /**
+     * Constructor that initializes the database connection.
+     * Uses {@link FlipFitDBConnection#getConnection()} to obtain a connection to the database.
+     */
     public FlipFitGymOwnerDAO() {
         this.connection = FlipFitDBConnection.getConnection();
     }
 
+    /**
+     * Registers a new gym owner in the system.
+     *
+     * @param gymOwner The {@link FlipFitGymOwner} object containing the gym owner's details to be registered.
+     * @throws SQLException If a database error occurs during registration.
+     */
     @Override
     public void registerGymOwner(FlipFitGymOwner gymOwner) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMOWNER_REGISTER)) {
@@ -29,6 +47,12 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
         }
     }
 
+    /**
+     * Adds a new gym center to the system.
+     *
+     * @param gymCentre The {@link FlipFitGymCentre} object containing the gym center's details to be added.
+     * @throws SQLException If a database error occurs during gym center addition.
+     */
     @Override
     public void addGym(FlipFitGymCentre gymCentre) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_ADD)) {
@@ -42,6 +66,12 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
         }
     }
 
+    /**
+     * Removes a gym center from the system based on its gym ID.
+     *
+     * @param gymId The ID of the gym to be removed.
+     * @throws SQLException If a database error occurs during gym center removal.
+     */
     @Override
     public void removeGym(int gymId) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMCENTER_REMOVE)) {
@@ -50,6 +80,13 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
         }
     }
 
+    /**
+     * Retrieves a list of gym centers owned by a specific gym owner.
+     *
+     * @param ownerId The ID of the gym owner whose gyms are to be retrieved.
+     * @return A list of {@link FlipFitGymCentre} objects representing the gym centers owned by the specified owner.
+     * @throws SQLException If a database error occurs during the retrieval.
+     */
     @Override
     public List<FlipFitGymCentre> viewGymList(int ownerId) throws SQLException {
         List<FlipFitGymCentre> gymCentres = new ArrayList<>();
@@ -71,6 +108,12 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
         return gymCentres;
     }
 
+    /**
+     * Adds a new gym slot for a specific gym.
+     *
+     * @param slot The {@link FlipFitSlot} object containing the slot's details to be added.
+     * @throws SQLException If a database error occurs during slot addition.
+     */
     @Override
     public void addGymSlot(FlipFitSlot slot) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_ADD)) {
@@ -82,6 +125,12 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
         }
     }
 
+    /**
+     * Removes a gym slot from the system based on its slot ID.
+     *
+     * @param slotId The ID of the slot to be removed.
+     * @throws SQLException If a database error occurs during slot removal.
+     */
     @Override
     public void removeGymSlot(int slotId) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_SLOT_DELETE)) {
@@ -90,6 +139,13 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
         }
     }
 
+    /**
+     * Retrieves a list of available gym slots for a specific gym.
+     *
+     * @param gymId The ID of the gym whose available slots are to be retrieved.
+     * @return A list of {@link FlipFitSlot} objects representing the available gym slots.
+     * @throws SQLException If a database error occurs during retrieval.
+     */
     @Override
     public List<FlipFitSlot> viewGymSlots(int gymId) throws SQLException {
         List<FlipFitSlot> slots = new ArrayList<>();
