@@ -165,4 +165,22 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
         }
         return slots;
     }
+
+
+    /**
+     * Retrieves the status of a gym owner based on the owner ID.
+     *
+     * @param ownerId The ID of the gym owner whose status is to be retrieved.
+     * @return The status of the gym owner.
+     * @throws SQLException If a database error occurs during status retrieval.
+     */
+    @Override
+    public String getGymOwnerStatus(int ownerId) throws SQLException {
+        try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.FLIPFIT_SQL_GYMOWNER_STATUS)) {
+            stmt.setInt(1, ownerId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? rs.getString("status") : null;
+            }
+        }
+    }
 }

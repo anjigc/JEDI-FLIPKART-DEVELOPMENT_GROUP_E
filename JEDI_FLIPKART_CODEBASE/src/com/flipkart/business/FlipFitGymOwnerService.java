@@ -62,6 +62,19 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
      * @param ownerId The ID of the gym owner adding the gym
      */
     public void addGym(int ownerId) {
+
+        // Check if the gym owner is approved
+        String status = isOwnerApproved(ownerId);
+
+        if (status.equals("Pending")) {
+            System.out.println("Gym Owner is not approved yet. Please wait for approval.");
+            return;
+        }
+        else if (status.equals("Rejected")) {
+            System.out.println("Gym Owner is rejected. Cannot add gym.");
+            return;
+        }
+
         System.out.print("Enter Gym Name: ");
         String gymName = scanner.nextLine();
         System.out.print("Enter Gym Location: ");
@@ -116,8 +129,21 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
     /**
      * Removes a gym from the system.
      * 
+     * @param ownerId The ID of the gym owner removing the gym
      */
-    public void removeGym() {
+    public void removeGym(int ownerId) {
+        // Check if the gym owner is approved
+        String status = isOwnerApproved(ownerId);
+
+        if (status.equals("Pending")) {
+            System.out.println("Gym Owner is not approved yet. Please wait for approval.");
+            return;
+        }
+        else if (status.equals("Rejected")) {
+            System.out.println("Gym Owner is rejected. Cannot remove gym.");
+            return;
+        }
+
         System.out.print("Enter Gym ID to remove: ");
         int gymId = scanner.nextInt();
         scanner.nextLine(); // consume newline
@@ -136,6 +162,19 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
      * @param ownerId The ID of the gym owner whose gyms need to be displayed
      */
     public void viewGymList(int ownerId) {
+
+        // Check if the gym owner is approved
+        String status = isOwnerApproved(ownerId);
+
+        if (status.equals("Pending")) {
+            System.out.println("Gym Owner is not approved yet. Please wait for approval.");
+            return;
+        }
+        else if (status.equals("Rejected")) {
+            System.out.println("Gym Owner is rejected. Cannot view gyms.");
+            return;
+        }
+
         try {
             List<FlipFitGymCentre> gymList = gymOwnerDAO.viewGymList(ownerId);
             if (gymList.isEmpty()) {
@@ -151,6 +190,22 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
             }
         } catch (SQLException e) {
             System.err.println("Error viewing gym list: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Checks if the gym owner is approved or rejected.
+     * 
+     * @param ownerId The ID of the gym owner
+     * @return The status of the gym owner
+     */
+    public String isOwnerApproved(int ownerId) {
+        try {
+            String status = gymOwnerDAO.getGymOwnerStatus(ownerId);
+            return status;
+        } catch (SQLException e) {
+            System.err.println("Error checking gym owner status: " + e.getMessage());
+            return "Error";
         }
     }
 }

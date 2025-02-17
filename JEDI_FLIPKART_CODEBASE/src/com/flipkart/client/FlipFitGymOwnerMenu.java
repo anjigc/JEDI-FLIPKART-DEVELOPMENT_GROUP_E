@@ -56,7 +56,7 @@ public class FlipFitGymOwnerMenu {
                 switch (choice) {
                     case 1 -> gymOwnerService.viewGymList(gymOwnerUser.getId()); // Viewing the gym list
                     case 2 -> gymOwnerService.addGym(gymOwnerUser.getId()); // Adding a gym
-                    case 3 -> gymOwnerService.removeGym(); // Removing a gym
+                    case 3 -> gymOwnerService.removeGym(gymOwnerUser.getId()); // Removing a gym
                     case 4 -> System.out.println("Logging out..."); // Logging out action
                     default -> System.out.println("Invalid choice. Please try again."); // Invalid option message
                 }

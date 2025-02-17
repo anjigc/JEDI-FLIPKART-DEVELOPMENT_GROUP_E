@@ -27,12 +27,21 @@ public interface FlipFitGymOwnerInterface {
 
     /**
      * Removes a gym for the gym owner.
+     * @param ownerId The unique identifier of the gym owner.
      */
-    public void removeGym();
+    public void removeGym(int ownerId);
 
     /**
      * Displays the list of gyms owned by the gym owner.
      * @param ownerId The unique identifier of the gym owner.
      */
     public void viewGymList(int ownerId);
+
+    /**
+     * Checks if the gym owner is approved or rejected.
+     * 
+     * @param ownerId The ID of the gym owner
+     * @return The status of the gym owner
+     */
+    public String isOwnerApproved(int ownerId);
 }

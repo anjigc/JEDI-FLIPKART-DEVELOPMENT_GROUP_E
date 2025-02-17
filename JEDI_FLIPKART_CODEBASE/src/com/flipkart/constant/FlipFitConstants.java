@@ -89,4 +89,7 @@ public class FlipFitConstants {
     /** SQL query to delete a user by their ID. */
     public final static String FLIPFIT_SQL_USER_DELETE = "DELETE FROM FlipFitUser WHERE id = ?";
 
+    /** SQL query to get the status of a gym owner. */
+    public final static String FLIPFIT_SQL_GYMOWNER_STATUS = "SELECT status FROM FlipFitGymOwner WHERE id = ?";
+
 }

@@ -65,4 +65,12 @@ public interface FlipFitGymOwnerDAOInterface {
      * @throws SQLException If a database access error occurs.
      */
     public List<FlipFitSlot> viewGymSlots(int gymId) throws SQLException;
+
+    /**
+     * Retrieves the status of a gym owner.
+     * @param ownerId The unique identifier of the gym owner.
+     * @return The status of the gym owner.
+     * @throws SQLException If a database access error occurs.
+     */
+    public String getGymOwnerStatus(int ownerId) throws SQLException;
 }
