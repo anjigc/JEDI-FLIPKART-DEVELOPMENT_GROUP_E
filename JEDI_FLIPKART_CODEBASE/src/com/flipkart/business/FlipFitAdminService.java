@@ -57,21 +57,17 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         int gymId = scanner.nextInt();
         scanner.nextLine();
         try {
-            if(gymId == 0){
+            if (gymId == 0) {
                 throw new GymNotFoundException("Gym ID " + gymId + " not found.");
             }
 
             List<FlipFitGymCentre> gyms = adminDAO.viewGymStatus();
-            boolean gymFound = false;
-            for (FlipFitGymCentre gym : gyms) {
-                if (gym.getGymId() == gymId) {
-                    gymFound = true;
-                    break;
-                }
-            }
-            if(!gymFound){
+            boolean gymFound = gyms.stream().anyMatch(gym -> gym.getGymId() == gymId); // Using Stream API
+
+            if (!gymFound) {
                 throw new GymNotFoundException("Gym with ID " + gymId + " not found.");
             }
+
             adminDAO.approveGym(gymId);
             System.out.println("Gym ID " + gymId + " approved successfully!\n");
         } catch (SQLException e) {
@@ -80,6 +76,7 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             throw e;
         }
     }
+
 
     /**
      * Rejects a gym by its gym ID.
@@ -96,17 +93,12 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             }
 
             List<FlipFitGymCentre> gyms = adminDAO.viewGymStatus();
-            boolean gymFound = false;
-            for (FlipFitGymCentre gym : gyms) {
-                if (gym.getGymId() == gymId) {
-                    gymFound = true;
-                    break;
-                }
-            }
+            boolean gymFound = gyms.stream().anyMatch(gym -> gym.getGymId() == gymId); // Using Stream API
 
             if (!gymFound) {
                 throw new GymNotFoundException("Gym with ID " + gymId + " not found.");
             }
+
             adminDAO.rejectGym(gymId);
             System.out.println("Gym ID " + gymId + " rejected successfully!\n");
         } catch (SQLException e) {
@@ -133,9 +125,11 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             System.out.println("-------------------------------------");
             System.out.println("| Gym ID | Gym Name  | Status      |");
             System.out.println("-------------------------------------");
-            for (FlipFitGymCentre gym : gyms) {
+
+            gyms.forEach(gym -> {
                 System.out.printf("|   %d    | %s   | %s    |%n", gym.getGymId(), gym.getGymName(), gym.getStatus());
-            }
+            });
+
             System.out.println("-------------------------------------\n");
         } catch (SQLException e) {
             throw new DatabaseException("Error retrieving gym status from the database: " + e.getMessage());
@@ -155,19 +149,12 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         scanner.nextLine();
         try {
             Map<FlipFitGymOwner, String> ownerMap = adminDAO.viewGymOwnerStatus();
-            boolean gymOwnerFound = false;
-    
-            for (FlipFitGymOwner owner : ownerMap.keySet()) {
-                if (owner.getId() == gymOwnerId) {
-                    gymOwnerFound = true;
-                    break;
-                }
-            }
-    
+            boolean gymOwnerFound = ownerMap.keySet().stream().anyMatch(owner -> owner.getId() == gymOwnerId); // Using Stream API
+
             if (!gymOwnerFound) {
                 throw new GymOwnerNotFoundException("Gym Owner ID " + gymOwnerId + " not found.");
             }
-    
+
             adminDAO.approveGymOwner(gymOwnerId);
             System.out.println("Gym Owner ID " + gymOwnerId + " approved successfully!\n");
         } catch (SQLException e) {
@@ -188,19 +175,12 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
         scanner.nextLine();
         try {
             Map<FlipFitGymOwner, String> ownerMap = adminDAO.viewGymOwnerStatus();
-            boolean ownerFound = false;
-    
-            for (FlipFitGymOwner owner : ownerMap.keySet()) {
-                if (owner.getId() == gymOwnerId) {
-                    ownerFound = true;
-                    break;
-                }
-            }
-    
+            boolean ownerFound = ownerMap.keySet().stream().anyMatch(owner -> owner.getId() == gymOwnerId); // Using Stream API
+
             if (!ownerFound) {
                 throw new GymOwnerNotFoundException("Gym Owner with ID " + gymOwnerId + " not found.");
             }
-    
+
             adminDAO.rejectGymOwner(gymOwnerId);
             System.out.println("Gym Owner ID " + gymOwnerId + " rejected successfully!\n");
         } catch (SQLException e) {
@@ -227,13 +207,11 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             System.out.println("---------------------------------------------");
             System.out.println("| Owner ID | Owner Name      | Status       |");
             System.out.println("---------------------------------------------");
-            
-            for (Map.Entry<FlipFitGymOwner, String> entry : ownerMap.entrySet()) {
-                FlipFitGymOwner owner = entry.getKey();
-                String ownerName = entry.getValue();
+
+            ownerMap.forEach((owner, ownerName) -> {
                 System.out.printf("|   %d    | %-15s | %-12s |%n", owner.getId(), ownerName, owner.getStatus());
-            }
-            
+            });
+
             System.out.println("---------------------------------------------\n");
         } catch (SQLException e) {
             throw new DatabaseException("Error retrieving gym owner status from the database: " + e.getMessage());
@@ -241,4 +219,5 @@ public class FlipFitAdminService implements FlipFitAdminInterface {
             throw e;
         }
     }
+
 }
