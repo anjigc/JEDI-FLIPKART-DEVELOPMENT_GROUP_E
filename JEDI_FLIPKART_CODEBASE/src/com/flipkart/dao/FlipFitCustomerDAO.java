@@ -170,8 +170,7 @@ public class FlipFitCustomerDAO implements FlipFitCustomerDAOInterface {
             }
 
             // Insert notification for the booking
-            String notificationQuery = "INSERT INTO FlipFitNotification (bookingId, message) VALUES (?, ?)";
-            try (PreparedStatement stmt = connection.prepareStatement(notificationQuery)) {
+            try (PreparedStatement stmt = connection.prepareStatement(FlipFitConstants.SQL_INSERT_NOTIFICATION)) {
                 String message = "Your booking for Slot ID " + slotId + " has been confirmed!";
                 stmt.setInt(1, bookingId);
                 stmt.setString(2, message);

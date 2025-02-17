@@ -100,4 +100,5 @@ public class FlipFitConstants {
     public static final String FLIPFIT_SQL_INSERT_BOOKING_RECORD = "INSERT INTO FlipFitBooking (slotId, customerId, isConfirmed) VALUES (?, ?, ?)";
     public static final String SQL_UPDATE_SLOT_AVAILABILITY = "UPDATE FlipFitSlot SET availableSeats = availableSeats - 1 WHERE slotId = ?";
     public static final String SQL_INSERT_PAYMENT_RECORD = "INSERT INTO FlipFitPayment (transactionId, bookingId, status, amount) VALUES (?, ?, ?, ?)";
+    public static final String SQL_INSERT_NOTIFICATION = "INSERT INTO FlipFitNotification (bookingId, message) VALUES (?, ?)";
 }
