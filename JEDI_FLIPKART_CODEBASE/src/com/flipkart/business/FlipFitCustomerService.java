@@ -31,7 +31,7 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
      * @param id The unique ID of the customer
      * @param age The age of the customer
      * @param address The address of the customer
-     * @throws InvalidCustomerDataException If invalid customer data is provided (age <= 0 or empty address)
+     * @throws InvalidCustomerDataException If invalid customer data is provided (age less than or equal to 0 or empty address)
      */
     public void registerCustomer(int id, int age, String address) throws InvalidCustomerDataException {
         FlipFitCustomer customer = new FlipFitCustomer();
