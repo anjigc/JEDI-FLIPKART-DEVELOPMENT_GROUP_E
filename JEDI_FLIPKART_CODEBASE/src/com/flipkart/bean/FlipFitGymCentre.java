@@ -34,6 +34,12 @@ public class FlipFitGymCentre {
      */
     private String status;
 
+
+    /**
+     * Slot price of the gym.
+     */
+    private int  slotPrice;
+
     /**
      * Retrieves the gym ID.
      *
@@ -140,5 +146,23 @@ public class FlipFitGymCentre {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    /**
+     * Retrieves the slot price of the gym.
+     *
+     * @return the slot price
+     */
+    public int getSlotPrice() {
+        return slotPrice;
+    }
+
+    /**
+     * Sets the slot price of the gym.
+     *
+     * @param slotPrice the slot price to set
+     */
+    public void setSlotPrice(int slotPrice) {
+        this.slotPrice = slotPrice;
     }
 }
