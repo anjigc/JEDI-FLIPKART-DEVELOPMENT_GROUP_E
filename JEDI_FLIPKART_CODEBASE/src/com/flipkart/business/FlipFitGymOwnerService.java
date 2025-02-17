@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
 
@@ -70,7 +71,7 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         FlipFitGymCentre gymCentre = new FlipFitGymCentre();
         int gymId = Math.abs(UUID.randomUUID().hashCode());
         gymCentre.setGymId(gymId);
-        gymCentre.setGymName(gymName);  
+        gymCentre.setGymName(gymName);
         gymCentre.setGymAddress(location);
         gymCentre.setOwnerId(ownerId);
         gymCentre.setCapacity(capacity);
@@ -81,7 +82,7 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
             System.out.println("Gym '" + gymName + "' added successfully!");
 
             // Adding gym slots
-            for (int i = 0; i < slots; i++) {
+            IntStream.range(0, slots).forEach(i -> {
                 System.out.print("Enter Start Time for Slot " + (i + 1) + ": ");
                 String startTime = scanner.nextLine();
                 System.out.print("Enter End Time for Slot " + (i + 1) + ": ");
@@ -92,11 +93,16 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
                 slot.setStartTime(startTime);
                 slot.setEndTime(endTime);
                 slot.setAvailableSeats(capacity);
-                
+
+                // Add the slot to the database
                 System.out.println("Adding slot -> " + slot);
-                gymOwnerDAO.addGymSlot(slot);
+                try {
+                    gymOwnerDAO.addGymSlot(slot);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 System.out.println("Slot " + (i + 1) + " added successfully!");
-            }
+            });
         } catch (SQLException e) {
             System.err.println("Error adding gym: " + e.getMessage());
         }
@@ -135,9 +141,8 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
                 System.out.println("-------------------------------------");
                 System.out.println("| Gym ID | Gym Name  | Location    | Status      |");
                 System.out.println("-------------------------------------");
-                for (FlipFitGymCentre gym : gymList) {
-                    System.out.println("|   " + gym.getGymId() + "    | " + gym.getGymName() + "   | " + gym.getGymAddress() + "   | " + gym.getStatus() + "    |");
-                }
+                gymList.stream().forEach(gym -> System.out.println("|   " + gym.getGymId() + "    | " + gym.getGymName() + "   | " + gym.getGymAddress() + "   | " + gym.getStatus() + "    |"));
+
                 System.out.println("-------------------------------------\n");
             }
         } catch (SQLException e) {
