@@ -1,6 +1,7 @@
 package com.flipkart.client;
 
 import java.util.Scanner;
+import java.util.List;
 import com.flipkart.business.FlipFitAdminInterface;
 import com.flipkart.bean.FlipFitUser;
 import com.flipkart.exception.DatabaseException;
@@ -9,81 +10,42 @@ import com.flipkart.exception.GymOwnerNotFoundException;
 import com.flipkart.exception.GymStatusNotFoundException;
 
 public class FlipFitAdminMenu {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void Menu(FlipFitUser adminUser, FlipFitAdminInterface adminService) {
-        int choice;
-
         System.out.println("Welcome, Admin " + adminUser.getName() + "!");
+        List<String> menuOptions = List.of(
+                "1. Approve Gym",
+                "2. Reject Gym",
+                "3. View Gym List",
+                "4. Approve Gym Owner",
+                "5. Reject Gym Owner",
+                "6. View Gym Owner Status",
+                "7. Logout"
+        );
+
+        int choice;
         do {
             System.out.println("\n--- Admin Menu ---");
-            System.out.println("1. Approve Gym");
-            System.out.println("2. Reject Gym");
-            System.out.println("3. View Gym List");
-            System.out.println("4. Approve Gym Owner");
-            System.out.println("5. Reject Gym Owner");
-            System.out.println("6. View Gym Owner Status");
-            System.out.println("7. Logout");
+            menuOptions.forEach(System.out::println);
             System.out.print("Enter your choice: ");
 
             choice = scanner.nextInt();
-            scanner.nextLine();  
+            scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    try {
-                        adminService.approveGym();
-                    } catch (GymNotFoundException e) {
-                        System.out.println("Error: " + e.getMessage());
-                    } catch (DatabaseException e) {
-                        System.out.println("Database error: " + e.getMessage());
-                    }
-                    break;
-                case 2:
-                    try {
-                        adminService.rejectGym();
-                    } catch (GymNotFoundException e) {
-                        System.out.println("Error: " + e.getMessage());
-                    } catch (DatabaseException e) {
-                        System.out.println("Database error: " + e.getMessage());
-                    }
-                    break;
-                case 3:
-                    try {
-                        adminService.viewGymStatus();
-                    } catch (GymStatusNotFoundException e) {
-                        System.out.println("Error: " + e.getMessage());
-                    } catch (DatabaseException e) {
-                        System.out.println("Database error: " + e.getMessage());
-                    }
-                    break;
-                case 4:
-                    try {
-                        adminService.approveGymOwner();
-                    } catch (GymOwnerNotFoundException e) {
-                        System.out.println("Error: " + e.getMessage());  // Custom message if gym owner not found
-                    } catch (DatabaseException e) {
-                        System.out.println("Database error: " + e.getMessage());  // Custom message for DB error
-                    }
-                    break;
-                case 5:
-                    try {
-                        adminService.rejectGymOwner();
-                    } catch (GymOwnerNotFoundException e) {
-                        System.out.println("Error: " + e.getMessage());  // Custom message if gym owner not found
-                    } catch (DatabaseException e) {
-                        System.out.println("Database error: " + e.getMessage());  // Custom message for DB error
-                    }
-                    break;
-                case 6:
-                    adminService.viewGymOwnerStatus();
-                    break;
-                case 7:
-                    System.out.println("Logging out...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
+            try {
+                switch (choice) {
+                    case 1 -> adminService.approveGym();
+                    case 2 -> adminService.rejectGym();
+                    case 3 -> adminService.viewGymStatus();
+                    case 4 -> adminService.approveGymOwner();
+                    case 5 -> adminService.rejectGymOwner();
+                    case 6 -> adminService.viewGymOwnerStatus();
+                    case 7 -> System.out.println("Logging out...");
+                    default -> System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (GymNotFoundException | GymOwnerNotFoundException | GymStatusNotFoundException | DatabaseException e) {
+                System.out.println("Error: " + e.getMessage());
             }
         } while (choice != 7);
     }
