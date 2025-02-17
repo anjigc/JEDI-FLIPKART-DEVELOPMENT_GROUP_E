@@ -8,19 +8,25 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Service class responsible for handling customer operations such as registration, gym selection, slot booking,
+ * and viewing bookings. Interacts with the {@link FlipFitCustomerDAO} for database operations.
+ */
 public class FlipFitCustomerService implements FlipFitCustomerInterface {
     private FlipFitCustomerDAO customerDAO;
     private Scanner scanner = new Scanner(System.in);
 
     /**
      * Constructor: Initializes the customerDAO for database operations.
+     * 
+     * Initializes the FlipFitCustomerDAO to interact with the database and the scanner to take user input.
      */
     public FlipFitCustomerService() {
         this.customerDAO = new FlipFitCustomerDAO();
     }
 
     /**
-     * Registers a new customer with provided details.
+     * Registers a new customer with the provided details.
      * 
      * @param id The unique ID of the customer
      * @param age The age of the customer

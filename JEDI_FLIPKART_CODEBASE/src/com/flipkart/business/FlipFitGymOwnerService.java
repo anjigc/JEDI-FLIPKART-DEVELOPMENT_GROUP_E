@@ -10,13 +10,18 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
+/**
+ * Service class responsible for handling gym owner operations, including registering gym owners, adding gyms,
+ * removing gyms, and viewing gym lists. Interacts with the {@link FlipFitGymOwnerDAO} for database operations.
+ */
 public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
 
     private FlipFitGymOwnerDAO gymOwnerDAO;
     private Scanner scanner;
 
     /**
-     * Constructor to initialize the FlipFitGymOwnerService with DAO and Scanner
+     * Constructor to initialize the FlipFitGymOwnerService with DAO and Scanner.
+     * Initializes the gymOwnerDAO object for handling database operations and the scanner for user input.
      */
     public FlipFitGymOwnerService() {
         this.gymOwnerDAO = new FlipFitGymOwnerDAO();
@@ -24,13 +29,13 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
     }
 
     /**
-     * Registers a new Gym Owner in the system.
+     * Registers a new gym owner in the system.
      * 
      * @param id The unique identifier of the gym owner
      * @param panNo The PAN number of the gym owner
      * @param address The address of the gym owner
      * @param aadhaar The Aadhaar number of the gym owner
-     * @return The GymOwner object created
+     * @return The registered {@link FlipFitGymOwner} object
      */
     @Override
     public FlipFitGymOwner registerGymOwner(int id, String panNo, String address, String aadhaar) {
