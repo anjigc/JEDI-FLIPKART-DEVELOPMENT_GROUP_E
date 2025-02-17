@@ -6,12 +6,19 @@ import com.flipkart.dao.FlipFitUserDAO;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Service class responsible for handling user-related operations like registration,
+ * login, logout, and password change. Interacts with the {@link FlipFitUserDAO} 
+ * for database operations.
+ */
+
 public class FlipFitUserService implements FlipFitUserInterface {
 
     private FlipFitUserDAO userDAO;
 
     /**
      * Constructor to initialize the FlipFitUserService with the associated DAO.
+     * Initializes the userDAO object for handling database interactions.
      */
     public FlipFitUserService() {
         this.userDAO = new FlipFitUserDAO();
@@ -26,7 +33,7 @@ public class FlipFitUserService implements FlipFitUserInterface {
      * @param name The full name of the user
      * @param contact The contact number of the user
      * @param roleId The role ID of the user (e.g., customer, gym owner, etc.)
-     * @return The registered FlipFitUser object
+     * @return The registered {@link FlipFitUser} object
      */
     public FlipFitUser registerUser(int id, String email, String password, String name, String contact, int roleId) {
         FlipFitUser user = new FlipFitUser();
@@ -49,7 +56,7 @@ public class FlipFitUserService implements FlipFitUserInterface {
      * 
      * @param email The email address of the user attempting to log in
      * @param password The password of the user
-     * @return The logged-in FlipFitUser object if successful, null otherwise
+     * @return The logged-in {@link FlipFitUser} object if successful, null otherwise
      */
     public FlipFitUser loginUser(String email, String password) {
         return userDAO.getAllUsers().stream()
