@@ -113,14 +113,14 @@ public class FlipFitCustomerDAO {
     }
 
     /**
-     * Books a gym slot for the customer and processes payment.
-     * 
-     * @param customerId The ID of the customer
-     * @param slotId The ID of the slot to book
-     * @param slotPrice The price of the slot
-     * @return Transaction ID if successful, -1 if failed
-     * @throws SQLException If any database error occurs
-     */
+    * Books a gym slot for the customer and processes payment, including a notification.
+    * 
+    * @param customerId The ID of the customer
+    * @param slotId The ID of the slot to book
+    * @param slotPrice The price of the slot
+    * @return Transaction ID if successful, -1 if failed
+    * @throws SQLException If any database error occurs
+    */
     public int bookGymSlot(int customerId, int slotId, double slotPrice) throws SQLException {
         int transactionId = Math.abs(UUID.randomUUID().hashCode());
         int bookingId = -1;
@@ -162,6 +162,15 @@ public class FlipFitCustomerDAO {
                 stmt.executeUpdate();
             }
 
+            // Insert notification for the booking
+            String notificationQuery = "INSERT INTO FlipFitNotification (bookingId, message) VALUES (?, ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(notificationQuery)) {
+                String message = "Slot " + slotId + " has been booked for customer " + customerId + " with a price of " + slotPrice + ".";
+                stmt.setInt(1, bookingId);
+                stmt.setString(2, message);
+                stmt.executeUpdate();
+            }
+
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
@@ -171,6 +180,7 @@ public class FlipFitCustomerDAO {
         }
         return transactionId;
     }
+
 
 
     /**
