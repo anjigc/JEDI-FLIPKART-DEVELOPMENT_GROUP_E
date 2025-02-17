@@ -3,6 +3,9 @@ package com.flipkart.business;
 import com.flipkart.bean.FlipFitUser;
 import com.flipkart.dao.FlipFitUserDAO;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class FlipFitUserService implements FlipFitUserInterface {
 
     private FlipFitUserDAO userDAO;
@@ -31,7 +34,14 @@ public class FlipFitUserService implements FlipFitUserInterface {
         for (FlipFitUser user : userDAO.getAllUsers()) {
             if (user.getEmail().equals(email)) {
                 if (user.getPassword().equals(password)) {
-                    System.out.println("User with email " + email + " logged in successfully!");
+
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    String formattedDateTime = now.format(formatter);
+                    System.out.println("\nLogin:");
+
+
+                    System.out.println("User " + user.getName() + " with email " + email + " logged in successfully at " + formattedDateTime + "!");
                     return user;
                 } else {
                     System.out.println("Incorrect password for email " + email + "!");
