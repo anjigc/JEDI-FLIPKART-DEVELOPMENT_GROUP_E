@@ -85,6 +85,9 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         System.out.print("Enter Gym Capacity of each Slot: ");
         int capacity = scanner.nextInt();
         scanner.nextLine();
+        int slotPrice = scanner.nextInt();
+        scanner.nextLine();
+
 
         FlipFitGymCentre gymCentre = new FlipFitGymCentre();
         int gymId = Math.abs(UUID.randomUUID().hashCode());
@@ -94,7 +97,7 @@ public class FlipFitGymOwnerService implements FlipFitGymOwnerInterface {
         gymCentre.setOwnerId(ownerId);
         gymCentre.setCapacity(capacity);
         gymCentre.setStatus("Pending");
-
+        gymCentre.setSlotPrice(slotPrice);
         try {
             gymOwnerDAO.addGym(gymCentre);
             System.out.println("Gym '" + gymName + "' added successfully!");

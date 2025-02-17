@@ -62,6 +62,7 @@ public class FlipFitGymOwnerDAO implements FlipFitGymOwnerDAOInterface {
             stmt.setInt(4, gymCentre.getOwnerId());
             stmt.setInt(5, gymCentre.getCapacity());
             stmt.setString(6, "Pending");
+            stmt.setInt(7, gymCentre.getSlotPrice());
             stmt.executeUpdate();
         }
     }

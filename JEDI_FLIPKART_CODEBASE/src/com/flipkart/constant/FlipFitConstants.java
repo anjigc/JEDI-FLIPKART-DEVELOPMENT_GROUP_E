@@ -27,7 +27,7 @@ public class FlipFitConstants {
     public final static String FLIPFIT_SQL_GYMCENTER_LIST_ALL_APPROVED = "SELECT * FROM FlipFitGymCentre WHERE status = 'Approved'";
 
     /** SQL query for adding a new gym center. */
-    public final static String FLIPFIT_SQL_GYMCENTER_ADD = "INSERT INTO FlipFitGymCentre (gymId, gymName, gymAddress, ownerId, capacity, status) VALUES (?, ?, ?, ?, ?, ?)";
+    public final static String FLIPFIT_SQL_GYMCENTER_ADD = "INSERT INTO FlipFitGymCentre (gymId, gymName, gymAddress, ownerId, capacity, status, slotPrice) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     /** SQL query for removing a gym center. */
     public final static String FLIPFIT_SQL_GYMCENTER_REMOVE = "DELETE FROM FlipFitGymCentre WHERE gymId = ?";
