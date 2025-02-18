@@ -82,6 +82,10 @@ public class FlipFitApplication {
 
                     case 2:
                         // Handling registration
+                    	System.out.println("Enter your role: 1) Admin 2) GymOwner 3) Customer");
+                    	int roleId = scanner.nextInt();
+                    	scanner.nextLine();
+                    	
                         System.out.print("Enter name: ");
                         String name = scanner.nextLine();
                         System.out.print("Enter email: ");
@@ -91,9 +95,6 @@ public class FlipFitApplication {
                         System.out.print("Enter contact: ");
                         String contact = scanner.nextLine();
 
-                        System.out.println("Enter your role: 1) Admin 2) GymOwner 3) Customer");
-                        int roleId = scanner.nextInt();
-                        scanner.nextLine();
 
                         // Generating unique user ID
                         int userId = Math.abs(UUID.randomUUID().hashCode());
